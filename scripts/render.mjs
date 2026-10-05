@@ -34,6 +34,24 @@ try {
     throw new Error("Invalid render range");
   const audioOut = sample ? path.join(out, "sample-audio") : out;
   await mkdir(audioOut, { recursive: true });
+  if (sample) {
+    await status({
+      phase: "audio-check",
+      progress: 1,
+      message: "先检查整片旁白的实际时长，避免完成样片后才发现后续镜头放不下",
+    });
+    await buildAudio(
+      p,
+      path.join(out, "preflight"),
+      (done, total) =>
+        status({
+          phase: "audio-check",
+          progress: Math.round(1 + (done / total) * 6),
+          message: `正在检查整片旁白 ${done} / ${total} 句（复用已有声音）`,
+        }),
+      { preflightOnly: true },
+    );
+  }
   const audioProject = sample
     ? {
         ...p,

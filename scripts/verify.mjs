@@ -1,9 +1,22 @@
 import path from "node:path";
 import { readFile, writeFile } from "node:fs/promises";
-import { renderContext, run, writeJSON, readJSON } from "./lib.mjs";
-import { duration } from "../src/model.mjs";
-import { generate, configured } from "../src/google.mjs";
-const { p, out } = await renderContext();
+import {
+  ROOT,
+  loadProject,
+  displayOutputHash,
+  run,
+  writeJSON,
+  readJSON,
+} from "./lib.mjs";
+import { duration, timeline, assertProject } from "../src/model.mjs";
+import { generate } from "../src/google.mjs";
+import { getSettings } from "../src/settings.mjs";
+const snapshot = process.argv.indexOf("--snapshot");
+const p =
+  snapshot >= 0
+    ? assertProject(await readJSON(process.argv[snapshot + 1]))
+    : await loadProject(process.argv[2] ?? "subgroup-matrix");
+const out = path.join(ROOT, "outputs", p.id, displayOutputHash(p));
 const target = path.join(out, "film.mp4");
 const result = JSON.parse(
   (
@@ -54,7 +67,7 @@ await run("ffmpeg", [
   "-i",
   target,
   "-vf",
-  "fps=1/2,scale=320:180,tile=5x15:padding=6:margin=6:color=0x111713",
+  `fps=1/2,scale=320:180,tile=5x${Math.ceil(duration(p) / 10)}:padding=6:margin=6:color=0x111713`,
   "-frames:v",
   "1",
   path.join(out, "contact-sheet.jpg"),
@@ -64,7 +77,7 @@ await run("ffmpeg", [
   "-v",
   "error",
   "-ss",
-  "27.4",
+  String(Math.max(0, (timeline(p)[2]?.start ?? 0.6) - 0.6)),
   "-i",
   target,
   "-vf",
@@ -90,11 +103,24 @@ const qa = {
 };
 if (
   process.argv.includes("--asr") &&
-  configured() &&
   p.scenes.some((s) => s.narration.trim())
 ) {
   try {
-    const source = await readFile(path.join(out, "soundtrack.wav"));
+    const input = path.join(out, "asr-input.wav");
+    await run("ffmpeg", [
+      "-y",
+      "-v",
+      "error",
+      "-i",
+      path.join(out, "soundtrack.wav"),
+      "-ar",
+      "16000",
+      "-ac",
+      "1",
+      input,
+    ]);
+    const source = await readFile(input);
+    const settings = getSettings();
     const parts = await generate(
       "gemini-3.8-flash",
       [
@@ -114,6 +140,12 @@ if (
         },
       ],
       { temperature: 0 },
+      {
+        settings: {
+          ...settings,
+          director: { ...settings.director, provider: "gemini" },
+        },
+      },
     );
     const transcript = parts
       .filter((x) => x.text)

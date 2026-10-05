@@ -22,6 +22,7 @@ import {
   run,
   storySignature,
   reviewState,
+  displayOutputHash,
 } from "./scripts/lib.mjs";
 import { assertProject, duration } from "./src/model.mjs";
 import { createPresetProject as createProject } from "./src/presets.mjs";
@@ -716,6 +717,7 @@ const server = http.createServer(async (req, res) => {
         return;
       }
       if (action === "outputs" && req.method === "GET") {
+        const currentKey = displayOutputHash(await loadProject(id));
         let keys = [];
         try {
           keys = await readdir(path.join(ROOT, "outputs", id));
@@ -733,7 +735,7 @@ const server = http.createServer(async (req, res) => {
                 x,
               ),
             ),
-            current: key === hashProject(await loadProject(id)),
+            current: key === currentKey,
             updatedAt: st.mtime.toISOString(),
           });
         }
@@ -759,7 +761,9 @@ const server = http.createServer(async (req, res) => {
       target = path.join(ROOT, "public", pathname.slice(1));
     else if (
       /^\/src\/(film|model|workflow|presets)\.mjs$/.test(pathname) ||
-      /^\/src\/engine\/(motion|schema|renderer|recipes|review)\.mjs$/.test(pathname)
+      /^\/src\/engine\/(motion|schema|renderer|recipes|review)\.mjs$/.test(
+        pathname,
+      )
     )
       target = path.join(ROOT, pathname.slice(1));
     else if (/^\/projects\/[a-z0-9-]+\/assets\/[a-zA-Z0-9._-]+$/.test(pathname))

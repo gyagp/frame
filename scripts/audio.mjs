@@ -4,6 +4,7 @@ import { ROOT, readJSON, writeJSON, run, hashProject } from "./lib.mjs";
 import { duration, timeline } from "../src/model.mjs";
 import { createHash } from "node:crypto";
 import { azureSpeech } from "../src/azure.mjs";
+import { narrationFit } from "../src/audio-fit.mjs";
 
 const RATE = 24000;
 function wavSamples(buf) {
@@ -36,12 +37,22 @@ function stamp(sec) {
   const ms = Math.round(sec * 1000);
   return `${String(Math.floor(ms / 3600000)).padStart(2, "0")}:${String(Math.floor(ms / 60000) % 60).padStart(2, "0")}:${String(Math.floor(ms / 1000) % 60).padStart(2, "0")},${String(ms % 1000).padStart(3, "0")}`;
 }
-export async function buildAudio(p, out, onProgress = () => {}) {
-  const cache = path.join(out, "audio.json");
+export async function buildAudio(
+  p,
+  out,
+  onProgress = () => {},
+  { preflightOnly = false } = {},
+) {
+  const cache = path.join(
+    out,
+    preflightOnly ? "narration-fit.json" : "audio.json",
+  );
   try {
     const old = await readJSON(cache);
     if (old.projectHash === hashProject(p)) {
-      await readFile(path.join(out, "soundtrack.wav"));
+      if (!preflightOnly) await readFile(path.join(out, "soundtrack.wav"));
+      if (old.issues?.length)
+        throw new Error("Narration preflight needs repair");
       return old;
     }
   } catch {}
@@ -118,11 +129,8 @@ export async function buildAudio(p, out, onProgress = () => {}) {
       ]);
     }
   }
-  const total = duration(p);
-  const mix = new Float32Array(Math.ceil(total * RATE));
-  const voice = new Float32Array(mix.length);
-  const cues = [];
-  const timings = [];
+  const prepared = [],
+    issues = [];
   for (const scene of timeline(p)) {
     const entries = await Promise.all(
       lines
@@ -132,25 +140,75 @@ export async function buildAudio(p, out, onProgress = () => {}) {
           samples: wavSamples(await readFile(path.join(dir, `${line.id}.wav`))),
         })),
     );
-    const original = entries.reduce((n, x) => n + x.samples.length / RATE, 0);
-    const available =
-      scene.duration - 1.2 - Math.max(0, entries.length - 1) * 0.18;
-    const tempo = Math.max(1, original / available);
+    const fit = narrationFit(entries, scene.duration, RATE);
+    prepared.push({ scene, fit });
+    if (fit.tempo > 1.3)
+      issues.push({
+        sceneId: scene.id,
+        title: scene.title,
+        sceneDuration: scene.duration,
+        normalSpeechDuration: fit.original,
+        requiredSeconds: Math.ceil(
+          fit.fitted / 1.3 + 0.7 + Math.max(0, entries.length - 1) * 0.16,
+        ),
+      });
+  }
+  const preflight = {
+    projectHash: hashProject(p),
+    issues,
+    scenes: prepared.map(({ scene, fit }) => ({
+      sceneId: scene.id,
+      tempo: fit.tempo,
+      originalSpeechDuration: fit.original,
+      trimmedPaddingSeconds: fit.trimmedSeconds,
+      fittingMode: fit.mode,
+    })),
+  };
+  await writeJSON(path.join(out, "narration-fit.json"), preflight);
+  if (issues.length)
+    throw new Error(
+      "Too much narration: " +
+        issues
+          .map(
+            (s) =>
+              `\"${s.title}\" needs at least ${s.requiredSeconds}s, has ${s.sceneDuration}s`,
+          )
+          .join("; "),
+    );
+  if (preflightOnly) return preflight;
+  const total = duration(p);
+  const mix = new Float32Array(Math.ceil(total * RATE));
+  const voice = new Float32Array(mix.length);
+  const cues = [];
+  const timings = [];
+  for (const { scene, fit } of prepared) {
+    const { entries, original, tempo } = fit;
     if (tempo > 1.3)
       throw new Error(
         `Scene "${scene.title}" has too much narration. Shorten it or increase its duration (needs ${Math.ceil(original + 1.2)}s at normal speed).`,
       );
-    let cursor = scene.start + 0.6;
+    let cursor = scene.start + fit.leadIn;
     for (const e of entries) {
       let samples = e.samples;
       if (tempo > 1.005) {
         const pcm = path.join(dir, `${e.id}.pcm`);
+        let input = path.join(dir, `${e.id}.wav`);
+        const inputFormat = [];
+        if (fit.mode !== "original") {
+          input = path.join(dir, `${e.id}-trimmed.pcm`);
+          const raw = Buffer.alloc(samples.length * 2);
+          for (let i = 0; i < samples.length; i++)
+            raw.writeInt16LE(Math.round(samples[i] * 32768), i * 2);
+          await writeFile(input, raw);
+          inputFormat.push("-f", "s16le", "-ar", String(RATE), "-ac", "1");
+        }
         await run("ffmpeg", [
           "-y",
           "-v",
           "error",
+          ...inputFormat,
           "-i",
-          path.join(dir, `${e.id}.wav`),
+          input,
           "-af",
           `atempo=${tempo}`,
           "-f",
@@ -168,6 +226,10 @@ export async function buildAudio(p, out, onProgress = () => {}) {
       }
       const start = cursor,
         end = start + samples.length / RATE;
+      if (end > scene.end - 0.08)
+        throw new Error(
+          `Narration exceeds scene boundary: ${scene.id}. Speech was not truncated.`,
+        );
       const offset = Math.round(start * RATE);
       for (let i = 0; i < samples.length && offset + i < voice.length; i++)
         voice[offset + i] += samples[i];
@@ -177,13 +239,15 @@ export async function buildAudio(p, out, onProgress = () => {}) {
         end: Math.min(scene.end - 0.1, end + 0.16),
         text: e.text,
       });
-      cursor = end + 0.18;
+      cursor = end + fit.gap;
     }
     timings.push({
       sceneId: scene.id,
       originalSpeechDuration: original,
       tempo: Number(tempo.toFixed(4)),
       sceneDuration: scene.duration,
+      fittingMode: fit.mode,
+      trimmedPaddingSeconds: Number(fit.trimmedSeconds.toFixed(4)),
     });
   }
   const boundaries = timeline(p)

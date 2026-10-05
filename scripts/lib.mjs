@@ -2,11 +2,12 @@ import { readFile, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { spawn } from "node:child_process";
 import { GlobalFonts, createCanvas, loadImage } from "@napi-rs/canvas";
 import { assertProject } from "../src/model.mjs";
 import { paletteFingerprint } from "../src/presets.mjs";
+import { equivalentApproval } from "../src/review-compatibility.mjs";
 export const ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "..",
@@ -36,6 +37,7 @@ export const hashProject = (p) => {
     "src/engine/schema.mjs",
     "src/engine/renderer.mjs",
     "scripts/audio.mjs",
+    "src/audio-fit.mjs",
     "scripts/render.mjs",
   ])
     hash.update(readFileSync(path.join(ROOT, source)));
@@ -84,14 +86,27 @@ export const storySignature = (p) =>
     )
     .digest("hex");
 export const reviewState = (p) => {
+  const key = hashProject(p);
+  const compatible = equivalentApproval(ROOT, p, key);
+  const approved = (hash) =>
+    hash === key || (!!compatible && hash === compatible);
   const storyApproved = p.review?.story === storySignature(p),
-    framesApproved = storyApproved && p.review?.frames === hashProject(p);
+    framesApproved = storyApproved && approved(p.review?.frames);
   return {
     storyApproved,
     framesApproved,
-    sampleApproved: framesApproved && p.review?.sample === hashProject(p),
+    sampleApproved: framesApproved && approved(p.review?.sample),
   };
 };
+export function displayOutputHash(p) {
+  const key = hashProject(p);
+  if (existsSync(path.join(ROOT, "outputs", p.id, key, "film.mp4"))) return key;
+  const prior = equivalentApproval(ROOT, p, key);
+  return prior &&
+    existsSync(path.join(ROOT, "outputs", p.id, prior, "film.mp4"))
+    ? prior
+    : key;
+}
 export async function loadProject(id) {
   return assertProject(
     await readJSON(path.join(projectDir(id), "project.json")),
