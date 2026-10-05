@@ -1,0 +1,12 @@
+{
+  "retrievedAt": "2026-10-05",
+  "story": {"source": "User request: 小马过河，3D，五分钟以内", "adaptation": "Newly written narration and shot plan", "editionVerified": false},
+  "references": [
+    {"author": "noahduck283", "url": "https://x.com/noahduck283/status/2100195971284316228", "method": "FxTwitter article text; sampled embedded video frames", "use": "Editable scene assets and spatial blocking", "notUsed": "Seedance output and character assets"},
+    {"author": "Leila", "url": "https://x.com/leilamakes/status/2098450393277595841", "method": "FxTwitter post text; sampled video frames", "use": "Separate structure and appearance references", "notUsed": "PixVerse / Seedance dependency"},
+    {"author": "npaka", "url": "https://x.com/npaka123/status/2096471372235243750", "method": "FxTwitter post and linked note.com production record", "use": "Separate character, environment and storyboard", "notUsed": "VRoid character and Omni video restyling"},
+    {"author": "袋鼠帝 / kangarooking", "url": "https://x.com/aikangarooking/status/2086449883616342389", "method": "FxTwitter full article and three linked repository Markdown guides", "repositoryCommit": "80c79670918a56575e6ed623c9bc43bf03dd38e5", "use": "Scale, staging, causal action, camera and end-state design", "notUsed": "Flova / Seedance, courses, film assets"},
+    {"source": "User-provided Muse Qingming Riverside prompt", "url": null, "method": "Prompt text only", "use": "Identity, action, environment and continuity constraints", "filmViewed": false}
+  ],
+  "productionChecks": {"storyApproval": "pending", "3dAssets": "not-created", "frames": "not-rendered", "motion": "not-rendered", "narrationTiming": "not-measured", "listening": "not-performed"}
+}

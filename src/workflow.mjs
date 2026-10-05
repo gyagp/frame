@@ -1,3 +1,4 @@
+import { productionUnavailable } from "./production.mjs";
 // Presentation-only workflow: the server remains the authority for approvals.
 export function workflowView({ project, review = {}, outputs = [], job }) {
   const output = outputs.find((x) => x.current);
@@ -103,6 +104,32 @@ export function workflowView({ project, review = {}, outputs = [], job }) {
       label: "正在制作…",
       action: null,
     };
+  const unavailable = productionUnavailable(project);
+  if (unavailable) {
+    if (!review.storyApproved)
+      return {
+        ...view,
+        phase: "story",
+        step: 0,
+        title: "先看看，这是不是你想讲的故事",
+        description:
+          "这是 3D 电影的故事与分镜稿。制作功能尚待接入，当前可审阅和确认方案。",
+        label: "确认故事与分镜",
+        action: "approve-story",
+        media: null,
+      };
+    return {
+      ...view,
+      phase: "production-pending",
+      step: 1,
+      title: "故事已确认，3D 制作尚待接入",
+      description: unavailable,
+      label: "3D 制作暂未就绪",
+      action: null,
+      disabled: true,
+      media: null,
+    };
+  }
   const obsoleteFailure =
     job?.status === "failed" &&
     ((job.projectHash && job.projectHash !== output?.key) ||

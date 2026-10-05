@@ -41,6 +41,7 @@ import {
   redactError,
 } from "./src/settings.mjs";
 import { testConnection } from "./src/connections.mjs";
+import { assertProductionAvailable } from "./src/production.mjs";
 
 const PORT = Number(process.env.PORT || 4173),
   jobs = new Map(),
@@ -329,6 +330,21 @@ const server = http.createServer(async (req, res) => {
       const id = route[1],
         action = route[2] ?? "";
       projectDir(id);
+      if (
+        req.method === "POST" &&
+        [
+          "prepare",
+          "render",
+          "audio",
+          "stills",
+          "sample",
+          "critique",
+          "revise-shot",
+          "approve-frames",
+          "approve-sample",
+        ].includes(action)
+      )
+        assertProductionAvailable(await loadProject(id));
       if (!action && req.method === "GET") {
         json(res, 200, await loadProject(id));
         return;
@@ -760,8 +776,8 @@ const server = http.createServer(async (req, res) => {
     )
       target = path.join(ROOT, "public", pathname.slice(1));
     else if (
-      /^\/src\/(film|model|workflow|presets)\.mjs$/.test(pathname) ||
-      /^\/src\/engine\/(motion|schema|renderer|recipes|review)\.mjs$/.test(
+      /^\/src\/(film|model|workflow|presets|production)\.mjs$/.test(pathname) ||
+      /^\/src\/engine\/(motion|schema|renderer|recipes|review|shot-plan)\.mjs$/.test(
         pathname,
       )
     )

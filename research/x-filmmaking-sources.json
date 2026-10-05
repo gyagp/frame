@@ -1,0 +1,148 @@
+{
+  "scope": "Directed reference expansion from user-supplied X posts; not an exhaustive search",
+  "sources": [
+    {
+      "url": "https://x.com/aikangarooking/status/2086449883616342389",
+      "author": "aikangarooking",
+      "publishedAt": "Sun Aug 09 13:49:51 +0000 2026",
+      "articleTitle": "从0到1跑通AI短剧史诗级场面制作全流程SOP【附教程+避坑指南】",
+      "retrieval": "FxTwitter API; text read",
+      "retrievedAt": "2026-10-05",
+      "rawSha256": "a7eee5c0b8d791a5e9fff35e54b9b1c0caa5e880c15a4eae9f6b22c6cab81f7c",
+      "cachedRaw": ".cache/x-film-research/2086449883616342389.json"
+    },
+    {
+      "url": "https://x.com/tomkrcha/status/2095598645190291775",
+      "author": "tomkrcha",
+      "publishedAt": "Thu Sep 03 19:43:46 +0000 2026",
+      "articleTitle": null,
+      "retrieval": "FxTwitter API; text read",
+      "retrievedAt": "2026-10-05",
+      "rawSha256": "448bc7c9ab7c052e93886ed84cb3bd07e3e9b05a6e18e785042324e463dc9c9a",
+      "cachedRaw": ".cache/x-film-research/2095598645190291775.json"
+    },
+    {
+      "url": "https://x.com/EHuanglu/status/2095742882498158644",
+      "author": "EHuanglu",
+      "publishedAt": "Fri Sep 04 05:16:54 +0000 2026",
+      "articleTitle": null,
+      "retrieval": "FxTwitter API; text read",
+      "retrievedAt": "2026-10-05",
+      "rawSha256": "aeab4634afe5fbd83c9b31420762c0ac56753ec995b6ae3f04315c05dd6843b6",
+      "cachedRaw": ".cache/x-film-research/2095742882498158644.json"
+    },
+    {
+      "url": "https://x.com/npaka123/status/2096367013652476131",
+      "author": "npaka123",
+      "publishedAt": "Sat Sep 05 22:36:59 +0000 2026",
+      "articleTitle": null,
+      "retrieval": "FxTwitter API; text read",
+      "retrievedAt": "2026-10-05",
+      "rawSha256": "cc6aaff532f9368235ded93fbb871081ad6044ed57cb340586ae48094e728f38",
+      "cachedRaw": ".cache/x-film-research/2096367013652476131.json"
+    },
+    {
+      "url": "https://x.com/npaka123/status/2096435985425010837",
+      "author": "npaka123",
+      "publishedAt": "Sun Sep 06 03:11:03 +0000 2026",
+      "articleTitle": null,
+      "retrieval": "FxTwitter API; text read",
+      "retrievedAt": "2026-10-05",
+      "rawSha256": "aab8254cb303b3262c5bffaac927e3324fe7a951fa489ea175dff0899f9e19a7",
+      "cachedRaw": ".cache/x-film-research/2096435985425010837.json"
+    },
+    {
+      "url": "https://x.com/npaka123/status/2096471372235243750",
+      "author": "npaka123",
+      "publishedAt": "Sun Sep 06 05:31:40 +0000 2026",
+      "articleTitle": null,
+      "retrieval": "FxTwitter API; text read",
+      "retrievedAt": "2026-10-05",
+      "rawSha256": "6944f59d911fca4799f2f11b869876b5c18fbcdff0d9e0d8bc3909aaf636f45a",
+      "cachedRaw": ".cache/x-film-research/2096471372235243750.json"
+    },
+    {
+      "url": "https://x.com/npaka123/status/2096500824088465498",
+      "author": "npaka123",
+      "publishedAt": "Sun Sep 06 07:28:42 +0000 2026",
+      "articleTitle": null,
+      "retrieval": "FxTwitter API; text read",
+      "retrievedAt": "2026-10-05",
+      "rawSha256": "b82df00640371f4882bf6feb9bff87464bdaaa269b4b0cda2d34e2f67492cd33",
+      "cachedRaw": ".cache/x-film-research/2096500824088465498.json"
+    },
+    {
+      "url": "https://x.com/npaka123/status/2096501205623328811",
+      "author": "npaka123",
+      "publishedAt": "Sun Sep 06 07:30:13 +0000 2026",
+      "articleTitle": null,
+      "retrieval": "FxTwitter API; text read",
+      "retrievedAt": "2026-10-05",
+      "rawSha256": "fc6642d8b4f565f27c4c56ef5585b15fcefaa189727b9f722b3cd1ea7e595205",
+      "cachedRaw": ".cache/x-film-research/2096501205623328811.json"
+    },
+    {
+      "url": "https://x.com/TJ16th/status/2096871490809643168",
+      "author": "TJ16th",
+      "publishedAt": "Mon Sep 07 08:01:36 +0000 2026",
+      "articleTitle": null,
+      "retrieval": "FxTwitter API; text read",
+      "retrievedAt": "2026-10-05",
+      "rawSha256": "a840b42ea051e5ce9380171d3f39bd6a78eb0244b09b39d3f2b5b09be97f6341",
+      "cachedRaw": ".cache/x-film-research/2096871490809643168.json"
+    },
+    {
+      "url": "https://x.com/leilamakes/status/2098450393277595841",
+      "author": "leilamakes",
+      "publishedAt": "Fri Sep 11 16:35:35 +0000 2026",
+      "articleTitle": null,
+      "retrieval": "FxTwitter API; text read",
+      "retrievedAt": "2026-10-05",
+      "rawSha256": "cc854b9f17bfdcfcae581525cd3b565a8dcbf44c5dd2e45d77e1713adc8d7567",
+      "cachedRaw": ".cache/x-film-research/2098450393277595841.json"
+    },
+    {
+      "url": "https://x.com/Kushal_70/status/2098463865780765003",
+      "author": "Kushal_70",
+      "publishedAt": "Fri Sep 11 17:29:07 +0000 2026",
+      "articleTitle": null,
+      "retrieval": "FxTwitter API; text read",
+      "retrievedAt": "2026-10-05",
+      "rawSha256": "f8c402b09192db2b1dfd8115a50d4b79b15a25f14ad3f9111f4668dc04626fb1",
+      "cachedRaw": ".cache/x-film-research/2098463865780765003.json"
+    },
+    {
+      "url": "https://x.com/shapelayer/status/2098485777298510119",
+      "author": "shapelayer",
+      "publishedAt": "Fri Sep 11 18:56:11 +0000 2026",
+      "articleTitle": null,
+      "retrieval": "FxTwitter API; text read",
+      "retrievedAt": "2026-10-05",
+      "rawSha256": "f32c26e0909a379cb414e1a53400825819db26410d50a0e0b10fc6537d068695",
+      "cachedRaw": ".cache/x-film-research/2098485777298510119.json"
+    },
+    {
+      "url": "https://x.com/noahduck283/status/2100195971284316228",
+      "author": "noahduck283",
+      "publishedAt": "Wed Sep 16 12:11:53 +0000 2026",
+      "articleTitle": "上帝之手Blender丨从入门到榨干",
+      "retrieval": "FxTwitter API; text read",
+      "retrievedAt": "2026-10-05",
+      "rawSha256": "5da9915a2d007228cd1ca6de49235991cbfc00d477a55b05b1ce355d2d9d809e",
+      "cachedRaw": ".cache/x-film-research/2100195971284316228.json"
+    }
+  ],
+  "sampledMedia": [
+    "2100179525384765440",
+    "2100179938649468928",
+    "2098450393277595841",
+    "2096871490809643168"
+  ],
+  "visualReview": "12 extracted frames per listed media; viewed contact sheets",
+  "fullSpeedPlayback": "not-performed",
+  "listening": "not-performed",
+  "repo": {
+    "url": "https://github.com/kangarooking/ai-short-drama-resources",
+    "commit": "80c79670918a56575e6ed623c9bc43bf03dd38e5"
+  }
+}

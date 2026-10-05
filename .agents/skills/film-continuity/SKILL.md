@@ -20,5 +20,13 @@ Preserve editable layers and scene data. Altering a background should not force 
 new narrator; changing a line should not regenerate every image. Invalidate only
 relevant approvals and never silently replace approved artwork.
 
-Current implementation is 2D. Blender is an allowed future local backend, but do
-not install or build a 3D dependency for a 2D task. Pika and Seedance are excluded.
+Ordinary films use the 2D implementation. For explicitly requested 3D work, consult
+`film-3d` and verify the backend exists; do not infer it from a successful probe.
+Blender is allowed; do not install a 3D dependency for a purely 2D task. Pika and
+Seedance are excluded.
+
+Separate reference responsibilities: identity, structure/layout, surface/light,
+performance and camera. Lock the approved attributes during a targeted revision.
+For 3D, use versioned shared assets and record the shot's exit pose, location,
+facing, contact phase and props as the next shot's entry conditions. Stable geometry
+does not alone guarantee matching eye lines, animation phase or lighting.

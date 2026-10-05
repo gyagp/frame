@@ -26,3 +26,9 @@ ceiling around -1.5 dBTP. Re-measure the encoded output.
 Transcribe generated speech back when available, inspect mismatches, and listen
 before claiming human listening QA. Report automated transcription and listening
 as distinct checks. Deliver burned captions plus an editable SRT.
+
+For physical scenes, distinguish near contact sounds, mid-distance activity and
+far ambience. Tie the first audible contact to the visible event, then let the
+response decay. Keep the primary action readable; constant impacts and dense BGM
+do not substitute for weight. Planned woodwind/water/cloth cues are not delivered
+audio until corresponding assets or synthesis exist and the mix has been heard.

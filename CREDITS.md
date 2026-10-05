@@ -9,6 +9,10 @@
 - **Typography**: Inter, Rasmus Andersson and contributors, SIL Open Font License
   1.1. Original source <https://github.com/rsms/inter>. License in `public/fonts/OFL.txt`.
 - **Software**: @napi-rs/canvas and Playwright retain their package licenses.
+- **3D research reference**: bangbuilds / [code-doc-film](https://github.com/bangbuilds/code-doc-film),
+  MIT, copyright 2026 bangbuilds. An isolated feasibility render uses its supplied
+  fleet scene and Three.js (MIT); it is attributed upstream work, not an original
+  Studio film or a production-engine integration. See `research/code-doc-film.md`.
 - **Image generation**: Google Gemini / Nano Banana, using the user's Google API
   account. Generated assets preserve prompt, model and timestamp in sidecars.
 - **Speech**: Azure Speech neural voices, or user-selected installed Microsoft Windows voices.
@@ -22,3 +26,13 @@
   noahduck283. Exact links and what was read are in `research/studio-references.md`.
   These informed original method synthesis; their video platforms, films, character
   designs, commercial template libraries and example code are not bundled.
+- **3D workflow and shot design research**: noahduck283, Leila, npaka, Tom Krcha,
+  Kushal Magar, Leon Fucak / shapelayer, TJ16th and el.cine; see
+  `research/x-filmmaking-3d.md`. User-supplied Muse prompt is a brief reference,
+  not a film we have viewed. Public media were sampled locally for research only.
+- **Action and spatial shot methods**: 袋鼠帝 / kangarooking,
+  <https://x.com/aikangarooking/status/2086449883616342389> and
+  <https://github.com/kangarooking/ai-short-drama-resources>, revision
+  `80c79670918a56575e6ed623c9bc43bf03dd38e5`. Root license: MIT, copyright 2026
+  kangarooking; retained in `research/licenses/kangarooking-MIT.txt`. Rewritten
+  method synthesis only; no third-party courses, films or commercial assets bundled.

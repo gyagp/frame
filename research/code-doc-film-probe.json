@@ -1,0 +1,39 @@
+{
+  "testedAt": "2026-10-05T10:05:34.295Z",
+  "repository": "https://github.com/bangbuilds/code-doc-film",
+  "commit": "d3078a857fbc70f78121ed0f919aa9d15c854e57",
+  "scope": "Reviewed upstream fleet scene and local Three.js renderer only. Not HyperFrames, terrain downloads, speech, music, full pipeline, or Movie Studio integration.",
+  "threeRevision": "181",
+  "width": 1280,
+  "height": 720,
+  "renderer": "ANGLE (Intel, Intel(R) Arc(TM) Graphics (0x00007D55) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "vendor": "Google Inc. (Intel)",
+  "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+  "deterministic": true,
+  "cameraStart": [
+    -60,
+    26,
+    760
+  ],
+  "cameraEnd": [
+    -20.00074074074074,
+    149.9977037037037,
+    899.9974074074074
+  ],
+  "drawCalls": 21,
+  "triangles": 640527,
+  "cameraWarnings": [],
+  "browserErrors": [],
+  "browserWarnings": [],
+  "blockedRequests": [],
+  "captureSeconds": 50.591,
+  "media": {
+    "duration": 6,
+    "codec": "h264",
+    "width": 1280,
+    "height": 720,
+    "frames": "144",
+    "frameRate": "24/1",
+    "audio": false
+  }
+}

@@ -26,3 +26,10 @@ voice clips when continuing; substantive edits invalidate the affected approvals
 
 The studio's `project.json` is the executable timeline. `TREATMENT.md` explains its
 intent; keep both consistent when the direction changes.
+
+When adapting a detailed reference prompt, extract its reusable structure: intended
+look, fixed character traits, palette roles, timed events, visible actions and
+continuity. Keep reference-specific exclusions local to that film. Turn adjectives
+such as cinematic or smooth into planned assets, observable actions and review
+criteria; distinguish desired quality from implemented capability. For 3D, list
+character/rig, environment, camera and render dependencies before promising a shot.

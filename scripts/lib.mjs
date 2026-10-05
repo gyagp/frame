@@ -8,6 +8,7 @@ import { GlobalFonts, createCanvas, loadImage } from "@napi-rs/canvas";
 import { assertProject } from "../src/model.mjs";
 import { paletteFingerprint } from "../src/presets.mjs";
 import { equivalentApproval } from "../src/review-compatibility.mjs";
+import { assertProductionAvailable, requires3D } from "../src/production.mjs";
 export const ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "..",
@@ -79,6 +80,7 @@ export const storySignature = (p) =>
         height: p.height,
         theme: p.theme,
         music: p.music,
+        ...(requires3D(p) ? { production: p.production } : {}),
         scenes: p.scenes.map(
           ({ image, imageAlt, composition, soundCues, ...scene }) => scene,
         ),
@@ -168,6 +170,7 @@ export async function renderContext() {
       ? assertProject(await readJSON(process.argv[snapshot + 1]))
       : await loadProject(id);
   if (p.id !== id) throw new Error("Snapshot project mismatch");
+  assertProductionAvailable(p);
   const out = path.join(ROOT, "outputs", id, hashProject(p));
   await mkdir(out, { recursive: true });
   await writeJSON(path.join(out, "project.json"), p);

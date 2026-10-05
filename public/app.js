@@ -1,4 +1,6 @@
-import { drawFrame } from "/src/film.mjs";
+import { drawFrame as draw2DFrame } from "/src/film.mjs";
+import { productionUnavailable } from "/src/production.mjs";
+import { SHOT_DIRECTION_FIELDS } from "/src/engine/shot-plan.mjs";
 import { reviewTime } from "/src/engine/review.mjs";
 import { workflowView, briefSuggestions } from "/src/workflow.mjs";
 import { mountConnections } from "/settings.js";
@@ -20,6 +22,21 @@ import {
 const $ = (id) => document.getElementById(id),
   canvas = $("preview"),
   ctx = canvas.getContext("2d");
+function drawFrame(context, p, seconds, loaded, captionCues, options) {
+  if (!productionUnavailable(p))
+    return draw2DFrame(context, p, seconds, loaded, captionCues, options);
+  const { width, height } = context.canvas;
+  context.save();
+  context.fillStyle = "#ede6d6";
+  context.fillRect(0, 0, width, height);
+  context.fillStyle = "#335b52";
+  context.textAlign = "center";
+  context.font = `500 ${height * 0.18}px 'Microsoft YaHei', sans-serif`;
+  context.fillText("3D", width / 2, height * 0.46, width * 0.82);
+  context.font = `400 ${height * 0.065}px 'Microsoft YaHei', sans-serif`;
+  context.fillText("分镜文字稿", width / 2, height * 0.62);
+  context.restore();
+}
 mountPresets();
 document
   .querySelector(".project-settings")
@@ -578,7 +595,7 @@ function renderGuidance() {
   $("review-title").textContent = g.title;
   $("review-description").textContent = g.description;
   $("review-next").textContent = g.label;
-  $("review-next").disabled = !!g.busy || actionPending;
+  $("review-next").disabled = !!g.busy || !!g.disabled || actionPending;
   document
     .querySelector(".review-panel")
     .classList.toggle("is-complete", g.phase === "complete" && !g.busy);
@@ -665,7 +682,9 @@ function renderGuidance() {
       if (g.phase === "story" && !s.composition && !s.image) {
         const placeholder = document.createElement("span");
         placeholder.className = "guided-shot-placeholder";
-        placeholder.textContent = "分镜占位 · 美术待制作";
+        placeholder.textContent = productionUnavailable(project)
+          ? "3D 画面待制作"
+          : "分镜占位 · 美术待制作";
         visual.append(placeholder);
       }
       card.append(visual);
@@ -694,13 +713,7 @@ function renderGuidance() {
         const heading = document.createElement("summary");
         heading.textContent = "镜头、运镜与声音";
         details.append(heading);
-        for (const [key, label] of [
-          ["framing", "构图"],
-          ["staging", "镜内节奏"],
-          ["action", "运镜与动作"],
-          ["transitionIntent", "衔接"],
-          ["sound", "声音设计"],
-        ]) {
+        for (const [key, label] of SHOT_DIRECTION_FIELDS) {
           if (!s.direction[key]) continue;
           const line = document.createElement("p");
           const title = document.createElement("strong");
@@ -766,6 +779,7 @@ async function advanceWorkflow() {
     const action = guideState.action;
     if (
       ["plan", "prepare", "approve-story"].includes(action) &&
+      !(action === "approve-story" && productionUnavailable(project)) &&
       !config.director
     ) {
       await openConnections();
@@ -821,7 +835,7 @@ async function advanceWorkflow() {
     }
     if (action === "approve-story") {
       await api(route("approve-story"), "POST", {});
-      await runJob("prepare");
+      if (!productionUnavailable(project)) await runJob("prepare");
     } else if (action === "approve-frames") {
       await api(route("approve-frames"), "POST", {});
       await runJob("sample", { start: sampleStart });

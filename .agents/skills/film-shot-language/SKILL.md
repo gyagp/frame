@@ -17,9 +17,21 @@ screen direction and give the viewer the space needed to understand a change.
 Brief shots cannot carry unlimited actions. For abstract graphics, the actor can be
 a shape, data point or signal. Plan a beginning pose, action and ending pose.
 
-Compile the design through the data-only 2D engine. Prefer actual geometry changes,
+For 2D, compile the design through the data-only 2D engine. Prefer actual geometry changes,
 paths and coordinated layers over a collection of static cards. For exact numerical
 evidence, a held comparison can be the strongest shot.
 
 Methods are informed by [the reference synthesis](../../../research/studio-references.md).
 Do not claim to have reproduced the cited 424 techniques or 463 example videos.
+
+For spatial or character action, extend `scene.direction` with a readable execution
+plan: scale reference, foreground/midground/background, actor direction, contact
+and weight/force response, one dominant camera path, speed changes, environment
+response, sound event and final state. Two to four event phases often suffice;
+choose timing from the action, not a universal quota. Record camera movement,
+subject movement and relative background movement separately. Dolly changes camera
+position; zoom changes focal length. Choose depth of field for what must be read.
+
+Use [the kangarooking digest](../../../research/kangarooking-digest.md) as a method
+reference, not a promise about a particular video model or a requirement to add
+epic action. For 3D execution read `film-3d`; a written motion plan is not animation.

@@ -21,12 +21,16 @@ Read the relevant repository skill under `.agents/skills/`:
 - `film-shot-language`: framing, staging, motion and transition grammar.
 - `film-continuity`: identity, spatial and visual continuity across shots.
 - `film-quality-review`: actual-frame critique and targeted revision.
+- `film-3d`: editable assets, blocking, rigged performance and local 3D production.
 
 Prioritize the reusable studio and engine over any individual film. Ordinary films
 use the data-only 2D composition engine in `src/engine/`. Do not evaluate arbitrary
 LLM-written JavaScript. Nano Banana and Azure Speech are authorized providers;
-Blender and other local engines are permitted for future 3D work. Pika, Seedance and
-similar paid video generation tools are excluded. The current scope is 2D.
+Blender and other local engines are permitted for explicitly requested 3D work.
+Pika, Seedance and similar paid video generation tools are excluded. The existing
+production renderer is 2D; 3D projects must not silently fall back to it. The user
+has requested a 3D Little Pony Crosses the River film under five minutes; verify
+each new backend before describing it as integrated or production-ready.
 
 Keep the guided workspace simple without lowering rendering or production quality.
 Preserve the complete editor behind "精细调整". Each stage should have one clear
