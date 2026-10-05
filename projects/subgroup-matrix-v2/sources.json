@@ -1,0 +1,149 @@
+{
+  "importedAt": "2026-10-05",
+  "sourceDirectory": "D:/workspace/project/skills/gyagp-skills/subgroup-matrix",
+  "verification": "Original files match V1 snapshots byte-for-byte. No benchmarks rerun. Report data are user-supplied measurements, not independent measurements made during film production.",
+  "files": [
+    { "name": "demo.html", "sha256": "bd4c9b6e5145217960f0c8b1101845661c822982cc9eada1bb56b3bbc28f88f8", "measurementDate": "2026-09-21" },
+    { "name": "report.html", "sha256": "d72a485fb95cb8e769260c0c9f2c0e1b63e22b6c887191e60f369b849b8343a8", "reportGenerated": "2026-08-01", "reportUpdated": "2026-08-31", "fourArmMeasurementDate": null, "dateNote": "Exact collection date for the controlled four-arm rerun is not separately stated; never label the report update date as that run's measurement date." }
+  ],
+  "officialChecks": [
+    {
+      "id": "microsoft-preview",
+      "url": "https://devblogs.microsoft.com/directx/directx12agility/",
+      "retrieved": "2026-10-05",
+      "method": "HTTPS GET; read release table text",
+      "sha256": "e6466358c4a98e777d94260a8ef81dc3f8fa7ed2d38f9766c66a9a2d8f52734e",
+      "evidence": "Latest Preview Agility SDK: 1.721.3-preview, 7/30/2026. Other features in 721: LinAlg VectorAccumulate; Addition to existing LinAlg support in SM 6.10 preview.",
+      "interpretation": "Supports current preview wording as of retrieval, not a promise about all future releases. This is not the first-ever DirectX matrix experiment."
+    },
+    {
+      "id": "hlsl-proposal",
+      "url": "https://github.com/microsoft/hlsl-specs/blob/main/proposals/0035-linalg-matrix.md",
+      "retrieved": "2026-10-05",
+      "method": "GitHub raw HTTPS GET; read header and introduction",
+      "evidence": "Title: 0035 - Linear Algebra Matrix; status: Accepted; Planned Version: SM 6.10. Introduction describes the former SM 6.8 Wave Matrix experiment.",
+      "interpretation": "Accepted proposal status does not mean a generally available SDK release."
+    },
+    {
+      "id": "dawn-design",
+      "url": "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/subgroup_matrix.md",
+      "retrieved": "2026-10-05",
+      "method": "Gitiles base64 document GET; read background and target API support",
+      "evidence": "Large matrix-multiply operations can be decomposed into many matrix multiplies over small sub-blocks. Metal support since MSL 2.3; earlier HLSL WaveMatrices experimental feature later withdrawn.",
+      "caveat": "Document also contains stale D3D no-support wording. For current Dawn implementation status use specific merged CLs, not that stale line. Feature is experimental, not universal standard WebGPU availability."
+    },
+    {
+      "id": "vulkan",
+      "url": "https://registry.khronos.org/vulkan/specs/latest/man/html/VK_KHR_cooperative_matrix.html",
+      "retrieved": "2026-10-05",
+      "sha256": "5dec6a3851f0d2f8c1f711818968ca4e037055dac0417e1cf42856beb7b938b1",
+      "method": "HTTPS GET; extension reference",
+      "evidence": "Official cooperative-matrix extension exists; supported shapes and types depend on the implementation."
+    },
+    {
+      "id": "metal",
+      "url": "https://developer.apple.com/metal/Metal-Shading-Language-Specification.pdf",
+      "retrieved": "2026-10-05",
+      "sha256": "41538b30d2f1140a5b2a0c84ce0a9f7b67bf0c707e224cfea0bfe5a44aa26cf5",
+      "method": "Official PDF retrieved; historical statement cross-checked in Dawn target-API documentation",
+      "caveat": "Do not repeat demo's earliest A13/2019 hardware date; feature-set boundaries differ. Screenplay intentionally makes no earliest Apple-generation claim."
+    },
+    {
+      "id": "nvidia",
+      "url": "https://www.nvidia.com/en-us/data-center/volta-gpu-architecture/",
+      "retrieved": "2026-10-05",
+      "sha256": "46009a4b8d4bf9ff0bbfacc19c85f9b71ef658b6075e5679c951119dad366891",
+      "method": "Official page retrieved; hardware history also in supplied demo"
+    },
+    {
+      "id": "amd",
+      "url": "https://gpuopen.com/learn/wmma_on_rdna3/",
+      "retrieved": "2026-10-05",
+      "sha256": "f9fcd11c4489984c3b3b4fea5473e744caf2b07020f0b5cc50b6560147f7aaa9",
+      "method": "Official page retrieved; hardware history also in supplied demo"
+    },
+    {
+      "id": "intel",
+      "url": "https://www.intel.com/content/www/us/en/architecture-and-technology/visual-technology/arc-discrete-graphics/xe-hpg-microarchitecture/overview.html",
+      "attempted": "2026-10-05",
+      "access": "HTTP 403",
+      "fallback": "User-supplied demo hardware table. No claim of independent retrieval or confirmation of this page."
+    }
+  ],
+  "dawnContributions": {
+    "checkedAt": "2026-10-05",
+    "method": "Gerrit REST GET https://dawn-review.googlesource.com/changes/<CL>/detail; status, owner, subject and submitted fields",
+    "changes": [
+      { "cl": 330695, "status": "MERGED", "owner": "Yang Gu", "submittedUTC": "2026-08-08 02:36:20", "subject": "[spirv] Gate NonPrivatePointer on cooperative matrix loads" },
+      { "cl": 331295, "status": "MERGED", "owner": "Yang Gu", "submittedUTC": "2026-08-17 18:03:46", "subject": "[d3d12] release Agility SDK interfaces before DLL teardown" },
+      { "cl": 333935, "status": "MERGED", "owner": "Yang Gu", "submittedUTC": "2026-08-20 15:19:17", "subject": "[dawn] Validate subgroup matrix against explicit subgroup size" },
+      { "cl": 335215, "status": "MERGED", "owner": "Yang Gu", "submittedUTC": "2026-08-25 16:00:08", "subject": "d3d12: Honor LinAlg multiplication support flags" },
+      { "cl": 335895, "status": "MERGED", "owner": "Yang Gu", "submittedUTC": "2026-08-27 15:43:41", "subject": "d3d12: Validate subgroup matrix configurations in HLSL" }
+    ],
+    "relatedDependency": { "cl": 326715, "status": "MERGED", "owner": "Shao, Jiawei", "submittedUTC": "2026-07-24 00:55:45", "subject": "D3D12: Support Agility SDK in CMake build", "credit": "Dependency only; not counted as one of our five contributions" }
+  },
+  "measurements": {
+    "native": {
+      "source": "assets/demo.html, JS bench table and measurement contract",
+      "gpu": "AMD Radeon RX 9070 XT",
+      "backend": "native D3D12",
+      "workload": "MLP up",
+      "shapeOrder": "M,K,N",
+      "shape": [512, 8192, 3072],
+      "precision": "f16 x f16 -> f32",
+      "baseline": "FP16 FMA",
+      "baselineTflops": 12.41,
+      "matrixTflops": 51.27,
+      "publishedSpeedup": 4.13,
+      "measurementDate": "2026-09-21",
+      "boundary": "GPU dispatch-only timestamps, same shapes and inputs, CPU correctness check, warmup + 30 measured samples",
+      "driver": "26.10.07.02 preview",
+      "agility": "1.721.3.0",
+      "dxc": "1.10.2605.24 preview",
+      "shaderModel": "6.10",
+      "os": "Windows 11",
+      "notClaimed": "4.13x full-model speedup; live execution during film playback; new measurements"
+    },
+    "ort": {
+      "source": "assets/report.html#ort-backend-comparison; controlled four-arm rerun table, D3D12 pair only",
+      "gpu": "AMD Radeon RX 7900 XTX",
+      "backend": "D3D12; experimental ORT WebGPU EP / Dawn build",
+      "model": "Phi-4-mini-instruct",
+      "weightPrecision": "INT4; subgroup path dequantizes before f16 matrix arithmetic",
+      "inputTokens": 512,
+      "generatedTokens": 128,
+      "graphCapture": true,
+      "baseline": "DP4AMatMulNBits",
+      "matrixPath": "SubgroupMatrixMatMulNBits",
+      "prefillDispatchesPerArm": 160,
+      "baselinePrefillTokensPerSecond": 2781,
+      "matrixPrefillTokensPerSecond": 5056,
+      "publishedPrefillSpeedup": 1.82,
+      "baselineDecodeTokensPerSecond": 136,
+      "matrixDecodeTokensPerSecond": 137,
+      "baselineEndToEndMs": 1116,
+      "matrixEndToEndMs": 1025,
+      "endToEndDurationReductionPercent": 8.1541,
+      "shortPrompt": { "inputTokens": 128, "baselinePrefillTokensPerSecond": 2470, "matrixPrefillTokensPerSecond": 2302, "publishedPrefillSpeedup": 0.93 },
+      "reportUpdated": "2026-08-31",
+      "measurementDate": null,
+      "dateNote": "Exact acquisition day not separately specified. Screen shows report snapshot date.",
+      "protocol": "Report Section 5: median of three process launches, 3 reps after 1 warmup, graph capture enabled, 128 generated tokens; later controlled four-arm rerun reports <=3.1% largest prefill spread, one binary with runtime switch and verified kernel identities.",
+      "environment": "RX 7900 XTX, Ryzen 9 9950X, 62 GB RAM, Windows 11 Enterprise 10.0.26200; AMD package 26.10.07.02, Agility 1.721.3.0, DXC 1.10.2605.24 (report configuration).",
+      "notClaimed": "82% full-generation speedup; official ORT release support; same GPU or baseline as native result; uniform gains across prompt sizes"
+    }
+  },
+  "claims": [
+    { "id": "C01", "claim": "On-device inference benefits from efficient matrix multiplication, especially transformer prefill.", "sources": ["dawn-design", "assets/report.html#index-5-ort-performance"], "limit": "Do not say all inference is compute-bound; decode often has different constraints." },
+    { "id": "C02", "claim": "C' = A x B + C; a subgroup cooperates on distributed matrix fragments.", "sources": ["dawn-design", "assets/demo.html"], "limit": "Illustration grid sizes are not hardware capability claims." },
+    { "id": "C03", "claim": "NVIDIA, AMD, Intel and Apple GPU families have matrix-acceleration paths.", "sources": ["assets/demo.html hardware table", "nvidia", "amd", "dawn-design"], "limit": "Not every GPU, datatype or API configuration; no common launch date and no earliest Apple generation asserted. Intel official page returned 403." },
+    { "id": "C04", "claim": "Vulkan cooperative matrices are exposed via extensions.", "sources": ["vulkan", "dawn-design"] },
+    { "id": "C05", "claim": "Metal exposes SIMD-group matrices.", "sources": ["metal", "dawn-design"] },
+    { "id": "C06", "claim": "D3D12 LinAlg SM6.10 is preview as checked on 2026-10-05; DirectX had an earlier withdrawn matrix experiment.", "sources": ["microsoft-preview", "hlsl-proposal", "dawn-design"], "limit": "No invented first release date or assertion that DirectX never had matrix work before LinAlg." },
+    { "id": "C07", "claim": "Our five specified Dawn fixes are merged upstream.", "sources": ["dawnContributions", "assets/report.html#index-8-history"], "limit": "Exclude CL326715 from our count. Dawn feature remains experimental; not universal WebGPU availability." },
+    { "id": "C08", "claim": "Our experimental ORT integration adds subgroup-size control, AMD configuration work and a controlled A/B switch; upstreaming remains work in the report.", "sources": ["assets/report.html#index-7-follow-up-work", "assets/report.html#ort-backend-comparison"], "limit": "Report snapshot; no new ORT mainline audit and no claim the patches have merged." },
+    { "id": "C09", "claim": "Native RX9070XT MLP-up 12.41 -> 51.27 TFLOP/s (4.13x).", "sources": ["measurements.native"] },
+    { "id": "C10", "claim": "ORT RX7900XTX D3D12 512-token prefill 2781 -> 5056 tok/s (+82%).", "sources": ["measurements.ort"], "limit": "Do not mix with earlier report values 2825 -> 5141 or the Vulkan paired run 3005 -> 5058." },
+    { "id": "C11", "claim": "Same rerun: full generation 1116 -> 1025ms (~8% shorter), decode nearly unchanged; 128-token prompt prefill regresses to 0.93x.", "sources": ["measurements.ort"], "limit": "128 input tokens in the regression is distinct from 128 generated tokens in the full-run setup." }
+  ]
+}

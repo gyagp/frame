@@ -1,0 +1,16 @@
+{
+  "importedAt": "2026-10-04",
+  "sourceDirectory": "D:\\workspace\\project\\skills\\gyagp-skills\\subgroup-matrix",
+  "files": [
+    {
+      "name": "demo.html",
+      "sha256": "bd4c9b6e5145217960f0c8b1101845661c822982cc9eada1bb56b3bbc28f88f8"
+    },
+    {
+      "name": "report.html",
+      "sha256": "d72a485fb95cb8e769260c0c9f2c0e1b63e22b6c887191e60f369b849b8343a8"
+    }
+  ],
+  "measurementDate": "2026-09-21",
+  "verification": "Values transcribed from user-supplied demo; benchmarks were not re-run."
+}

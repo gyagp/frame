@@ -1,0 +1,1353 @@
+{
+  "schemaVersion": 1,
+  "id": "subgroup-matrix",
+  "title": "Subgroup Matrix",
+  "idea": "Explain cooperative matrix execution and replay the supplied GPU evaluation for international developers.",
+  "language": "en",
+  "template": "explainer",
+  "theme": "midnight",
+  "voice": "Azure en-US-AndrewMultilingualNeural",
+  "music": true,
+  "fps": 24,
+  "width": 1920,
+  "height": 1080,
+  "status": "draft",
+  "createdAt": "2026-10-04T13:00:00Z",
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "title",
+      "duration": 12,
+      "title": "One subgroup.\nA different engine.",
+      "eyebrow": "SUBGROUP MATRIX / A DEVELOPER FILM",
+      "body": "From lane-level arithmetic to cooperative matrix operations.",
+      "narration": "What changes when a subgroup can use matrix hardware? The math stays the same. The way the GPU executes it changes.",
+      "note": "September 2026 evaluation snapshot",
+      "camera": "push",
+      "image": "assets/frame-54f7a80a-fd6d-4a2e-8182-1b67af256c66.jpg",
+      "composition": {
+        "version": 1,
+        "background": "#0b1118",
+        "transition": "none",
+        "camera": {
+          "x": 0.5,
+          "y": 0.5,
+          "zoom": 1,
+          "tracks": [
+            {
+              "property": "zoom",
+              "keys": [
+                {
+                  "t": 0,
+                  "value": 1,
+                  "ease": "easeInOut"
+                },
+                {
+                  "t": 12,
+                  "value": 1.07,
+                  "ease": "linear"
+                }
+              ]
+            },
+            {
+              "property": "x",
+              "keys": [
+                {
+                  "t": 0,
+                  "value": 0.5,
+                  "ease": "easeInOut"
+                },
+                {
+                  "t": 12,
+                  "value": 0.52,
+                  "ease": "linear"
+                }
+              ]
+            }
+          ]
+        },
+        "layers": [
+          {
+            "id": "bg_img",
+            "type": "image",
+            "asset": "assets/frame-54f7a80a-fd6d-4a2e-8182-1b67af256c66.jpg",
+            "fit": "cover",
+            "x": 0.5,
+            "y": 0.5,
+            "w": 1,
+            "h": 1,
+            "opacity": 0.22,
+            "rotation": 0,
+            "scale": 1.05,
+            "tracks": [
+              {
+                "property": "scale",
+                "keys": [
+                  {
+                    "t": 0,
+                    "value": 1.05,
+                    "ease": "linear"
+                  },
+                  {
+                    "t": 12,
+                    "value": 1,
+                    "ease": "linear"
+                  }
+                ]
+              },
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 0,
+                    "value": 0,
+                    "ease": "easeOut"
+                  },
+                  {
+                    "t": 2,
+                    "value": 0.24,
+                    "ease": "linear"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "grid_ambient",
+            "type": "particles",
+            "count": 36,
+            "seed": 9070,
+            "size": 0.002,
+            "x": 0.5,
+            "y": 0.45,
+            "w": 0.9,
+            "h": 0.7,
+            "fill": "#78cbd8",
+            "stroke": "#78cbd8",
+            "opacity": 0.35,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 0,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 2.5,
+                    "value": 0.4,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "math_core_glow",
+            "type": "ellipse",
+            "x": 0.72,
+            "y": 0.46,
+            "w": 0.36,
+            "h": 0.36,
+            "fill": "#bcf574",
+            "stroke": "#bcf574",
+            "opacity": 0.07,
+            "rotation": 0,
+            "scale": 0.9,
+            "tracks": [
+              {
+                "property": "scale",
+                "keys": [
+                  {
+                    "t": 1,
+                    "value": 0.85,
+                    "ease": "easeInOut"
+                  },
+                  {
+                    "t": 6,
+                    "value": 1.15,
+                    "ease": "easeInOut"
+                  },
+                  {
+                    "t": 12,
+                    "value": 0.95,
+                    "ease": "easeInOut"
+                  }
+                ]
+              },
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 0,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 2,
+                    "value": 0.08,
+                    "ease": "linear"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "matrix_bracket_l",
+            "type": "line",
+            "x": 0.58,
+            "y": 0.45,
+            "w": 0.04,
+            "h": 0.28,
+            "stroke": "#78cbd8",
+            "opacity": 0.6,
+            "rotation": 0,
+            "scale": 1,
+            "points": [
+              [
+                -0.015,
+                -0.14
+              ],
+              [
+                -0.02,
+                -0.14
+              ],
+              [
+                -0.02,
+                0.14
+              ],
+              [
+                -0.015,
+                0.14
+              ]
+            ],
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 1.5,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 2.8,
+                    "value": 0.75,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "matrix_bracket_r",
+            "type": "line",
+            "x": 0.86,
+            "y": 0.45,
+            "w": 0.04,
+            "h": 0.28,
+            "stroke": "#78cbd8",
+            "opacity": 0.6,
+            "rotation": 0,
+            "scale": 1,
+            "points": [
+              [
+                0.015,
+                -0.14
+              ],
+              [
+                0.02,
+                -0.14
+              ],
+              [
+                0.02,
+                0.14
+              ],
+              [
+                0.015,
+                0.14
+              ]
+            ],
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 1.5,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 2.8,
+                    "value": 0.75,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "math_formula_label",
+            "type": "text",
+            "text": "C' = A × B + C",
+            "fontSize": 0.055,
+            "weight": 700,
+            "align": "center",
+            "x": 0.72,
+            "y": 0.45,
+            "w": 0.32,
+            "h": 0.08,
+            "fill": "#bcf574",
+            "stroke": "#bcf574",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 0.92,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 1.8,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 3,
+                    "value": 1,
+                    "ease": "easeOut"
+                  }
+                ]
+              },
+              {
+                "property": "scale",
+                "keys": [
+                  {
+                    "t": 1.8,
+                    "value": 0.88,
+                    "ease": "easeOut"
+                  },
+                  {
+                    "t": 3.2,
+                    "value": 1,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "math_sub_label",
+            "type": "text",
+            "text": "COOPERATIVE MMA TILE EXECUTION",
+            "fontSize": 0.018,
+            "weight": 600,
+            "align": "center",
+            "x": 0.72,
+            "y": 0.53,
+            "w": 0.35,
+            "h": 0.04,
+            "fill": "#a4b5bd",
+            "stroke": "#a4b5bd",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 2.5,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 3.8,
+                    "value": 0.85,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "perf_indicator_box",
+            "type": "rect",
+            "radius": 0.008,
+            "x": 0.72,
+            "y": 0.64,
+            "w": 0.34,
+            "h": 0.08,
+            "fill": "#131e29",
+            "stroke": "#78cbd8",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 0.96,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 4,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 5.2,
+                    "value": 0.9,
+                    "ease": "easeOut"
+                  }
+                ]
+              },
+              {
+                "property": "scale",
+                "keys": [
+                  {
+                    "t": 4,
+                    "value": 0.95,
+                    "ease": "easeOut"
+                  },
+                  {
+                    "t": 5.2,
+                    "value": 1,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "perf_indicator_val",
+            "type": "text",
+            "text": "3.74x SPEEDUP  ·  48.97 TFLOP/s",
+            "fontSize": 0.022,
+            "weight": 700,
+            "align": "center",
+            "x": 0.72,
+            "y": 0.64,
+            "w": 0.33,
+            "h": 0.05,
+            "fill": "#f0f4ee",
+            "stroke": "#f0f4ee",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 4.6,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 5.6,
+                    "value": 1,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "eyebrow_txt",
+            "type": "text",
+            "text": "SUBGROUP MATRIX / A DEVELOPER FILM",
+            "fontSize": 0.021,
+            "weight": 600,
+            "align": "left",
+            "x": 0.29,
+            "y": 0.31,
+            "w": 0.44,
+            "h": 0.04,
+            "fill": "#78cbd8",
+            "stroke": "#78cbd8",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 0.4,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 1.4,
+                    "value": 1,
+                    "ease": "easeOut"
+                  }
+                ]
+              },
+              {
+                "property": "x",
+                "keys": [
+                  {
+                    "t": 0.4,
+                    "value": 0.27,
+                    "ease": "easeOut"
+                  },
+                  {
+                    "t": 1.6,
+                    "value": 0.29,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "title_txt",
+            "type": "text",
+            "text": "One subgroup.\nA different engine.",
+            "fontSize": 0.068,
+            "weight": 700,
+            "align": "left",
+            "x": 0.29,
+            "y": 0.44,
+            "w": 0.45,
+            "h": 0.18,
+            "fill": "#f0f4ee",
+            "stroke": "#f0f4ee",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 0.7,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 2,
+                    "value": 1,
+                    "ease": "easeOut"
+                  }
+                ]
+              },
+              {
+                "property": "y",
+                "keys": [
+                  {
+                    "t": 0.7,
+                    "value": 0.47,
+                    "ease": "easeOut"
+                  },
+                  {
+                    "t": 2,
+                    "value": 0.44,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "body_txt",
+            "type": "text",
+            "text": "From lane-level arithmetic to cooperative matrix operations.",
+            "fontSize": 0.024,
+            "weight": 400,
+            "align": "left",
+            "x": 0.29,
+            "y": 0.58,
+            "w": 0.42,
+            "h": 0.06,
+            "fill": "#a4b5bd",
+            "stroke": "#a4b5bd",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 2,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 3.2,
+                    "value": 0.95,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "foot_note",
+            "type": "text",
+            "text": "September 2026 evaluation snapshot · RX 9070 XT",
+            "fontSize": 0.018,
+            "weight": 400,
+            "align": "left",
+            "x": 0.29,
+            "y": 0.65,
+            "w": 0.42,
+            "h": 0.04,
+            "fill": "#a4b5bd",
+            "stroke": "#a4b5bd",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 3.5,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 4.5,
+                    "value": 0.65,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "soundCues": [
+          {
+            "t": 0.5,
+            "type": "whoosh",
+            "gain": 0.03
+          },
+          {
+            "t": 1.8,
+            "type": "impact",
+            "gain": 0.04
+          },
+          {
+            "t": 4.5,
+            "type": "tick",
+            "gain": 0.025
+          }
+        ]
+      },
+      "soundCues": []
+    },
+    {
+      "id": "math",
+      "kind": "matrix",
+      "duration": 16,
+      "title": "The same mathematical contract.",
+      "eyebrow": "01 / START WITH THE MATH",
+      "body": "C′ = A × B + C",
+      "narration": "Start with matrix multiply and accumulate. A has M rows and K columns. B has K rows and N columns. Each output adds a dot product to C. In this small example, the first result is fifty-nine.",
+      "note": "Illustrative 2×3 and 3×2 matrices; not an advertised hardware tile",
+      "camera": "locked"
+    },
+    {
+      "id": "lanes",
+      "kind": "lanes",
+      "duration": 18,
+      "title": "From individual work\nto one cooperative operation.",
+      "eyebrow": "02 / CHANGE THE EXECUTION PATH",
+      "body": "A subgroup is a hardware-sized team of lanes: a warp or wave.",
+      "narration": "On the F M A path, lanes execute multiply-add instructions to build an output tile. With subgroup matrix operations, the lanes cooperate on matrix fragments and use matrix multiply hardware. The result is distributed across the subgroup.",
+      "note": "Conceptual animation. Lane count and fragment layout are implementation-dependent.",
+      "camera": "reveal"
+    },
+    {
+      "id": "bridge",
+      "kind": "pipeline",
+      "duration": 18,
+      "title": "One surface. Three native paths.",
+      "eyebrow": "03 / THROUGH DAWN AND TINT",
+      "body": "Validate capabilities first. Lower to the native backend.",
+      "narration": "Dawn exposes an experimental Web G P U surface. Tint lowers the shader to Vulkan cooperative matrices, Metal SIMD-group operations, or D three D twelve wave matrices. The adapter must advertise the exact configuration. Hardware branding alone is not enough.",
+      "note": "Source snapshot: D3D12 SM 6.10 LinAlg uses a preview runtime.",
+      "camera": "pull"
+    },
+    {
+      "id": "contract",
+      "kind": "checklist",
+      "duration": 16,
+      "title": "Make the comparison fair.",
+      "eyebrow": "04 / THE MEASUREMENT CONTRACT",
+      "body": "Radeon RX 9070 XT · Windows · D3D12",
+      "narration": "The supplied evaluation compares matched workloads on a Radeon R X ninety seventy X T. Inputs and shapes match. Results are checked against a CPU reference. GPU timestamps measure dispatch only, after warmup, with thirty measured samples.",
+      "note": "f16 × f16 → f32 · preview driver 26.10.07.02 · historical measurements",
+      "items": [
+        "Same shapes and input data",
+        "CPU reference validation",
+        "Dispatch-only GPU timestamps",
+        "Warmup + 30 measured samples"
+      ],
+      "camera": "locked"
+    },
+    {
+      "id": "prefill",
+      "kind": "benchmark",
+      "duration": 18,
+      "title": "Prefill 2048. A clear difference.",
+      "eyebrow": "05 / REPLAY THE RECORDED RESULT",
+      "body": "2048 × 3072 × 3072 · FP16 FMA baseline",
+      "narration": "For the prefill twenty forty-eight workload, the recorded F M A result is thirteen point zero nine teraflops. LinAlg reaches forty-eight point nine seven. That is a three point seven four times gain in this matched test. This is a replay of recorded data.",
+      "note": "Measured 21 Sep 2026 · RX 9070 XT · D3D12 · not a live benchmark",
+      "baseline": 13.09,
+      "result": 48.97,
+      "camera": "locked"
+    },
+    {
+      "id": "demo",
+      "kind": "demo",
+      "duration": 20,
+      "title": "Explore the original demo.",
+      "eyebrow": "06 / THE SOURCE, ON SCREEN",
+      "body": "Choose a workload. Replay its measured comparison.",
+      "narration": "The original demo lets you switch workloads and replay the comparison. Across its five D three D twelve cases, recorded speedups range from two point seven zero to four point one three times. These are workload-specific results, not a promise for every model or every GPU.",
+      "note": "Captured from the supplied demo.html · recorded results, not live execution",
+      "image": "assets/demo-prefill.png",
+      "imageAlt": "assets/demo-mlp.png",
+      "camera": "track"
+    },
+    {
+      "id": "limits",
+      "kind": "compare",
+      "duration": 14,
+      "title": "Keep the baseline in the frame.",
+      "eyebrow": "07 / INTERPRET THE RESULT",
+      "body": "A speedup belongs to a workload, a device, and a baseline.",
+      "narration": "Vulkan uses an integer eight D P four A baseline. D three D twelve uses F P sixteen F M A. These results cannot rank APIs. One Vulkan case is slower.",
+      "note": "RTX 5080 · Vulkan · Prefill 128: 0.89× vs INT8 DP4A",
+      "camera": "locked"
+    },
+    {
+      "id": "engineering",
+      "kind": "checklist",
+      "duration": 10,
+      "title": "A usable path needs engineering.",
+      "eyebrow": "08 / FROM FEATURE TO WORKING STACK",
+      "body": "Capabilities → correctness → measurement",
+      "narration": "Six Dawn changes fix setup, matrix loads, resource lifetime, and capability checks. Together, they enable the path.",
+      "note": "Dawn CLs 326715 · 330695 · 331295 · 333935 · 335215 · 335895",
+      "items": [
+        "Build and resource lifetime",
+        "Cooperative matrix loads",
+        "Exact capability validation"
+      ],
+      "camera": "reveal"
+    },
+    {
+      "id": "closing",
+      "kind": "closing",
+      "duration": 8,
+      "title": "Same math.\nBetter matched execution.",
+      "eyebrow": "SUBGROUP MATRIX",
+      "body": "Probe the adapter. Validate the output. Measure your workload.",
+      "narration": "Same math. A different engine. Probe the adapter, validate the output, and measure your workload.",
+      "note": "Source: gyagp-skills/subgroup-matrix · demo.html + report.html",
+      "camera": "pull",
+      "image": "assets/frame-54f7a80a-fd6d-4a2e-8182-1b67af256c66.jpg",
+      "composition": {
+        "version": 1,
+        "background": "#0b1118",
+        "transition": "wipe",
+        "camera": {
+          "x": 0.5,
+          "y": 0.5,
+          "zoom": 1.04,
+          "tracks": [
+            {
+              "property": "zoom",
+              "keys": [
+                {
+                  "t": 0,
+                  "value": 1.04,
+                  "ease": "easeInOut"
+                },
+                {
+                  "t": 8,
+                  "value": 0.98,
+                  "ease": "linear"
+                }
+              ]
+            }
+          ]
+        },
+        "layers": [
+          {
+            "id": "bg_img_close",
+            "type": "image",
+            "asset": "assets/frame-54f7a80a-fd6d-4a2e-8182-1b67af256c66.jpg",
+            "fit": "cover",
+            "x": 0.5,
+            "y": 0.5,
+            "w": 1,
+            "h": 1,
+            "opacity": 0.16,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 0,
+                    "value": 0.16,
+                    "ease": "linear"
+                  },
+                  {
+                    "t": 7,
+                    "value": 0.08,
+                    "ease": "linear"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "card_left",
+            "type": "rect",
+            "radius": 0.012,
+            "x": 0.31,
+            "y": 0.46,
+            "w": 0.28,
+            "h": 0.32,
+            "fill": "#131e29",
+            "stroke": "#78cbd8",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 0.95,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 0.8,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 1.8,
+                    "value": 0.85,
+                    "ease": "easeOut"
+                  }
+                ]
+              },
+              {
+                "property": "scale",
+                "keys": [
+                  {
+                    "t": 0.8,
+                    "value": 0.93,
+                    "ease": "easeOut"
+                  },
+                  {
+                    "t": 2,
+                    "value": 1,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "card_right",
+            "type": "rect",
+            "radius": 0.012,
+            "x": 0.69,
+            "y": 0.46,
+            "w": 0.28,
+            "h": 0.32,
+            "fill": "#131e29",
+            "stroke": "#bcf574",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 0.95,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 1.2,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 2.2,
+                    "value": 0.92,
+                    "ease": "easeOut"
+                  }
+                ]
+              },
+              {
+                "property": "scale",
+                "keys": [
+                  {
+                    "t": 1.2,
+                    "value": 0.93,
+                    "ease": "easeOut"
+                  },
+                  {
+                    "t": 2.4,
+                    "value": 1,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "card_l_tag",
+            "type": "text",
+            "text": "BASELINE SIMD",
+            "fontSize": 0.018,
+            "weight": 600,
+            "align": "center",
+            "x": 0.31,
+            "y": 0.36,
+            "w": 0.24,
+            "h": 0.03,
+            "fill": "#a4b5bd",
+            "stroke": "#a4b5bd",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 1.4,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 2.2,
+                    "value": 0.9,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "card_l_num",
+            "type": "text",
+            "text": "13.09",
+            "fontSize": 0.062,
+            "weight": 700,
+            "align": "center",
+            "x": 0.31,
+            "y": 0.45,
+            "w": 0.24,
+            "h": 0.08,
+            "fill": "#78cbd8",
+            "stroke": "#78cbd8",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 1.6,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 2.5,
+                    "value": 1,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "card_l_unit",
+            "type": "text",
+            "text": "TFLOP/s (Vulkan / D3D12)",
+            "fontSize": 0.017,
+            "weight": 400,
+            "align": "center",
+            "x": 0.31,
+            "y": 0.53,
+            "w": 0.24,
+            "h": 0.04,
+            "fill": "#a4b5bd",
+            "stroke": "#a4b5bd",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 1.8,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 2.7,
+                    "value": 0.8,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "card_r_tag",
+            "type": "text",
+            "text": "SUBGROUP MATRIX",
+            "fontSize": 0.018,
+            "weight": 600,
+            "align": "center",
+            "x": 0.69,
+            "y": 0.36,
+            "w": 0.24,
+            "h": 0.03,
+            "fill": "#bcf574",
+            "stroke": "#bcf574",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 1.8,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 2.6,
+                    "value": 1,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "card_r_num",
+            "type": "text",
+            "text": "48.97",
+            "fontSize": 0.062,
+            "weight": 700,
+            "align": "center",
+            "x": 0.69,
+            "y": 0.45,
+            "w": 0.24,
+            "h": 0.08,
+            "fill": "#bcf574",
+            "stroke": "#bcf574",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 2,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 2.9,
+                    "value": 1,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "card_r_unit",
+            "type": "text",
+            "text": "TFLOP/s (3.74x Matched Peak)",
+            "fontSize": 0.017,
+            "weight": 600,
+            "align": "center",
+            "x": 0.69,
+            "y": 0.53,
+            "w": 0.24,
+            "h": 0.04,
+            "fill": "#f0f4ee",
+            "stroke": "#f0f4ee",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 2.2,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 3,
+                    "value": 0.9,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "center_connector",
+            "type": "line",
+            "x": 0.5,
+            "y": 0.46,
+            "w": 0.08,
+            "h": 0.01,
+            "stroke": "#a4b5bd",
+            "opacity": 0.4,
+            "rotation": 0,
+            "scale": 1,
+            "points": [
+              [
+                -0.04,
+                0
+              ],
+              [
+                0.04,
+                0
+              ]
+            ],
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 2.2,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 3.2,
+                    "value": 0.6,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "cl_eyebrow",
+            "type": "text",
+            "text": "SUBGROUP MATRIX",
+            "fontSize": 0.02,
+            "weight": 600,
+            "align": "center",
+            "x": 0.5,
+            "y": 0.15,
+            "w": 0.6,
+            "h": 0.03,
+            "fill": "#78cbd8",
+            "stroke": "#78cbd8",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 0.3,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 1.2,
+                    "value": 1,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "cl_title",
+            "type": "text",
+            "text": "Same math.\nBetter matched execution.",
+            "fontSize": 0.052,
+            "weight": 700,
+            "align": "center",
+            "x": 0.5,
+            "y": 0.22,
+            "w": 0.7,
+            "h": 0.12,
+            "fill": "#f0f4ee",
+            "stroke": "#f0f4ee",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 0.6,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 1.6,
+                    "value": 1,
+                    "ease": "easeOut"
+                  }
+                ]
+              },
+              {
+                "property": "y",
+                "keys": [
+                  {
+                    "t": 0.6,
+                    "value": 0.24,
+                    "ease": "easeOut"
+                  },
+                  {
+                    "t": 1.6,
+                    "value": 0.22,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "cl_body",
+            "type": "text",
+            "text": "Probe the adapter. Validate the output. Measure your workload.",
+            "fontSize": 0.023,
+            "weight": 500,
+            "align": "center",
+            "x": 0.5,
+            "y": 0.68,
+            "w": 0.75,
+            "h": 0.05,
+            "fill": "#f0f4ee",
+            "stroke": "#f0f4ee",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 3,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 4.2,
+                    "value": 0.95,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "cl_note",
+            "type": "text",
+            "text": "Source: gyagp-skills/subgroup-matrix · demo.html + report.html · 21 September 2026",
+            "fontSize": 0.017,
+            "weight": 400,
+            "align": "center",
+            "x": 0.5,
+            "y": 0.75,
+            "w": 0.8,
+            "h": 0.04,
+            "fill": "#a4b5bd",
+            "stroke": "#a4b5bd",
+            "opacity": 0,
+            "rotation": 0,
+            "scale": 1,
+            "tracks": [
+              {
+                "property": "opacity",
+                "keys": [
+                  {
+                    "t": 3.8,
+                    "value": 0,
+                    "ease": "easeIn"
+                  },
+                  {
+                    "t": 5,
+                    "value": 0.6,
+                    "ease": "easeOut"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "soundCues": [
+          {
+            "t": 0.8,
+            "type": "whoosh",
+            "gain": 0.03
+          },
+          {
+            "t": 2.2,
+            "type": "impact",
+            "gain": 0.035
+          },
+          {
+            "t": 4.2,
+            "type": "chime",
+            "gain": 0.03
+          }
+        ]
+      },
+      "soundCues": []
+    }
+  ],
+  "sources": [
+    {
+      "label": "Original interactive demo",
+      "url": "assets/demo.html"
+    },
+    {
+      "label": "Detailed evaluation report",
+      "url": "assets/report.html"
+    },
+    {
+      "label": "Filmmaking reference · lemomo_ai",
+      "url": "https://x.com/lemomo_ai/status/2103823847632060854"
+    }
+  ],
+  "targetDuration": 150,
+  "brief": {
+    "audience": "International GPU and WebGPU developers",
+    "style": "technical editorial",
+    "story": "Same math, a different execution engine. Explain the mechanism, show matched evidence, then interpret limitations.",
+    "pace": "build",
+    "reference": "Polished developer launch films: restrained macro imagery and precise motion diagrams",
+    "materials": "User-supplied subgroup-matrix/demo.html and report.html; snapshots in assets.",
+    "mustInclude": "C prime = A times B plus C; 13.09 vs 48.97 TFLOP/s; 3.74x; RX 9070 XT; historical measurement on 21 September 2026; different Vulkan and D3D12 baselines.",
+    "aspect": "16:9",
+    "narrationMode": "voice",
+    "voiceTone": "warm-male"
+  },
+  "review": {
+    "story": "af7499a534de4032f62ddb2af0fff44ddbcd8d4101d0370199d41b25371a3d80",
+    "frames": "a2f0e7a165a985d7",
+    "sample": "a2f0e7a165a985d7"
+  }
+}

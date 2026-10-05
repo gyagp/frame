@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Subgroup Matrix</title>
+  <style>
+    :root {
+      --ink: #f4f7fb;
+      --muted: #a7b1c2;
+      --bg: #09111f;
+      --panel: #111d30;
+      --line: #263751;
+      --blue: #6fc7ff;
+      --cyan: #5be2d1;
+      --amber: #ffc66d;
+      --red: #ff8d88;
+      --green: #84e59b;
+    }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Segoe UI", Inter, Arial, sans-serif;
+    }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    button, select { font: inherit; }
+    .deck { position: relative; width: 100vw; height: 100vh; }
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      padding: clamp(34px, 5vw, 78px) clamp(42px, 7vw, 112px) 68px;
+      background:
+        radial-gradient(circle at 86% 14%, rgba(91, 226, 209, .10), transparent 28%),
+        linear-gradient(135deg, #09111f 0%, #0c1729 100%);
+    }
+    .slide.active { display: grid; grid-template-rows: auto 1fr auto; gap: 22px; }
+    .slide::after {
+      content: attr(data-index);
+      position: absolute;
+      right: 88px;
+      bottom: 24px;
+      color: #697a95;
+      font-size: 14px;
+    }
+    .eyebrow {
+      color: var(--cyan);
+      font-size: clamp(15px, 1.4vw, 20px);
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 1000px; margin-bottom: 18px; font-size: clamp(48px, 6.3vw, 94px); line-height: .98; letter-spacing: -.045em; }
+    h2 { margin-bottom: 0; font-size: clamp(34px, 4.1vw, 62px); line-height: 1.05; letter-spacing: -.035em; }
+    h3 { margin-bottom: 10px; font-size: clamp(20px, 2vw, 30px); }
+    p, li, td, th { font-size: clamp(16px, 1.45vw, 23px); line-height: 1.38; }
+    .lead { max-width: 980px; color: #d5dce8; font-size: clamp(23px, 2.3vw, 34px); line-height: 1.3; }
+    .muted { color: var(--muted); }
+    .accent { color: var(--cyan); }
+    .number { color: var(--cyan); font-size: 1.35em; font-weight: 800; }
+    .source { align-self: end; color: #7f8da3; font-size: 13px; }
+    .source a { color: #91a7c3; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 64px); align-items: center; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; }
+    .panel { border: 1px solid var(--line); border-radius: 18px; padding: 24px; background: rgba(17, 29, 48, .72); }
+    .clean-list { margin: 0; padding-left: 1.15em; }
+    .clean-list li { margin: 10px 0; }
+    .matrix-stage { display: grid; place-items: center; min-height: 360px; }
+    .equation { display: flex; align-items: center; justify-content: center; gap: 24px; }
+    .tile { display: grid; grid-template-columns: repeat(4, 30px); gap: 6px; padding: 15px; border: 1px solid var(--line); border-radius: 14px; background: #0b1628; }
+    .tile span { width: 30px; height: 30px; border-radius: 5px; background: #27405f; }
+    .tile.a span:nth-child(3n), .tile.b span:nth-child(4n+1) { background: var(--blue); }
+    .tile.c span { background: linear-gradient(135deg, var(--blue), var(--cyan)); animation: pulse 1.7s ease-in-out infinite alternate; }
+    .symbol { color: var(--muted); font-size: 46px; }
+    .sg-diagram { display: grid; gap: 13px; width: min(100%, 690px); padding: 20px; border: 1px solid var(--line); border-radius: 18px; background: rgba(17, 29, 48, .72); }
+    .sg-diagram-header { display: flex; justify-content: space-between; gap: 18px; align-items: baseline; }
+    .sg-diagram-header b { color: var(--blue); font-size: clamp(17px, 1.5vw, 23px); }
+    .sg-diagram-header span { color: var(--muted); font-size: clamp(12px, 1vw, 15px); }
+    .lane-strip { display: grid; grid-template-columns: repeat(6, 1fr); gap: 7px; }
+    .lane { display: grid; gap: 6px; place-items: center; min-height: 59px; padding: 7px 4px; border: 1px solid #304867; border-radius: 9px; background: #0b1628; color: var(--muted); font-size: 11px; }
+    .fragments { display: flex; gap: 4px; }
+    .fragment { width: 13px; height: 13px; border-radius: 3px; background: var(--blue); }
+    .fragment.b { background: var(--amber); }
+    .cooperate-arrow { display: grid; place-items: center; color: var(--cyan); font-size: 15px; font-weight: 700; }
+    .cooperate-arrow::after { content: "↓"; margin-top: -2px; font-size: 25px; line-height: .8; }
+    .mma-stage { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 10px; align-items: center; }
+    .matrix-chip { display: grid; place-items: center; min-height: 85px; padding: 9px; border: 1px solid #36516f; border-radius: 12px; background: #0b1628; text-align: center; }
+    .matrix-chip b { font-size: clamp(24px, 2.4vw, 38px); color: var(--ink); }
+    .matrix-chip span { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; }
+    .matrix-chip.core { border-color: #398d8d; background: linear-gradient(135deg, rgba(111,199,255,.15), rgba(91,226,209,.12)); }
+    .matrix-chip.core b { color: var(--cyan); font-size: clamp(16px, 1.55vw, 23px); }
+    .matrix-op { color: var(--muted); font-size: 29px; }
+    .sg-result { padding-top: 9px; border-top: 1px solid var(--line); color: #d5dce8; text-align: center; font-size: clamp(13px, 1.1vw, 17px); }
+    .workgroup-map { display: grid; gap: 9px; }
+    .workgroup-label { display: flex; justify-content: space-between; gap: 16px; color: var(--muted); font-size: 13px; }
+    .subgroup-row { display: grid; grid-template-columns: 104px 1fr; gap: 12px; align-items: center; min-height: 57px; padding: 8px 11px; border: 1px solid #304867; border-radius: 10px; background: #0b1628; }
+    .subgroup-row.active { border-color: #398d8d; background: linear-gradient(90deg, rgba(91,226,209,.14), rgba(111,199,255,.06)); }
+    .subgroup-name { color: var(--muted); font-size: 13px; font-weight: 700; }
+    .subgroup-row.active .subgroup-name { color: var(--cyan); }
+    .lane-dots { display: flex; align-items: center; justify-content: space-between; gap: 5px; }
+    .lane-dot { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 6px; background: #273a55; color: #cbd7e7; font-size: 10px; font-style: normal; }
+    .active .lane-dot { background: #1d6170; color: var(--ink); }
+    .subgroup-explain { display: grid; grid-template-columns: auto 1fr; gap: 11px; align-items: center; padding-top: 8px; color: #d5dce8; font-size: clamp(13px, 1.08vw, 17px); }
+    .subgroup-explain::before { content: "↑"; color: var(--cyan); font-size: 27px; }
+    .sg-concept { display: grid; gap: 14px; align-self: center; }
+    .sg-compare-intro { max-width: none; margin: 0; text-align: center; font-size: clamp(18px, 1.7vw, 27px); }
+    .matrix-overview { display: flex; justify-content: center; align-items: center; gap: 13px; min-height: 91px; padding: 10px 18px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .overview-label { display: grid; gap: 3px; min-width: 116px; margin-right: 8px; color: #d5dce8; font-size: 12px; line-height: 1.25; }
+    .overview-label strong { margin-bottom: 2px; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+    .overview-label b { color: var(--cyan); }
+    .overview-matrix { position: relative; display: grid; place-items: center; width: 104px; height: 90px; padding: 17px 14px 14px; border: 1px solid #3c5777; border-radius: 8px; background: #101d30; text-align: center; }
+    .overview-matrix.result { border-color: #398d8d; background: #12303a; }
+    .matrix-name { position: absolute; left: 6px; top: 3px; color: var(--blue); font-size: 15px; font-weight: 800; }
+    .overview-matrix.result .matrix-name { color: var(--cyan); }
+    .matrix-values { display: grid; grid-template-columns: repeat(2, 1fr); width: 62px; border-top: 1px solid #3c5777; border-left: 1px solid #3c5777; }
+    .matrix-values.cols-3 { grid-template-columns: repeat(3, 1fr); width: 72px; }
+    .matrix-values i { display: grid; place-items: center; height: 18px; border-right: 1px solid #3c5777; border-bottom: 1px solid #3c5777; color: #dce6f3; font: 700 11px Consolas, monospace; font-style: normal; }
+    .overview-matrix.result .matrix-values, .overview-matrix.result .matrix-values i { border-color: #398d8d; }
+    .matrix-shape { position: absolute; right: 4px; bottom: 2px; color: var(--muted); font-size: 9px; }
+    .overview-op { color: var(--muted); font-size: 28px; font-weight: 700; }
+    .overview-op.arrow { color: var(--cyan); }
+    .matrix-formula { color: #d5dce8; text-align: center; font: 700 clamp(17px, 1.55vw, 23px) Consolas, "Cascadia Code", monospace; }
+    .matrix-formula sub { color: var(--muted); font-size: .7em; }
+    .sg-paths { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .sg-path { display: grid; grid-template-rows: auto auto auto auto auto 1fr; gap: 8px; min-height: 350px; padding: 15px 18px; border: 1px solid var(--line); border-radius: 18px; background: rgba(17, 29, 48, .72); }
+    .sg-path.with { border-color: #398d8d; box-shadow: inset 0 3px 0 rgba(91,226,209,.55); }
+    .sg-path-title { display: flex; justify-content: space-between; gap: 14px; align-items: baseline; }
+    .sg-path-title b { font-size: clamp(19px, 1.7vw, 27px); }
+    .sg-path-title span { color: var(--muted); font-size: 13px; }
+    .path-lanes-wrap { display: grid; gap: 6px; }
+    .path-lanes-label { color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .path-lanes { display: grid; grid-template-columns: repeat(6, 1fr); gap: 7px; }
+    .path-lane { display: grid; place-items: center; min-height: 43px; border: 1px solid #304867; border-radius: 8px; background: #0b1628; color: #cbd7e7; font-size: 11px; }
+    .sg-path.with .path-lane { border-color: #337078; background: rgba(29,97,112,.45); }
+    .path-arrow { display: grid; place-items: center; color: var(--muted); font-size: 13px; }
+    .path-arrow::after { content: "↓"; color: var(--cyan); font-size: 23px; line-height: .8; }
+    .alu-array { display: grid; grid-template-columns: repeat(6, 1fr); gap: 7px; align-items: center; }
+    .alu { display: grid; place-items: center; min-height: 54px; border-radius: 9px; background: #263852; color: #dce6f3; font: 700 clamp(11px, 1vw, 15px) Consolas, monospace; }
+    .matrix-engine { display: grid; place-items: center; min-height: 54px; border: 1px solid #398d8d; border-radius: 11px; background: linear-gradient(135deg, rgba(111,199,255,.17), rgba(91,226,209,.13)); text-align: center; }
+    .matrix-engine b { color: var(--cyan); font-size: clamp(16px, 1.45vw, 23px); }
+    .matrix-engine code { margin-top: 2px; color: #dce8f5; font-size: clamp(12px, 1vw, 15px); }
+    .path-code { min-height: 65px; margin: 0; padding: 9px 12px; overflow: hidden; border: 1px solid #304867; border-radius: 9px; background: #08111e; color: #d9e5f5; font: clamp(10px, .8vw, 13px)/1.35 Consolas, "Cascadia Code", monospace; white-space: pre-wrap; }
+    .sg-path.with .path-code { border-color: #398d8d; background: linear-gradient(135deg, rgba(111,199,255,.10), rgba(91,226,209,.08)); }
+    .path-outcome { align-self: end; padding-top: 11px; border-top: 1px solid var(--line); color: #d5dce8; text-align: center; font-size: clamp(14px, 1.15vw, 18px); }
+    .path-outcome strong { color: var(--cyan); }
+    @keyframes pulse { to { filter: brightness(1.35); transform: scale(.92); } }
+    table { width: 100%; border-collapse: collapse; }
+    th { color: var(--muted); font-weight: 600; text-align: left; }
+    td, th { padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    .compact td, .compact th { font-size: clamp(14px, 1.2vw, 19px); padding: 9px 10px; }
+    .windows-focus td { background: rgba(91, 226, 209, .07); }
+    .windows-focus td:first-child { border-left: 3px solid var(--cyan); }
+    .tag { display: inline-block; margin: 2px 4px 2px 0; padding: 3px 8px; border: 1px solid #36516f; border-radius: 999px; color: #caddf3; font-size: .82em; }
+    .api-list { display: grid; gap: 14px; }
+    .api { display: grid; grid-template-columns: 120px 1fr; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+    .api strong { color: var(--cyan); }
+    .api-bridge { display: grid; gap: 0; margin: 0; }
+    .dawn-surface { justify-self: center; width: min(680px, 72%); padding: 17px 24px; border: 1px solid #398d8d; border-radius: 16px; background: linear-gradient(135deg, rgba(111,199,255,.14), rgba(91,226,209,.10)); text-align: center; }
+    .dawn-surface .app-layer { color: var(--muted); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .dawn-surface b { display: block; margin: 5px 0; color: var(--cyan); font-size: clamp(22px, 2vw, 31px); }
+    .dawn-surface span { color: #d5dce8; font-size: clamp(13px, 1.05vw, 16px); }
+    .api-connector { position: relative; height: 55px; }
+    .api-connector::before { content: ""; position: absolute; left: 50%; top: 0; width: 2px; height: 27px; background: #398d8d; }
+    .api-connector::after { content: ""; position: absolute; left: 16.66%; right: 16.66%; top: 26px; height: 2px; background: #398d8d; }
+    .api-connector i { position: absolute; top: 26px; width: 2px; height: 29px; background: #398d8d; }
+    .api-connector i:nth-child(1) { left: 16.66%; }
+    .api-connector i:nth-child(2) { left: 50%; }
+    .api-connector i:nth-child(3) { left: 83.33%; }
+    .native-apis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .native-api { min-height: 230px; padding: 18px 19px; border: 1px solid var(--line); border-radius: 16px; background: rgba(17,29,48,.78); }
+    .native-api.windows { border-color: #398d8d; box-shadow: inset 0 3px 0 rgba(91,226,209,.55); }
+    .native-api h3 { margin-bottom: 5px; color: var(--blue); }
+    .native-api .api-path { min-height: 40px; color: var(--muted); font-size: 13px; }
+    .native-api code { font-size: clamp(12px, .95vw, 15px); }
+    .native-api .readiness { margin-top: 13px; padding-top: 11px; border-top: 1px solid var(--line); color: #d5dce8; font-size: clamp(13px, 1vw, 16px); line-height: 1.45; }
+    .native-api .readiness b { color: var(--cyan); }
+    .env-layout { display: grid; gap: 18px; align-self: center; }
+    .env-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+    .env-card { padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: rgba(17,29,48,.78); }
+    .env-card.d3d12 { border-color: #398d8d; box-shadow: inset 0 3px 0 rgba(91,226,209,.55); }
+    .env-card h3 { margin: 0 0 10px; color: var(--blue); font-size: clamp(25px, 2.3vw, 36px); }
+    .env-list { display: grid; }
+    .env-row { display: grid; grid-template-columns: 130px 1fr; gap: 14px; padding: 11px 0; border-top: 1px solid var(--line); }
+    .env-row b { color: var(--amber); font-size: clamp(14px, 1.1vw, 17px); }
+    .env-row span { color: #d5dce8; font-size: clamp(13px, 1.05vw, 16px); line-height: 1.4; }
+    .env-contract { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 9px 14px; padding: 15px 20px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--muted); font-size: clamp(13px, 1.05vw, 16px); }
+    .env-contract b { color: var(--cyan); }
+    .env-contract i { color: var(--cyan); font-style: normal; font-weight: 800; }
+    .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; align-items: stretch; }
+    .flow-step { position: relative; display: grid; place-content: center; min-height: 150px; padding: 18px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); text-align: center; }
+    .flow-step:not(:last-child)::after { content: "→"; position: absolute; right: -20px; top: 48%; z-index: 2; color: var(--cyan); font-size: 28px; }
+    .flow-step b { display: block; margin-bottom: 7px; color: var(--blue); font-size: clamp(18px, 1.6vw, 25px); }
+    .flow-step span { color: var(--muted); font-size: clamp(13px, 1.1vw, 17px); }
+    .requirements { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+    .requirements span { padding: 9px 13px; border-left: 3px solid var(--amber); background: rgba(255,198,109,.08); color: #e8d8ba; }
+    .perf-comparison { display: grid; gap: 8px; align-self: center; }
+    .perf-legend { display: flex; justify-content: flex-end; gap: 20px; color: var(--muted); font-size: 13px; }
+    .perf-legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 7px; border-radius: 3px; vertical-align: -1px; background: var(--cyan); }
+    .perf-legend .vulkan::before { background: var(--amber); }
+    .compare-group { margin-top: 3px; padding-top: 9px; border-top: 1px solid var(--line); color: #d5dce8; font-size: 14px; font-weight: 700; }
+    .compare-group b { color: var(--blue); font-size: 17px; }
+    .compare-row { display: grid; grid-template-columns: 230px 1fr 62px; gap: 14px; align-items: center; }
+    .compare-label { color: var(--muted); font-size: 14px; text-align: right; }
+    .compare-track { position: relative; height: 24px; overflow: hidden; border-radius: 7px; background: #15233a; }
+    .compare-track::after { content: "1×"; position: absolute; left: 22.22%; top: 0; bottom: 0; z-index: 2; width: 1px; padding-left: 4px; border-left: 1px solid rgba(244,247,251,.55); color: #d5dce8; font-size: 10px; line-height: 24px; }
+    .compare-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+    .compare-fill.vulkan { background: linear-gradient(90deg, #cf9144, var(--amber)); }
+    .compare-fill.loss { background: var(--red); }
+    .compare-value { color: var(--ink); font-weight: 800; font-variant-numeric: tabular-nums; }
+    .comparison-note { margin: 7px 0 0; color: #d5dce8; text-align: center; font-size: 14px; }
+    .comparison-note b { color: var(--amber); }
+    .demo-wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: 44px; align-items: center; }
+    .controls { display: grid; gap: 16px; }
+    select, button { border: 1px solid #3c5474; border-radius: 10px; padding: 11px 14px; background: #101e33; color: var(--ink); }
+    button { cursor: pointer; background: #163b50; border-color: #2b7187; font-weight: 700; }
+    button:hover { background: #1b4a63; }
+    .chart { display: grid; gap: 24px; }
+    .bar-row { display: grid; grid-template-columns: 118px 1fr 108px; gap: 14px; align-items: center; }
+    .bar-label { color: var(--muted); }
+    .bar-track { height: 44px; border-radius: 9px; overflow: hidden; background: #15233a; }
+    .bar-fill { width: 0; height: 100%; transition: width 900ms cubic-bezier(.2,.85,.3,1); }
+    .bar-fill.fma { background: #52657f; }
+    .bar-fill.matrix { background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+    .bar-value { font-variant-numeric: tabular-nums; font-weight: 700; }
+    .speedup { margin-top: 28px; text-align: center; font-size: clamp(38px, 5vw, 70px); font-weight: 850; color: var(--cyan); }
+    .timeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .change { min-height: 150px; border-top: 4px solid var(--cyan); padding: 15px 4px; }
+    .change a { font-size: 20px; font-weight: 750; }
+    .change p { margin: 8px 0 0; color: var(--muted); font-size: clamp(14px, 1.15vw, 18px); }
+    .status { color: var(--green); font-size: 13px; font-weight: 800; letter-spacing: .08em; }
+    .nav { position: fixed; left: 28px; right: 28px; bottom: 22px; z-index: 20; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
+    .nav button { pointer-events: auto; width: 42px; height: 36px; padding: 0; background: rgba(15, 29, 49, .82); }
+    .progress { position: fixed; left: 0; bottom: 0; z-index: 30; height: 4px; width: 0; background: linear-gradient(90deg, var(--blue), var(--cyan)); transition: width 220ms ease; }
+    @media (max-width: 900px) {
+      .grid-2, .demo-wrap, .code-compare, .sg-paths, .native-apis, .env-grid { grid-template-columns: 1fr; }
+      .grid-3, .timeline { grid-template-columns: repeat(2, 1fr); }
+      .flow { grid-template-columns: 1fr; }
+      .flow-step { min-height: 72px; }
+      .flow-step:not(:last-child)::after { content: "↓"; right: 49%; top: auto; bottom: -24px; }
+      .api-connector { display: none; }
+      .dawn-surface { width: 100%; margin-bottom: 20px; }
+      .slide { overflow-y: auto; }
+    }
+    @media print {
+      html, body { overflow: visible; background: white; }
+      .slide { position: relative; display: grid !important; width: 13.333in; height: 7.5in; page-break-after: always; }
+      .nav, .progress { display: none; }
+    }
+  </style>
+</head>
+<body>
+<main class="deck" aria-live="polite">
+  <section class="slide active" data-index="1 / 8">
+    <header><div class="eyebrow">WebGPU · Dawn · Windows</div></header>
+    <div style="align-self:center">
+      <h1>Subgroup Matrix</h1>
+    </div>
+    <footer class="source">Evaluation snapshot: September 2026 · Use ← / → or Space to navigate</footer>
+  </section>
+
+  <section class="slide" data-index="2 / 8">
+    <header>
+      <div class="eyebrow">Why subgroup-matrix hardware matters</div>
+      <h2>One subgroup. Two matrix execution paths.</h2>
+    </header>
+    <div class="sg-concept">
+      <p class="lead sg-compare-intro">A subgroup is one hardware-sized team of lanes (a warp or wave). <span class="accent">For inference, matrix multiplies dominate the compute in attention and MLP layers; subgroup-matrix hardware increases token throughput and reduces latency.</span></p>
+      <div class="matrix-overview" role="img" aria-label="Matrix dimensions: M is the number of output rows, K is the full reduction dimension, and N is the number of output columns. In this non-square example, A is M by K, two by three; B is K by N, three by two; and C and C prime are M by N, two by two.">
+        <div class="overview-label"><strong>Dimensions</strong><span><b>M</b> output rows</span><span><b>K</b> full reduction</span><span><b>N</b> output columns</span></div>
+        <div class="overview-matrix"><b class="matrix-name">A</b><div class="matrix-values cols-3"><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i></div><span class="matrix-shape">M×K = 2×3</span></div>
+        <div class="overview-op">×</div>
+        <div class="overview-matrix"><b class="matrix-name">B</b><div class="matrix-values"><i>7</i><i>8</i><i>9</i><i>10</i><i>11</i><i>12</i></div><span class="matrix-shape">K×N = 3×2</span></div>
+        <div class="overview-op">+</div>
+        <div class="overview-matrix"><b class="matrix-name">C</b><div class="matrix-values"><i>1</i><i>1</i><i>1</i><i>1</i></div><span class="matrix-shape">M×N = 2×2</span></div>
+        <div class="overview-op arrow">→</div>
+        <div class="overview-matrix result"><b class="matrix-name">C′</b><div class="matrix-values"><i>59</i><i>65</i><i>140</i><i>155</i></div><span class="matrix-shape">M×N = 2×2</span></div>
+      </div>
+      <div class="matrix-formula" aria-label="C prime i j equals C i j plus the sum over k of A i k times B k j">C′[i,j] = C[i,j] + Σ<sub>k</sub> A[i,k] × B[k,j]</div>
+      <div class="sg-paths">
+        <article class="sg-path" role="group" aria-label="Without subgroup matrix hardware">
+          <div class="sg-path-title"><b>Without subgroup-matrix hardware</b><span>fused multiply-add (FMA) path</span></div>
+          <div class="path-lanes-wrap" aria-hidden="true"><span class="path-lanes-label">Subgroup lanes</span><div class="path-lanes"><div class="path-lane">Lane 0</div><div class="path-lane">Lane 1</div><div class="path-lane">Lane 2</div><div class="path-lane">Lane 3</div><div class="path-lane">…</div><div class="path-lane">Lane N−1</div></div></div>
+          <div class="path-arrow">each lane issues its own instructions</div>
+          <div class="alu-array" aria-hidden="true"><div class="alu">FMA</div><div class="alu">FMA</div><div class="alu">FMA</div><div class="alu">FMA</div><div class="alu">…</div><div class="alu">FMA</div></div>
+          <pre class="path-code"><code>// Inside each K tile
+for (uint tile_k = 0; tile_k &lt; TILE_K; ++tile_k)
+  acc = mad(sA[..., tile_k], sB[tile_k, ...], acc);</code></pre>
+          <div class="path-outcome">Many lane-level operations gradually build the output <strong>C′ tile</strong>.</div>
+        </article>
+        <article class="sg-path with" role="group" aria-label="With subgroup matrix hardware">
+          <div class="sg-path-title"><b>With subgroup-matrix hardware</b><span>D3D12 SM 6.10 LinAlg</span></div>
+          <div class="path-lanes-wrap" aria-hidden="true"><span class="path-lanes-label">Subgroup lanes</span><div class="path-lanes"><div class="path-lane">Lane 0</div><div class="path-lane">Lane 1</div><div class="path-lane">Lane 2</div><div class="path-lane">Lane 3</div><div class="path-lane">…</div><div class="path-lane">Lane N−1</div></div></div>
+          <div class="path-arrow">all lanes cooperate on one operation</div>
+          <div class="matrix-engine" aria-hidden="true"><b>Matrix multiply unit</b><code>C′ = A × B + C</code></div>
+          <pre class="path-code"><code>Matrix a = Matrix::Load(sA, ...);
+Matrix b = Matrix::Load(sB, ...);
+acc.MultiplyAccumulate(a, b);</code></pre>
+          <div class="path-outcome">One subgroup operation computes the distributed output <strong>C′ tile</strong>.</div>
+        </article>
+      </div>
+    </div>
+    <footer class="source">The example has K=3. Production code walks larger K in tiles; this benchmark uses TILE_K=32. <a href="bench/d3d12/shaders/gemm.hlsl">Matched sample source</a> · <a href="https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/subgroup_matrix.md">Dawn subgroup-matrix proposal</a></footer>
+  </section>
+
+  <section class="slide" data-index="3 / 8">
+    <header>
+      <div class="eyebrow">Hardware support</div>
+      <h2>Where matrix-multiply hardware begins—and when.</h2>
+    </header>
+    <div class="panel" style="align-self:center">
+      <table class="compact">
+        <thead><tr><th>IHV</th><th>First GPU generation with matrix hardware</th><th>Hardware path</th><th>Evidence in this evaluation</th></tr></thead>
+        <tbody>
+          <tr><td><b>NVIDIA</b></td><td><b>Volta</b> / V100 <span class="muted">(2017)</span></td><td>1st-generation Tensor Cores</td><td>RTX 5080 · Vulkan</td></tr>
+          <tr><td><b>Apple</b></td><td><b>Apple GPU family 6</b> / A13 <span class="muted">(2019)</span></td><td>SIMD-scoped matrix multiply</td><td>Dawn Metal path</td></tr>
+          <tr><td><b>AMD</b></td><td><b>CDNA 1</b> / MI100 <span class="muted">(2020)</span><br><span class="muted">Radeon client: RDNA 3 (2022)</span></td><td>MFMA / WMMA</td><td>RX 7900 XTX · Vulkan<br>RX 9070 XT · D3D12</td></tr>
+          <tr><td><b>Intel</b></td><td><b>Xe-HPG</b> / Arc Alchemist <span class="muted">(2022)</span><br><span class="muted">Mobile integrated: Lunar Lake / Xe2 (2024)</span></td><td>XMX / DPAS</td><td>Lunar Lake · Arc 140V · Vulkan</td></tr>
+          <tr><td><b>Qualcomm</b></td><td><span class="tag">no supported generation</span></td><td>No subgroup-matrix hardware support</td><td>Snapdragon X1 <span class="muted">(2024)</span>: unsupported</td></tr>
+        </tbody>
+      </table>
+      <p class="muted" style="margin:14px 8px 0;font-size:15px">“First generation” identifies the earliest family with a native matrix instruction/path—not WebGPU availability. Driver enumeration of the exact type, M/N/K, layout, and subgroup size remains mandatory.</p>
+    </div>
+    <footer class="source"><a href="https://www.nvidia.com/en-us/data-center/volta-gpu-architecture/">NVIDIA Volta</a> · <a href="https://www.amd.com/en/products/accelerators/instinct/mi100.html">AMD CDNA/MI100</a> · <a href="https://gpuopen.com/learn/wmma_on_rdna3/">AMD RDNA 3 WMMA</a> · <a href="https://www.intel.com/content/www/us/en/architecture-and-technology/visual-technology/arc-discrete-graphics/xe-hpg-microarchitecture/overview.html">Intel Xe-HPG</a> · <a href="https://developer.apple.com/metal/Metal-Feature-Set-Tables.pdf">Apple feature table</a></footer>
+  </section>
+
+  <section class="slide" data-index="4 / 8">
+    <header>
+      <div class="eyebrow">Graphics API support</div>
+      <h2>One Dawn surface. Three native API paths.</h2>
+    </header>
+    <figure class="api-bridge" aria-label="An application uses the experimental WebGPU subgroup-matrix surface. Dawn validates an adapter-reported configuration and Tint lowers WGSL into Vulkan SPIR-V, Metal MSL, or D3D12 HLSL and DXIL.">
+      <div class="dawn-surface">
+        <div class="app-layer">Application · WebGPU / WGSL</div>
+        <b>Dawn validates → Tint lowers</b>
+        <span>One experimental subgroup-matrix surface · exact adapter-reported configuration required</span>
+      </div>
+      <div class="api-connector" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="native-apis">
+        <article class="native-api">
+          <h3>Vulkan</h3>
+          <div class="api-path">WGSL → SPIR-V → cooperative-matrix operations</div>
+          <div><span class="tag">KHR</span> <code>VK_KHR_cooperative_matrix</code><br><code>SPV_KHR_cooperative_matrix</code></div>
+          <div><span class="tag">NVIDIA</span> <code>VK_NV_cooperative_matrix</code><br><code>SPV_NV_cooperative_matrix</code></div>
+          <div class="readiness"><b>Ready:</b> NV · February 2019<br>KHR · May 2023</div>
+        </article>
+        <article class="native-api">
+          <h3>Metal</h3>
+          <div class="api-path">WGSL → MSL → SIMD-group matrix operations</div>
+          <div><code>simdgroup_matrix</code><br><code>simdgroup_multiply_accumulate</code></div>
+          <div class="readiness"><b>Ready:</b> MSL 2.3 · 2020<br>Apple GPU family 6+</div>
+        </article>
+        <article class="native-api windows">
+          <h3>D3D12 <span class="tag">Windows focus</span></h3>
+          <div class="api-path">WGSL → HLSL wave matrices → DXIL</div>
+          <div>HLSL SM 6.10 LinAlg<br><code>dx/linalg.h</code></div>
+          <div class="readiness"><span class="tag">HLSL accepted</span><span class="tag">runtime preview</span><br><b>Not yet generally available</b></div>
+        </article>
+      </div>
+    </figure>
+    <footer class="source">Updated from “20240906-XMX on WebGPU,” slide 2. <a href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_KHR_cooperative_matrix.html">Vulkan KHR</a> · <a href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_NV_cooperative_matrix.html">Vulkan NV</a> · <a href="https://github.com/microsoft/hlsl-specs/blob/main/proposals/0035-linalg-matrix.md">HLSL LinAlg</a> · <a href="https://developer.apple.com/metal/Metal-Shading-Language-Specification.pdf">Metal language</a></footer>
+  </section>
+
+  <section class="slide" data-index="5 / 8">
+    <header>
+      <div class="eyebrow">Evaluation environment · Windows</div>
+      <h2>Matched D3D12 A/B on Radeon RX 9070 XT.</h2>
+    </header>
+    <div class="env-layout">
+      <div class="env-grid">
+        <article class="env-card">
+          <h3>Hardware + OS</h3>
+          <div class="env-list">
+            <div class="env-row"><b>GPU</b><span>AMD Radeon RX 9070 XT</span></div>
+            <div class="env-row"><b>Driver</b><span>AMD Software 26.10.07.02 preview</span></div>
+            <div class="env-row"><b>System</b><span>Windows 11 · Ryzen 9 9950X · 62 GB RAM</span></div>
+            <div class="env-row"><b>Backend</b><span>D3D12 · hardware execution, not WARP</span></div>
+          </div>
+        </article>
+        <article class="env-card d3d12">
+          <h3>Preview software stack</h3>
+          <div class="env-list">
+            <div class="env-row"><b>Agility SDK</b><span>1.721.3.0 · D3D12 LinAlg runtime</span></div>
+            <div class="env-row"><b>DXC</b><span>1.10.2605.24 preview · Shader Model 6.10</span></div>
+            <div class="env-row"><b>Dawn build</b><span><code>dawn_use_agility_sdk=true</code></span></div>
+            <div class="env-row"><b>Data path</b><span>f16 × f16 → f32 wave-matrix GEMM</span></div>
+          </div>
+        </article>
+      </div>
+      <div class="env-contract" aria-label="Measurement contract: identical matrix shapes and input data, CPU correctness reference, GPU dispatch timestamps, warmup, and thirty measured samples">
+        <b>Measurement contract</b><i>→</i><span>same shapes + inputs</span><i>→</i><span>CPU correctness check</span><i>→</i><span>GPU dispatch timestamps</span><i>→</i><span>warmup + 30 samples</span>
+      </div>
+    </div>
+    <footer class="source"><a href="https://www.amd.com/en/resources/support-articles/release-notes/RN-RAD-MS-AGILITY-SDK-26-10-07-02.html">AMD preview driver 26.10.07.02</a> · Full configuration and raw evidence: <a href="report.html#test-configuration">report.html</a></footer>
+  </section>
+
+  <section class="slide" data-index="6 / 8">
+    <header>
+      <div class="eyebrow">Performance evaluation</div>
+      <h2>Different baselines. Compare relative gains—not APIs.</h2>
+    </header>
+    <div class="perf-comparison" role="img" aria-label="Relative speedup results with different baselines, not a direct API comparison. D3D12 on Radeon RX 9070 XT uses an FP16 FMA baseline and ranges from 2.70 to 4.13 times. Vulkan uses an INT8 DP4A baseline and ranges from 1.17 to 1.68 times at 512-token prefill, while RTX 5080 at 128 tokens measures 0.89 times.">
+      <div class="perf-legend"><span>D3D12 vs FP16 FMA</span><span class="vulkan">Vulkan vs INT8 DP4A</span></div>
+      <div class="compare-group"><b>D3D12 · RX 9070 XT</b> — subgroup matrix vs <strong>FP16 FMA baseline</strong></div>
+      <div class="compare-row"><span class="compare-label">Prefill 128</span><div class="compare-track"><div class="compare-fill" style="width:60%"></div></div><span class="compare-value">2.70×</span></div>
+      <div class="compare-row"><span class="compare-label">Prefill 512</span><div class="compare-track"><div class="compare-fill" style="width:80%"></div></div><span class="compare-value">3.60×</span></div>
+      <div class="compare-row"><span class="compare-label">Prefill 2048</span><div class="compare-track"><div class="compare-fill" style="width:83.1%"></div></div><span class="compare-value">3.74×</span></div>
+      <div class="compare-row"><span class="compare-label">MLP up</span><div class="compare-track"><div class="compare-fill" style="width:91.8%"></div></div><span class="compare-value">4.13×</span></div>
+      <div class="compare-row"><span class="compare-label">MLP down</span><div class="compare-track"><div class="compare-fill" style="width:79.6%"></div></div><span class="compare-value">3.58×</span></div>
+      <div class="compare-group"><b>Vulkan · cross-vendor</b> — subgroup matrix vs <strong>INT8 DP4A baseline</strong></div>
+      <div class="compare-row"><span class="compare-label">RX 7900 XTX · Prefill 512</span><div class="compare-track"><div class="compare-fill vulkan" style="width:37.3%"></div></div><span class="compare-value">1.68×</span></div>
+      <div class="compare-row"><span class="compare-label">RTX 5080 · Prefill 512</span><div class="compare-track"><div class="compare-fill vulkan" style="width:33.3%"></div></div><span class="compare-value">1.50×</span></div>
+      <div class="compare-row"><span class="compare-label">Arc 140V · Prefill 512</span><div class="compare-track"><div class="compare-fill vulkan" style="width:26%"></div></div><span class="compare-value">1.17×</span></div>
+      <div class="compare-row"><span class="compare-label">RTX 5080 · Prefill 128</span><div class="compare-track"><div class="compare-fill loss" style="width:19.8%"></div></div><span class="compare-value">0.89×</span></div>
+      <p class="comparison-note"><b>Different baselines:</b> D3D12 = FP16 FMA; Vulkan = INT8 DP4A. These are relative gains only—not an API-to-API throughput comparison. Shared scale, maximum 4.5×.</p>
+    </div>
+    <footer class="source">D3D12: 30 measured samples after warmup, dispatch-only GPU timestamps · Vulkan: verified ORT kernel selection and graph capture. <a href="report.html#index-3-native-performance">Native results</a> · <a href="report.html#sgm-cross-vendor">Cross-vendor results</a></footer>
+  </section>
+
+  <section class="slide" data-index="7 / 8">
+    <header>
+      <div class="eyebrow">Small demo</div>
+      <h2>Run both samples or replay the measured result.</h2>
+    </header>
+    <div class="demo-wrap">
+      <div class="controls">
+        <label for="workload"><b>Workload</b></label>
+        <select id="workload">
+          <option value="prefill-128">Prefill 128 — 128×3072×3072</option>
+          <option value="prefill-512">Prefill 512 — 512×3072×3072</option>
+          <option value="prefill-2048" selected>Prefill 2048 — 2048×3072×3072</option>
+          <option value="mlp-up">MLP up — 512×8192×3072</option>
+          <option value="mlp-down">MLP down — 512×3072×8192</option>
+        </select>
+        <button id="replay" type="button">Replay comparison</button>
+        <p class="muted" style="font-size:15px">The animation uses measured RX 9070 XT data. Live A/B from the repository root: <code>.\subgroup-matrix\run-demo.ps1 -Native -NoOpen</code></p>
+      </div>
+      <div>
+        <div class="chart">
+          <div class="bar-row"><div class="bar-label">Without: FMA</div><div class="bar-track"><div id="fmaBar" class="bar-fill fma"></div></div><div id="fmaValue" class="bar-value">13.1 TFLOP/s</div></div>
+          <div class="bar-row"><div class="bar-label">With: LinAlg</div><div class="bar-track"><div id="matrixBar" class="bar-fill matrix"></div></div><div id="matrixValue" class="bar-value">49.0 TFLOP/s</div></div>
+        </div>
+        <div id="speedup" class="speedup">3.74× faster</div>
+      </div>
+    </div>
+    <footer class="source">Measured 21 September 2026 · RX 9070 XT · Windows D3D12 · Agility SDK 721 · DXC 1.10</footer>
+  </section>
+
+  <section class="slide" data-index="8 / 8">
+    <header>
+      <div class="eyebrow">Dawn engineering outcome</div>
+      <h2>Six landed changes in Dawn turned failures into a usable path.</h2>
+    </header>
+    <div class="timeline">
+      <div class="change"><div class="status">LANDED</div><a href="https://dawn-review.googlesource.com/c/dawn/+/326715">CL 326715</a><p>Stage Agility SDK correctly in CMake builds.</p></div>
+      <div class="change"><div class="status">LANDED</div><a href="https://dawn-review.googlesource.com/c/dawn/+/330695">CL 330695</a><p>Fix Vulkan cooperative loads; up to 22× in the isolated case.</p></div>
+      <div class="change"><div class="status">LANDED</div><a href="https://dawn-review.googlesource.com/c/dawn/+/331295">CL 331295</a><p>Release Agility interfaces before unloading D3D12Core.</p></div>
+      <div class="change"><div class="status">LANDED</div><a href="https://dawn-review.googlesource.com/c/dawn/+/333935">CL 333935</a><p>Validate against explicit subgroup size and accept granular capability evidence.</p></div>
+      <div class="change"><div class="status">LANDED</div><a href="https://dawn-review.googlesource.com/c/dawn/+/335215">CL 335215</a><p>Honor the D3D12 multiplication <code>SUPPORTED</code> flag.</p></div>
+      <div class="change"><div class="status">LANDED</div><a href="https://dawn-review.googlesource.com/c/dawn/+/335895">CL 335895</a><p>Reject HLSL matrix configurations the adapter did not advertise.</p></div>
+    </div>
+    <footer class="source">All six CLs above are Dawn changes. ONNX Runtime subgroup-matrix optimizations are ongoing. Also related: <a href="https://github.com/gpuweb/gpuweb/pull/5578">GPUWeb PR 5578 — subgroup size control</a> · <a href="report.html#index-8-history">full history</a></footer>
+  </section>
+
+</main>
+
+<div class="nav" aria-hidden="true"><button id="prev" title="Previous slide">←</button><button id="next" title="Next slide">→</button></div>
+<div id="progress" class="progress"></div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const data = {
+    'prefill-128': { fma: 3.11, matrix: 8.40, speedup: 2.70 },
+    'prefill-512': { fma: 9.22, matrix: 33.17, speedup: 3.60 },
+    'prefill-2048': { fma: 13.09, matrix: 48.97, speedup: 3.74 },
+    'mlp-up': { fma: 12.41, matrix: 51.27, speedup: 4.13 },
+    'mlp-down': { fma: 9.22, matrix: 33.00, speedup: 3.58 }
+  };
+  let current = Math.max(0, Math.min(slides.length - 1, Number(location.hash.slice(1)) - 1 || 0));
+
+  function show(index) {
+    current = Math.max(0, Math.min(slides.length - 1, index));
+    slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+    document.getElementById('progress').style.width = `${((current + 1) / slides.length) * 100}%`;
+    history.replaceState(null, '', `#${current + 1}`);
+    if (current === 6) replay(false);
+  }
+
+  function replay(animate = true) {
+    const selected = data[document.getElementById('workload').value];
+    const max = Math.max(selected.fma, selected.matrix);
+    const fmaBar = document.getElementById('fmaBar');
+    const matrixBar = document.getElementById('matrixBar');
+    document.getElementById('fmaValue').textContent = `${selected.fma.toFixed(1)} TFLOP/s`;
+    document.getElementById('matrixValue').textContent = `${selected.matrix.toFixed(1)} TFLOP/s`;
+    document.getElementById('speedup').textContent = `${selected.speedup.toFixed(2)}× faster`;
+    const finish = () => {
+      fmaBar.style.width = `${(selected.fma / max) * 100}%`;
+      matrixBar.style.width = `${(selected.matrix / max) * 100}%`;
+    };
+    if (!animate) {
+      fmaBar.style.transition = 'none';
+      matrixBar.style.transition = 'none';
+      finish();
+      requestAnimationFrame(() => {
+        fmaBar.style.transition = '';
+        matrixBar.style.transition = '';
+      });
+      return;
+    }
+    fmaBar.style.width = '0';
+    matrixBar.style.width = '0';
+    requestAnimationFrame(() => requestAnimationFrame(finish));
+  }
+
+  document.getElementById('prev').addEventListener('click', () => show(current - 1));
+  document.getElementById('next').addEventListener('click', () => show(current + 1));
+  document.getElementById('replay').addEventListener('click', () => replay(true));
+  document.getElementById('workload').addEventListener('change', () => replay(true));
+  addEventListener('keydown', event => {
+    if (['ArrowRight', 'PageDown', ' '].includes(event.key)) { event.preventDefault(); show(current + 1); }
+    if (['ArrowLeft', 'PageUp'].includes(event.key)) { event.preventDefault(); show(current - 1); }
+    if (event.key === 'Home') show(0);
+    if (event.key === 'End') show(slides.length - 1);
+  });
+  show(current);
+</script>
+</body>
+</html>

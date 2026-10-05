@@ -1,0 +1,89 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Subgroup Matrix — Closing the Gap · 故事审阅</title><style>
+@font-face{font-family:Inter;src:url('/fonts/InterVariable.ttf')}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#0a1016;color:#f1eee7;font:16px/1.8 Inter,'Microsoft YaHei',sans-serif}a{color:#64d8cb;text-underline-offset:4px}main{max-width:1120px;margin:auto;padding:64px 36px}header{padding-bottom:48px;border-bottom:1px solid #29363e}.kicker{letter-spacing:.2em;color:#64d8cb;font-size:12px}h1{font-size:clamp(34px,5vw,60px);line-height:1.13;letter-spacing:-.04em;max-width:950px;margin:24px 0}h2{font-size:28px;line-height:1.3;letter-spacing:-.025em;margin:0 0 14px}p{margin:10px 0}.synopsis{max-width:790px;color:#b8c4cb;font-size:19px}.meta{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}.meta span{border:1px solid #34434d;border-radius:24px;padding:4px 13px;font-size:13px}.status{border-left:3px solid #dfa861;padding:10px 18px;color:#dcc49e;background:#171b1c;font-size:14px}.studio{display:inline-block;margin-top:24px;padding:10px 20px;border-radius:6px;background:#64d8cb;color:#0a1016;text-decoration:none;font-weight:600}.brief{padding:34px 0;border-bottom:1px solid #29363e}.brief h2{font-size:20px}.brief p{color:#afbcc4;font-size:14px}article{display:grid;grid-template-columns:140px minmax(0,1fr);gap:28px;padding:42px 0;border-bottom:1px solid #29363e}.shot-index span{display:block;font-size:50px;line-height:1.1;color:#64d8cb;font-weight:500}.shot-index small{display:block;color:#8c9ba8;font-size:12px;margin-top:15px}.purpose{color:#bcc8cf}.script{background:#131e26;border-left:3px solid #64d8cb;padding:20px 24px;margin:24px 0}.script small{font-size:10px;letter-spacing:.17em;color:#64d8cb}blockquote{margin:10px 0 0;font-size:19px;line-height:1.65}dl{display:grid;grid-template-columns:108px minmax(0,1fr);gap:10px 20px;margin:24px 0;font-size:14px}dt{color:#8c9ba8}dd{margin:0;color:#bdc9d0}.evidence{font-size:12px;color:#91a1ac;border-top:1px solid #26343c;padding-top:14px}footer{padding-top:32px;font-size:13px;color:#8c9ba8}footer li{margin:8px 0}footer ul{padding-left:18px}details summary{cursor:pointer}@media(max-width:650px){main{padding:32px 20px}article{grid-template-columns:1fr;gap:15px}.shot-index{display:flex;align-items:center;gap:20px}.shot-index span{font-size:30px}.shot-index small{margin:0}h2{font-size:23px}dl{grid-template-columns:1fr;gap:3px}dd{margin-bottom:12px}blockquote{font-size:17px}}
+</style></head><body><main><header><div class="kicker">MOVIE STUDIO / STORY REVIEW</div><h1>Subgroup Matrix — Closing the Gap</h1><p class="synopsis">矩阵硬件已经存在；我们正在补齐从 preview API 到真实端侧推理之间的软件链路，并用 AMD 数据验证价值与边界。</p><div class="meta"><span>02:48</span><span>12 个镜头</span><span>en · 1920 × 1080 · 24 fps</span><span>Azure en-US-AndrewMultilingualNeural</span></div><div class="status">故事与分镜审阅稿。此页展示编排与设计意图，不是成片画面或已生成声音。确认顺序：故事 → 关键画面 → 有声短样片 → 全片。</div><a class="studio" href="/?project=subgroup-matrix-v2">在 Studio 审阅与确认 →</a></header>
+<section class="brief"><h2>视觉与声音方向</h2><p>Cinematic engineering documentary. Ink, warm porcelain, jade; amber only for preview and unfinished work. Purposeful 2D motion, restrained silicon imagery, optical depth and editorial typography.</p><p>Azure Andrew, calm and precise; composed electronic chamber score with distinct acts, deliberate quiet before evidence, no trailer booms or perpetual arpeggio. Score arrangement is a production requirement, not generated audio yet.</p></section>
+<article id="on-device">
+  <div class="shot-index"><span>01</span><small>00:00 — 00:12</small></div>
+  <div class="shot-body"><h2>Intelligence. Right here.</h2><p class="purpose">前三秒让观众看见本地设备上的一个请求，先建立应用动机，再提出速度问题。</p>
+    <div class="script"><small>ENGLISH NARRATION</small><blockquote>What if a powerful language model could respond right here, on your device? No server round trip. The challenge is making local inference fast enough.</blockquote></div>
+    <dl><dt>构图</dt><dd>侧面中景，电脑在右侧；左侧保留短标题。屏幕内容后期用代码精确叠加。</dd><dt>镜内节奏</dt><dd>0–3 秒光标和一句短请求出现；3–8 秒镜头靠近屏幕；8–12 秒请求变成一颗暖白数据点。</dd><dt>运镜与动作</dt><dd>缓慢推进约 6%，把注意力从设备带到等待中的请求；数据点向右离开画面，进入下一镜。</dd><dt>衔接</dt><dd>屏幕光标与下一镜矩阵单元格做形状匹配；不使用通用转场模板。</dd><dt>声音设计</dt><dd>留 0.7 秒室内底噪再进旁白；两颗干净琴音提出未完成的动机，不立即加鼓。</dd></dl>
+    <p class="evidence">Conceptual illustration · no live inference is shown</p></div>
+</article>
+<article id="matrix-bottleneck">
+  <div class="shot-index"><span>02</span><small>00:12 — 00:26</small></div>
+  <div class="shot-body"><h2>The matrix bottleneck</h2><p class="purpose">把等待落实为可理解的矩阵运算，同时限定在 prefill，避免把所有推理都说成算力瓶颈。</p>
+    <div class="script"><small>ENGLISH NARRATION</small><blockquote>In transformer prefill, attention projections and feed-forward layers demand large matrix multiplications. Multiply, accumulate, repeat. Executing these compute-heavy operations efficiently is one of the keys to faster responses.</blockquote></div>
+    <dl><dt>构图</dt><dd>从请求数据点切入矩阵近景，再横移到输出。A[M,K]、B[K,N]、C[M,N] 保持清楚。</dd><dt>镜内节奏</dt><dd>0–4 秒 token 队列展开成两个矩阵；4–9 秒两束行列片段相交、积累；9–14 秒出现 C′ = A×B+C 与等待中的输出。</dd><dt>运镜与动作</dt><dd>镜头跟随一块数据从左到右；多个计算单元形成重复工作量，最后合成一个协作 tile。示意格数不是硬件支持形状。</dd><dt>衔接</dt><dd>tile 的轮廓连续变成下一镜的矩阵执行单元。</dd><dt>声音设计</dt><dd>脉冲渐入；multiply、accumulate 两处轻触音，禁止每个格子都发声。</dd></dl>
+    <p class="evidence">Conceptual animation · prefill focus; decode can be memory-bound</p></div>
+</article>
+<article id="matrix-hardware">
+  <div class="shot-index"><span>03</span><small>00:26 — 00:40</small></div>
+  <div class="shot-body"><h2>Hardware moved first</h2><p class="purpose">建立跨厂商趋势：硬件端早已迈出一步，为下一镜的软件缺口铺垫。</p>
+    <div class="script"><small>ENGLISH NARRATION</small><blockquote>GPU vendors have built for this workload: NVIDIA Tensor Cores, AMD matrix instructions, Intel XMX, and Apple&#39;s matrix-capable GPUs. The common idea: accelerate whole matrix operations.</blockquote></div>
+    <dl><dt>构图</dt><dd>一个执行 tile 的特写拉开，四条独立硬件轨道依次进入，不做四张宣传卡。</dd><dt>镜内节奏</dt><dd>0–3 秒 tile 亮起；3–10 秒四家名字和各自机制按旁白依次出现；10–14 秒共同汇向矩阵操作。</dd><dt>运镜与动作</dt><dd>拉镜揭示共同能力，厂商名称位置稳定。AMD 可标 MFMA / WMMA；Apple 不沿用旧 demo 存疑的最早年份。</dd><dt>衔接</dt><dd>四条硬件轨道向左后景退，前景显露 API 路线。</dd><dt>声音设计</dt><dd>低频基底加入，四家不配四声品牌提示音；音乐以持续性表达多年演进。</dd></dl>
+    <p class="evidence">Hardware families differ · API and datatype support remain device-dependent</p></div>
+</article>
+<article id="api-gap">
+  <div class="shot-index"><span>04</span><small>00:40 — 00:54</small></div>
+  <div class="shot-body"><h2>The APIs follow</h2><p class="purpose">解释为什么硬件能力不会自然变成应用能力：Vulkan 和 Metal 已有通路，D3D 路线走得更久。</p>
+    <div class="script"><small>ENGLISH NARRATION</small><blockquote>Vulkan exposes cooperative matrices. Metal has SIMD-group matrices. Direct3D&#39;s path took longer, including an earlier experiment that was withdrawn. For this workload, the software bridge was still catching up.</blockquote></div>
+    <dl><dt>构图</dt><dd>同一空间的三条 API 桥梁；Vulkan、Metal 为已连通实线，D3D12 先留出一段间隙。</dd><dt>镜内节奏</dt><dd>0–5 秒依次跟随 Vulkan、Metal 的数据；5–9 秒平移至 D3D12；9–14 秒旧 WaveMatrix 实验的虚线淡出。</dd><dt>运镜与动作</dt><dd>以同一个数据点尝试过桥，差异是桥的状态，不用厂商排名条。长镜头末段锁定缺口。</dd><dt>衔接</dt><dd>让 D3D12 缺口留在原位，下一镜 LinAlg 从该位置接入。</dd><dt>声音设计</dt><dd>节拍稍收，D3D12 缺口处留半拍，不用故障报警。</dd></dl>
+    <p class="evidence">API history · not an API performance ranking</p></div>
+</article>
+<article id="linalg-preview">
+  <div class="shot-index"><span>05</span><small>00:54 — 01:06</small></div>
+  <div class="shot-body"><h2>LinAlg enters the picture</h2><p class="purpose">把 LinAlg 到来作为机会，同时保留 preview 身份，为工程转折做准备。</p>
+    <div class="script"><small>ENGLISH NARRATION</small><blockquote>Now, Direct3D twelve has LinAlg in Shader Model six point ten, still in preview. The bridge is taking shape. But an API announcement is only the beginning.</blockquote></div>
+    <dl><dt>构图</dt><dd>缺口中央出现 LinAlg，一条琥珀色桥接上；PREVIEW 标签持续可读。</dd><dt>镜内节奏</dt><dd>0–4 秒桥结构成形；4–8 秒 LinAlg / SM 6.10 锁定；8–12 秒镜头轻拉，桥外露出尚未接通的应用端。</dd><dt>运镜与动作</dt><dd>图形主体连接完成，镜头却揭示系统边界之外还有路径，从而自然引出转折。</dd><dt>衔接</dt><dd>拉出的空隙变成下一镜待验证的三个检查点。</dd><dt>声音设计</dt><dd>和声变明但暂不解决；only the beginning 后留一个自然呼吸。</dd></dl>
+    <p class="evidence">Microsoft Agility release page checked 2026-10-05 · evaluated SDK 1.721.3 preview</p></div>
+</article>
+<article id="preview-to-usable">
+  <div class="shot-index"><span>06</span><small>01:06 — 01:16</small></div>
+  <div class="shot-body"><h2>Available. But usable?</h2><p class="purpose">全片转折：主角从 API 发布变为我们的验证、修复与集成工作。</p>
+    <div class="script"><small>ENGLISH NARRATION</small><blockquote>Can applications actually reach the hardware, select valid configurations, and finish reliably? That&#39;s where our work begins.</blockquote></div>
+    <dl><dt>构图</dt><dd>宽景中的路径停在三个闸口，主体是被挡住的数据点，不是三个密集文本框。</dd><dt>镜内节奏</dt><dd>0–2 秒请求停下；2–6 秒 capability、compilation、lifetime 三处浮现；6–10 秒镜头停住，让问题和回答落地。</dd><dt>运镜与动作</dt><dd>通过主体停止产生张力；不靠快速剪辑假装复杂。最后一道青玉色修复线开始生长。</dd><dt>衔接</dt><dd>修复线延伸进入 Dawn，沿用同一坐标和方向。</dd><dt>声音设计</dt><dd>节拍减半、留出空间，That&#39;s where our work begins 以平实而坚定的语气说出。</dd></dl>
+    <p class="evidence">Illustrative checkpoints from the evaluation; not a live test run</p></div>
+</article>
+<article id="dawn-contributions">
+  <div class="shot-index"><span>07</span><small>01:16 — 01:32</small></div>
+  <div class="shot-body"><h2>Making Dawn more reliable</h2><p class="purpose">用修复带来的行为改变解释贡献，而不把镜头变为提交列表。</p>
+    <div class="script"><small>ENGLISH NARRATION</small><blockquote>In Dawn, a WebGPU implementation, we contributed five fixes: accurate capability checks, explicit subgroup-size validation, correct matrix-load compilation, and safe runtime teardown. Those changes are merged upstream.</blockquote></div>
+    <dl><dt>构图</dt><dd>跟随数据走过 Dawn / Tint 的三段路径；将五项修复归为能力与校验、编译、生命周期三个可读成果。</dd><dt>镜内节奏</dt><dd>0–5 秒无效配置被正确挡住；5–10 秒合法 tile 进入编译路径；10–13 秒运行结束有序释放；13–16 秒停稳在 5 fixes / MERGED。</dd><dt>运镜与动作</dt><dd>轨道由琥珀变青玉只表示验证通过。实际五个 CL 在证据带列出，不滚动代码或伪造 CI。</dd><dt>衔接</dt><dd>通过 Dawn 的数据点进入下一镜 ORT 层。</dd><dt>声音设计</dt><dd>低音和精简打击乐恢复推进；每个成果只用一次低音量质感触点，不加胜利音效。</dd></dl>
+    <p class="evidence">Dawn CLs 330695 · 331295 · 333935 · 335215 · 335895 — MERGED; checked 2026-10-05</p></div>
+</article>
+<article id="ort-integration">
+  <div class="shot-index"><span>08</span><small>01:32 — 01:46</small></div>
+  <div class="shot-body"><h2>Into the inference runtime</h2><p class="purpose">让观众看到修复服务于完整推理系统，同时明确 ORT 集成尚待上游化。</p>
+    <div class="script"><small>ENGLISH NARRATION</small><blockquote>We then carried the path into an experimental ONNX Runtime build: subgroup-size control, AMD configuration work, and a switch for controlled comparisons. This integration still needs upstreaming.</blockquote></div>
+    <dl><dt>构图</dt><dd>从 Dawn 路径拉开到 ORT → Dawn → API → GPU 的完整剖面；ORT 状态保持琥珀色。</dd><dt>镜内节奏</dt><dd>0–4 秒 ORT 层进入画面；4–9 秒控制开关把同一模型送入 DP4A 或 subgroup matrix；9–14 秒两条路径并排等待测量。</dd><dt>运镜与动作</dt><dd>A/B 两臂共享输入与模型，分岔只改变目标计算路径；不标 ORT 已合入、不标 stock build 可直接使用。</dd><dt>衔接</dt><dd>从软件层向底层下降，先验证 kernel，再回到 model；进入第一个硬件身份板。</dd><dt>声音设计</dt><dd>织体完整但克制；upstreaming 后撤去打击乐，为真实数据留静默入口。</dd></dl>
+    <p class="evidence">Local experimental ORT integration · upstreaming pending in the supplied report (2026-08-31)</p></div>
+</article>
+<article id="amd-native">
+  <div class="shot-index"><span>09</span><small>01:46 — 02:02</small></div>
+  <div class="shot-body"><h2>4.13× at the kernel</h2><p class="purpose">先证明计算内核价值；这不是 ORT 或整部模型的 4.13×。</p>
+    <div class="script"><small>ENGLISH NARRATION</small><blockquote>First, the kernel. On Radeon RX ninety seventy XT, native Direct3D twelve matrix multiplication reaches four point one three times the FP sixteen F M A baseline on the MLP up projection.</blockquote></div>
+    <dl><dt>构图</dt><dd>先用 RX 9070 XT / NATIVE D3D12 身份板明确设备，再显示同轴两根性能条；完全锁机位。</dd><dt>镜内节奏</dt><dd>0–3 秒实际 demo 中 MLP up 选择状态的裁切（标 Recorded results）；3–8 秒重绘同一组数据；8–16 秒留足 8 秒读数。</dd><dt>运镜与动作</dt><dd>基线 12.41、矩阵 51.27 同为 TFLOP/s，横轴从 0 起。4.13× 只在条长到位后出现。不能把 4.13 写成全模型加速。</dd><dt>衔接</dt><dd>硬切到另一张硬件身份板，清楚宣告下一组是另一 GPU、另一层级。</dd><dt>声音设计</dt><dd>First, the kernel 前短暂降低配乐；数据落定用极轻的单次触点，不给每根条配 whoosh。</dd></dl>
+    <p class="evidence">2026-09-21 · M×K×N 512×8192×3072 · f16×f16→f32 · GPU dispatch timestamps · recorded results</p></div>
+</article>
+<article id="amd-ort">
+  <div class="shot-index"><span>10</span><small>02:02 — 02:20</small></div>
+  <div class="shot-body"><h2>+82% prefill throughput</h2><p class="purpose">把 kernel 价值接回实际模型。选用报告同一次四臂复测的 D3D12 两臂，不拼接其他实验数据。</p>
+    <div class="script"><small>ENGLISH NARRATION</small><blockquote>Then, the model. On Radeon RX seventy-nine hundred XTX, Phi four mini prefill rises from about twenty-eight hundred to over five thousand tokens per second. That&#39;s eighty-two percent higher throughput for a five-hundred-twelve-token prompt.</blockquote></div>
+    <dl><dt>构图</dt><dd>RX 7900 XTX / ORT 身份板保持可见；主视觉是 PREFILL +82%，次级才是两臂精确 tok/s。</dd><dt>镜内节奏</dt><dd>0–3 秒设备与模型先出现；3–7 秒 2,781、5,056 两根同轴条到位；7–18 秒锁定。512-token prompt 全程留在数字附近。</dd><dt>运镜与动作</dt><dd>由短条伸展到长条只做一次，不反复计数。显示 DP4A baseline 与 subgroup matrix 标签；模型 INT4 权重，不误标为原生 FP16 FMA。</dd><dt>衔接</dt><dd>镜头继续停稳，结果条下方展开完整生成时间线，进入边界说明。</dd><dt>声音设计</dt><dd>旁白最清楚的一段，维持低密度和声；不加新的打击乐，不以音乐淹没数字。</dd></dl>
+    <p class="evidence">D3D12 WebGPU EP · graph capture ON · DP4A vs subgroup matrix · report snapshot 2026-08-31 · experimental build</p></div>
+</article>
+<article id="deployment-boundaries">
+  <div class="shot-index"><span>11</span><small>02:20 — 02:36</small></div>
+  <div class="shot-body"><h2>The workload still matters</h2><p class="purpose">让结论可信：解释局部提速为何只缩短约 8% 总时间，并主动保留短提示词退步。</p>
+    <div class="script"><small>ENGLISH NARRATION</small><blockquote>That is a prefill gain. Decode barely changes, and the complete generation run is about eight percent shorter. A shorter, one-hundred-twenty-eight-token prompt regresses. Choosing the right workload still matters.</blockquote></div>
+    <dl><dt>构图</dt><dd>一条 prefill + decode 时间轴，prefill 段缩短、decode 基本不变。不得把两段按吞吐量比例伪造为精确时长。</dd><dt>镜内节奏</dt><dd>0–7 秒以概念比例说明局部/整体，并用精确总时间标签 1,116 → 1,025 ms；7–11 秒保持；11–16 秒短 prompt 的 0.93× 小幅回落成为最后一拍。</dd><dt>运镜与动作</dt><dd>总时间使用精确测量，分段图明确为概念示意。128-token 回归仅指 prefill，不能与 128 个生成 token 混淆。</dd><dt>衔接</dt><dd>时间线汇回开场同一设备，完成从用户等待到工程收益的闭环。</dd><dt>声音设计</dt><dd>配乐变薄，给 caveat 同样清晰的空间；不以负面警报夸大 7% 回归。</dd></dl>
+    <p class="evidence">RX 7900 XTX · same D3D12 four-arm rerun · full run: 512 input + 128 generated tokens · not universal gains</p></div>
+</article>
+<article id="closing-the-gap">
+  <div class="shot-index"><span>12</span><small>02:36 — 02:48</small></div>
+  <div class="shot-body"><h2>Closing the gap.</h2><p class="purpose">回到开场的本地请求，以已验证的软件链路回答它，留下工程价值而非夸张口号。</p>
+    <div class="script"><small>ENGLISH NARRATION</small><blockquote>From matrix hardware to usable inference: the missing link is the software stack. We&#39;re helping close that gap, one validated path at a time.</blockquote></div>
+    <dl><dt>构图</dt><dd>同一设备，同一光向，从屏幕缓慢拉回；左侧短片名，最终定格。</dd><dt>镜内节奏</dt><dd>0–5 秒数据点回到屏幕并落成响应光标；5–9 秒出现 Closing the gap；9–12 秒画面停住，让尾音与最后一句完成。</dd><dt>运镜与动作</dt><dd>与开场推进方向相反的轻拉镜形成闭环；只表现概念响应，不伪造模型答案或实测延迟。</dd><dt>衔接</dt><dd>自然淡出到墨黑，尾部留 1 秒以上呼吸；若实测旁白过长，先精简台词。</dd><dt>声音设计</dt><dd>两音动机终于解决，低频渐退；最后和弦自然衰减，不突然切断。</dd></dl>
+    <p class="evidence">Conceptual closing · full evidence and source snapshots accompany this film</p></div>
+</article><footer><details><summary>查看来源与证据</summary><ul><li><a href="demo.html">用户原始 demo · RX 9070 XT · 2026-09-21</a></li><li><a href="report.html">用户评估报告 · ORT / Dawn · 更新于 2026-08-31</a></li><li><a href="https://devblogs.microsoft.com/directx/directx12agility/">Microsoft · Agility SDK preview / LinAlg</a></li><li><a href="https://github.com/microsoft/hlsl-specs/blob/main/proposals/0035-linalg-matrix.md">HLSL · Linear Algebra Matrix proposal</a></li><li><a href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_KHR_cooperative_matrix.html">Khronos · VK_KHR_cooperative_matrix</a></li><li><a href="https://developer.apple.com/metal/Metal-Shading-Language-Specification.pdf">Apple · Metal Shading Language specification</a></li><li><a href="https://dawn-review.googlesource.com/c/dawn/+/330695">Dawn CL 330695 · MERGED</a></li><li><a href="https://dawn-review.googlesource.com/c/dawn/+/331295">Dawn CL 331295 · MERGED</a></li><li><a href="https://dawn-review.googlesource.com/c/dawn/+/333935">Dawn CL 333935 · MERGED</a></li><li><a href="https://dawn-review.googlesource.com/c/dawn/+/335215">Dawn CL 335215 · MERGED</a></li><li><a href="https://dawn-review.googlesource.com/c/dawn/+/335895">Dawn CL 335895 · MERGED</a></li></ul></details><p>Generated from project.json · 2026-10-05T03:17:06.346Z. Numbers are attributed recorded results; no benchmarks were rerun for this review.</p></footer></main></body></html>

@@ -1,0 +1,28 @@
+{
+  "name": "movie-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A local, source-backed filmmaking studio with deterministic motion graphics",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs",
+    "render": "node scripts/render.mjs subgroup-matrix",
+    "stills": "node scripts/stills.mjs subgroup-matrix",
+    "test": "node --test tests/*.test.mjs",
+    "test:ui": "node scripts/check-ui.mjs",
+    "test:workflow": "node scripts/check-workflow.mjs",
+    "verify": "node scripts/verify.mjs subgroup-matrix"
+  },
+  "dependencies": {
+    "@github/copilot-sdk": "1.0.16",
+    "@napi-rs/canvas": "^0.1.80"
+  },
+  "devDependencies": {
+    "playwright": "^1.55.0",
+    "prettier": "^3.6.2"
+  }
+}

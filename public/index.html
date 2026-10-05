@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>FRAME · Movie Studio</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body data-mode="guided">
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="Movie Studio 首页"
+        ><span class="brand-mark">F<span>↗</span></span
+        ><span>FRAME<small>MOVIE STUDIO</small></span></a
+      >
+      <button id="new-project" class="button primary wide">＋ 新建作品</button>
+      <div class="nav-caption">你的工作室 <span>01</span></div>
+      <div id="projects" class="projects"></div>
+      <p class="sidebar-guidance">
+        你来决定方向。<br />工作室负责把电影做出来。
+      </p>
+      <div class="workflow-label">制作流程</div>
+      <nav class="workflow">
+        <button data-tab="story" class="active">
+          <span>01</span>故事与分镜</button
+        ><button data-tab="assets"><span>02</span>画面与素材</button
+        ><button data-tab="sound"><span>03</span>声音与节奏</button
+        ><button data-tab="delivery"><span>04</span>审片与交付</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <span class="live-dot"></span
+        ><span>本地工作室<small id="connection">正在连接…</small></span
+        ><span class="version">v0.1</span>
+      </div>
+      <button id="open-settings" class="button quiet wide">连接设置</button>
+    </aside>
+    <main>
+      <header class="topbar">
+        <div class="breadcrumb">
+          工作室 <span>/</span> <b id="breadcrumb">加载作品…</b>
+        </div>
+        <div class="header-actions">
+          <button id="toggle-editor" class="button quiet" aria-pressed="false">
+            精细调整
+          </button>
+          <span id="save-status" class="save-status">已保存</span
+          ><button id="save" class="button quiet">保存版本</button
+          ><button id="export" class="button primary">
+            导出电影 <span>↗</span>
+          </button>
+        </div>
+      </header>
+      <div class="project-heading">
+        <div>
+          <div class="overline">YOUR NEXT PICTURE</div>
+          <h1 id="project-title">让想法成为电影。</h1>
+        </div>
+        <div class="project-meta">
+          <button id="edit-brief" class="button quiet">创作简报</button
+          ><span id="runtime">—</span><span id="aspect-label">16:9</span
+          ><span>1080p</span>
+        </div>
+      </div>
+      <section class="review-panel">
+        <div class="review-steps">
+          <span id="step-story">01 故事分镜</span><i>→</i
+          ><span id="step-frames">02 关键画面</span><i>→</i
+          ><span id="step-sample">03 短片预览</span><i>→</i
+          ><span id="step-film">04 完整电影</span>
+        </div>
+        <div class="review-action">
+          <div>
+            <b id="review-title">先把故事讲对。</b>
+            <p id="review-description">
+              确认分镜后，工作室再准备关键画面。每一步都可以修改。
+            </p>
+          </div>
+          <button id="review-next" class="button primary">
+            确认分镜，准备画面 →
+          </button>
+        </div>
+        <div id="review-visuals" hidden></div>
+      </section>
+      <section id="job-panel" class="job-panel" hidden>
+        <div>
+          <span class="spinner"></span><b id="job-message"></b
+          ><span id="job-progress"></span>
+        </div>
+        <progress id="job-bar" max="100" value="0"></progress>
+        <details id="job-error-details" hidden>
+          <summary>错误详情</summary>
+          <pre id="job-error"></pre>
+        </details>
+      </section>
+      <section id="guided-workspace" class="guided-workspace">
+        <div id="guided-media" hidden>
+          <div class="guided-section-label">
+            <span id="guided-media-label">完整电影</span
+            ><span id="guided-media-sound">包含声音</span>
+          </div>
+          <video
+            id="guided-video"
+            controls
+            playsinline
+            preload="metadata"
+          ></video>
+          <div id="guided-downloads" class="guided-downloads"></div>
+        </div>
+        <div id="guided-plan">
+          <div class="guided-section-label">
+            <span id="guided-plan-title">创作方案</span
+            ><span id="guided-plan-count"></span>
+          </div>
+          <p id="guided-synopsis" class="guided-synopsis"></p>
+          <div id="guided-shots" class="guided-shots"></div>
+        </div>
+        <details id="sample-options" class="guided-options" hidden>
+          <summary>换一个试看片段 <span>默认从开场试做约 12 秒</span></summary>
+          <label for="sample-choice">想先看哪一段？</label
+          ><select id="sample-choice"></select>
+        </details>
+        <details id="guided-quality" class="guided-options" hidden>
+          <summary>工作室的画面检查建议</summary>
+          <div id="guided-quality-content"></div>
+        </details>
+        <div class="guided-secondary">
+          <button id="guide-edit" class="button quiet">想改一下</button
+          ><button id="guide-connections" class="button quiet" hidden>
+            检查连接设置</button
+          ><button id="guide-redo-sample" class="button quiet" hidden>
+            重新试做这一段
+          </button>
+        </div>
+      </section>
+      <div class="workspace">
+        <section class="editor-main">
+          <div class="preview-heading">
+            <div>
+              <span class="live-dot"></span>导演监视器
+              <span class="subtle" id="preview-mode" role="status"
+                >无声预览 · 尚未生成声音</span
+              >
+            </div>
+            <div class="preview-tools">
+              <button id="preview-audio" class="button quiet">生成声音</button>
+              <button id="fullscreen" class="icon-button" title="全屏预览">
+                ⛶
+              </button>
+            </div>
+          </div>
+          <div class="screen">
+            <canvas
+              id="preview"
+              width="1600"
+              height="900"
+              aria-label="电影预览画面"
+            ></canvas>
+            <div id="empty" hidden>创建你的第一部电影。</div>
+          </div>
+          <div class="transport">
+            <button id="previous" class="icon-button" aria-label="上一个镜头">
+              |‹</button
+            ><button id="play" class="play-button" aria-label="播放">▶</button
+            ><button id="next" class="icon-button" aria-label="下一个镜头">
+              ›|</button
+            ><span id="timecode">00:00 / 02:30</span
+            ><input
+              id="scrubber"
+              type="range"
+              min="0"
+              max="150"
+              step="0.05"
+              value="0"
+              aria-label="播放位置"
+            /><button
+              id="captions"
+              class="icon-button active"
+              aria-label="切换字幕"
+            >
+              CC
+            </button>
+          </div>
+          <section id="story-panel" class="tab-panel">
+            <div class="section-heading">
+              <div>
+                <h2>故事与分镜 <span id="scene-count"></span></h2>
+                <p>每个镜头，只讲清一件事。</p>
+              </div>
+              <div>
+                <button id="ai-plan" class="button quiet">✧ AI 编排</button
+                ><button id="add-scene" class="button quiet">＋ 镜头</button>
+              </div>
+            </div>
+            <div id="scene-strip" class="scene-strip"></div>
+          </section>
+          <section id="assets-panel" class="tab-panel" hidden>
+            <div class="section-heading">
+              <div>
+                <h2>画面与素材</h2>
+                <p>生成一个世界，或带入你自己的素材。</p>
+              </div>
+              <label class="button quiet upload"
+                >↑ 上传素材<input
+                  id="upload"
+                  type="file"
+                  accept="image/png,image/jpeg,.txt,.md"
+                  hidden
+              /></label>
+            </div>
+            <div class="generation-card">
+              <div class="overline">NANO BANANA / GOOGLE</div>
+              <label for="image-prompt">你想看到怎样的画面？</label
+              ><textarea
+                id="image-prompt"
+                rows="3"
+                placeholder="例如：微距镜头穿过深色芯片表面，绿色光脉冲在矩阵单元间流动，电影感侧光，无文字。"
+              ></textarea>
+              <div class="generation-footer">
+                <span id="image-model"
+                  >生成后可选择应用到镜头 · 调用 Google API</span
+                ><button id="generate-image" class="button primary">
+                  ✧ 生成画面
+                </button>
+              </div>
+            </div>
+            <div id="asset-grid" class="asset-grid"></div>
+            <div class="section-heading"><h2>来源与证据</h2></div>
+            <div id="source-list"></div>
+          </section>
+          <section id="sound-panel" class="tab-panel" hidden>
+            <div class="section-heading">
+              <div>
+                <h2>声音与节奏</h2>
+                <p>让声音带着观众进入画面。</p>
+              </div>
+            </div>
+            <div class="sound-grid">
+              <div class="setting-card">
+                <label for="voice">旁白声线</label
+                ><select id="voice">
+                  <option value="Azure en-US-AndrewMultilingualNeural">
+                    Andrew · 温暖自然 / Azure 英文
+                  </option>
+                  <option value="Azure en-US-AvaMultilingualNeural">
+                    Ava · 清晰亲切 / Azure 英文
+                  </option>
+                  <option value="Azure zh-CN-XiaoxiaoNeural">
+                    晓晓 · 自然中文 / Azure
+                  </option>
+                  <option value="Microsoft David Desktop">
+                    David · 离线英文
+                  </option>
+                  <option value="Microsoft Zira Desktop">
+                    Zira · 离线英文
+                  </option>
+                  <option value="Microsoft Huihui Desktop">
+                    慧慧 · 离线中文
+                  </option>
+                </select>
+                <p>已按语言选择默认声线。旁白会缓存，重复导出可复用。</p>
+                <button id="prepare-audio" class="button primary">
+                  生成旁白并试听
+                </button>
+              </div>
+              <div class="setting-card">
+                <label class="check-label"
+                  ><input id="music" type="checkbox" /> 配乐与转场音效</label
+                >
+                <p>
+                  原创电子脉冲配乐 · 跟随镜头节奏<br />人声优先混音 · 目标 −14
+                  LUFS
+                </p>
+                <div class="sound-wave" aria-hidden="true">
+                  ▂ ▄ ▇ ▅ ▂ ▆ ▃ █ ▄ ▂ ▅ ▇ ▃ ▂ ▆ ▄
+                </div>
+                <small>修改镜头旁白后，重新生成声音即可同步字幕。</small>
+              </div>
+            </div>
+          </section>
+          <section id="delivery-panel" class="tab-panel" hidden>
+            <div class="section-heading">
+              <div>
+                <h2>审片与交付</h2>
+                <p>每次导出保存独立快照，始终可以回看。</p>
+              </div>
+              <button id="make-stills" class="button quiet">
+                生成分镜总览
+              </button>
+            </div>
+            <div id="delivery-checks" class="delivery-checks"></div>
+            <div id="deliveries"></div>
+            <details class="history">
+              <summary>版本历史与恢复</summary>
+              <div id="revisions"></div>
+            </details>
+          </section>
+        </section>
+        <aside class="inspector">
+          <div class="inspector-heading">
+            <span>镜头详情</span><span id="shot-number">01</span>
+          </div>
+          <div class="inspector-inner">
+            <label for="scene-title">镜头标题</label
+            ><textarea id="scene-title" rows="2"></textarea>
+            <div class="two-fields">
+              <div>
+                <label for="scene-duration">时长 / 秒</label
+                ><input
+                  id="scene-duration"
+                  type="number"
+                  min="4"
+                  max="60"
+                  step="1"
+                />
+              </div>
+              <div>
+                <label for="scene-camera">运镜</label
+                ><select id="scene-camera">
+                  <option value="locked">定镜 · 看清信息</option>
+                  <option value="push">推进 · 聚焦细节</option>
+                  <option value="pull">拉远 · 揭示全貌</option>
+                  <option value="track">横移 · 跟随主体</option>
+                  <option value="reveal">揭示 · 建立空间</option>
+                </select>
+              </div>
+            </div>
+            <label for="scene-kind">画面形式</label
+            ><select id="scene-kind">
+              <option value="title">开场标题</option>
+              <option value="card">动态排版</option>
+              <option value="image">电影画面</option>
+              <option value="closing">片尾</option>
+              <option value="matrix">矩阵运算</option>
+              <option value="lanes">协作动画</option>
+              <option value="pipeline">技术路径</option>
+              <option value="benchmark">性能对比</option>
+              <option value="demo">实机演示</option>
+              <option value="compare">基线解读</option>
+              <option value="checklist">重点列表</option>
+            </select>
+            <div id="benchmark-fields" class="two-fields" hidden>
+              <div>
+                <label for="baseline">Baseline / TFLOP/s</label
+                ><input id="baseline" type="number" min="0.01" step="0.01" />
+              </div>
+              <div>
+                <label for="result">Result / TFLOP/s</label
+                ><input id="result" type="number" min="0.01" step="0.01" />
+              </div>
+            </div>
+            <div id="items-field" hidden>
+              <label for="items">Key points (one per line, up to 4)</label
+              ><textarea id="items" rows="4"></textarea>
+            </div>
+            <label for="scene-body">画面上的说明</label
+            ><textarea id="scene-body" rows="2"></textarea>
+            <div class="label-row">
+              <label for="scene-narration">旁白</label
+              ><span id="reading-time"></span>
+            </div>
+            <textarea
+              id="scene-narration"
+              rows="7"
+              placeholder="写下这一镜头里，观众会听到的话。"
+            ></textarea>
+            <div class="narration-hint" id="narration-hint"></div>
+            <label for="scene-note">来源 / 注释</label
+            ><textarea id="scene-note" rows="2"></textarea>
+            <div class="shot-actions">
+              <button id="move-left" class="button quiet" title="前移">←</button
+              ><button id="duplicate" class="button quiet">复制镜头</button
+              ><button id="move-right" class="button quiet" title="后移">
+                →</button
+              ><button
+                id="delete-scene"
+                class="button quiet danger"
+                title="删除镜头"
+              >
+                ×
+              </button>
+            </div>
+            <div class="project-settings">
+              <label for="theme">全片配色</label
+              ><select id="theme">
+                <option value="midnight">Midnight · 深色科技</option>
+                <option value="paper">Editorial · 温暖纸感</option>
+                <option value="ember">Ember · 琥珀电影</option>
+              </select>
+              <div
+                id="theme-preview"
+                class="palette-preview"
+                aria-live="polite"
+              ></div>
+              <small>用于新画面与动画；已有图片可在素材页重新生成。</small>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+    <dialog id="new-dialog">
+      <form id="create-form">
+        <div class="dialog-header">
+          <span class="overline">THE CREATIVE BRIEF</span
+          ><button
+            type="button"
+            id="close-dialog"
+            class="icon-button"
+            aria-label="关闭"
+          >
+            ×
+          </button>
+        </div>
+        <h2>想拍什么，说给导演听。</h2>
+        <p>先说想法。工作室会给出方案，你看过再往下做。</p>
+        <label for="new-idea">主题 · 拍什么？</label
+        ><textarea
+          id="new-idea"
+          required
+          rows="3"
+          maxlength="6000"
+          placeholder="例如：给新用户介绍产品的离线功能，英文，60 秒，节奏轻快。"
+        ></textarea>
+        <div
+          id="brief-presets"
+          class="brief-presets"
+          role="group"
+          aria-label="影片方向"
+        >
+          <button type="button" data-template="explainer" aria-pressed="true">
+            讲清一个概念</button
+          ><button type="button" data-template="product" aria-pressed="false">
+            介绍一个产品</button
+          ><button type="button" data-template="story" aria-pressed="false">
+            讲一个故事
+          </button>
+        </div>
+        <details id="format-options" class="advanced-create">
+          <summary>
+            风格与播放方式
+            <span id="brief-defaults">科技发布 · 60 秒 · 中文 · 横屏</span>
+          </summary>
+          <label for="new-audience"
+            >给谁看？ <span class="optional">可不填</span></label
+          ><input
+            id="new-audience"
+            placeholder="例如：国际 GPU 开发者；第一次接触的新用户"
+          />
+          <div class="two-fields">
+            <div>
+              <label for="new-style">风格</label
+              ><select id="new-style">
+                <option value="technical editorial">科技发布 · 精准克制</option>
+                <option value="watercolor">水彩 · 温柔手绘</option>
+                <option value="Chinese ink wash">水墨 · 留白与意境</option>
+                <option value="Swiss motion graphics">
+                  瑞士排版 · 图形节奏
+                </option>
+                <option value="cinematic realism">电影写实 · 光影叙事</option>
+                <option value="paper pop-up">立体纸书 · 想象世界</option>
+              </select>
+            </div>
+            <div>
+              <label for="new-duration">时长</label
+              ><select id="new-duration">
+                <option value="30">30 秒</option>
+                <option value="45">45 秒</option>
+                <option value="60" selected>60 秒</option>
+                <option value="90">90 秒</option>
+                <option value="150">2 分 30 秒</option>
+                <option value="180">3 分钟</option>
+              </select>
+            </div>
+          </div>
+          <div class="two-fields">
+            <div>
+              <label for="new-language">旁白语言</label
+              ><select id="new-language">
+                <option value="zh">中文</option>
+                <option value="en">English</option>
+              </select>
+            </div>
+            <div>
+              <label for="new-aspect">画幅</label
+              ><select id="new-aspect">
+                <option value="16:9">横屏 16:9</option>
+                <option value="9:16">竖屏 9:16</option>
+              </select>
+            </div>
+          </div>
+        </details>
+        <details id="creative-details" class="advanced-create">
+          <summary>故事、节奏与声音 <span>默认交给导演</span></summary>
+          <label for="new-story">故事</label
+          ><textarea
+            id="new-story"
+            rows="3"
+            placeholder="谁，想要什么，发生什么，如何结束？留空则由导演编排一个有转折的故事。"
+          ></textarea>
+          <div class="two-fields">
+            <div>
+              <label for="new-pace">节奏</label
+              ><select id="new-pace">
+                <option value="balanced">交给导演 · 有快有慢</option>
+                <option value="fast">快 · 利落有力</option>
+                <option value="slow">慢 · 留白与呼吸</option>
+                <option value="build">前慢后快 · 逐步推进</option>
+              </select>
+            </div>
+            <div>
+              <label for="new-narration">旁白</label
+              ><select id="new-narration">
+                <option value="auto">自然声线 · 自动选择</option>
+                <option value="warm-male">温暖男声</option>
+                <option value="clear-female">清晰女声</option>
+                <option value="none">不要旁白 · 音乐与画面</option>
+              </select>
+            </div>
+          </div>
+        </details>
+        <details id="material-details" class="advanced-create">
+          <summary>对标与素材 <span>可选</span></summary>
+          <label for="new-reference">对标作品</label
+          ><input
+            id="new-reference"
+            placeholder="学哪部电影、片头或广告的节奏 / 运镜？"
+          /><label for="new-materials">已有素材和使用要求</label
+          ><textarea
+            id="new-materials"
+            rows="2"
+            placeholder="素材路径、照片、logo、录音、模型及希望如何使用。"
+          ></textarea
+          ><label for="new-must">必须出现的名字、事实和数字</label
+          ><textarea
+            id="new-must"
+            rows="2"
+            placeholder="准确事实请在这里给出，并说明来源。"
+          ></textarea
+          ><label for="brief-upload">附上图片 / 文本素材</label
+          ><input
+            id="brief-upload"
+            type="file"
+            accept="image/png,image/jpeg,.txt,.md"
+            multiple
+          /><small
+            >支持图片和文本；模型、视频可先记录路径，后续按镜头补充。</small
+          >
+        </details>
+        <details id="advanced-create" class="advanced-create">
+          <summary>更多设置 <span>12 种影片类型 · 12 套配色</span></summary>
+          <label for="new-title">作品名称（可不填）</label
+          ><input id="new-title" maxlength="140" placeholder="自动从主题命名" />
+          <div class="two-fields">
+            <div>
+              <label for="new-template">影片类型</label
+              ><select id="new-template">
+                <option value="explainer">科普 / 技术讲解</option>
+                <option value="product">产品 / 品牌介绍</option>
+                <option value="story">故事 / 创意短片</option>
+              </select>
+              <p id="new-template-hint" class="preset-hint"></p>
+              <p id="new-template-beats" class="preset-beats"></p>
+            </div>
+            <div>
+              <label for="new-theme">配色</label
+              ><select id="new-theme">
+                <option value="midnight">深色科技</option>
+                <option value="paper">温暖纸感</option>
+                <option value="ember">琥珀电影</option>
+              </select>
+            </div>
+          </div>
+          <div
+            id="new-theme-preview"
+            class="palette-preview"
+            aria-live="polite"
+          ></div>
+          <details class="palette-library-details">
+            <summary>浏览全部配色 <span>深色、明亮、自然与情绪</span></summary>
+            <div id="palette-library" class="palette-library"></div>
+          </details>
+          <label class="check-label"
+            ><input id="new-ai" type="checkbox" checked /> 由 AI
+            导演生成初稿（关闭后手工编排）</label
+          >
+        </details>
+        <div class="brief-promise">
+          分镜确认 → 画面确认 → 短片预览 → 完成全片
+        </div>
+        <small id="brief-services"
+          >导演与画面使用 Google；配音使用
+          Azure。只在你确认后推进制作，生成会调用你的 API。</small
+        ><button class="button primary wide" type="submit" id="create-submit">
+          生成创作方案 →
+        </button>
+      </form>
+    </dialog>
+    <div id="toast" class="toast" role="status" hidden></div>
+    <audio id="soundtrack" preload="metadata"></audio>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
