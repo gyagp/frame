@@ -5,34 +5,16 @@ import { duration, timeline } from "../src/model.mjs";
 import { createHash } from "node:crypto";
 import { azureSpeech } from "../src/azure.mjs";
 import { narrationFit } from "../src/audio-fit.mjs";
+import { captionTextForSpeech } from "../src/captions.mjs";
+import { physicalEvents, addPhysicalSound } from "../src/physical-sound.mjs";
+import { isDeepStrictEqual } from "node:util";
+import {
+  narrationPhrases,
+  wavSamples,
+  cachedSpeech,
+} from "../src/speech-audio.mjs";
 
 const RATE = 24000;
-function wavSamples(buf) {
-  if (buf.toString("ascii", 0, 4) !== "RIFF")
-    throw new Error("Invalid speech WAV");
-  let pos = 12,
-    rate,
-    channels,
-    bits,
-    data;
-  while (pos + 8 <= buf.length) {
-    const name = buf.toString("ascii", pos, pos + 4),
-      size = buf.readUInt32LE(pos + 4);
-    if (name === "fmt ") {
-      channels = buf.readUInt16LE(pos + 10);
-      rate = buf.readUInt32LE(pos + 12);
-      bits = buf.readUInt16LE(pos + 22);
-    }
-    if (name === "data") data = buf.subarray(pos + 8, pos + 8 + size);
-    pos += 8 + size + (size % 2);
-  }
-  if (rate !== RATE || channels !== 1 || bits !== 16 || !data)
-    throw new Error("Speech format must be 24 kHz / mono / PCM16");
-  const samples = new Float32Array(data.length / 2);
-  for (let i = 0; i < samples.length; i++)
-    samples[i] = data.readInt16LE(i * 2) / 32768;
-  return samples;
-}
 function stamp(sec) {
   const ms = Math.round(sec * 1000);
   return `${String(Math.floor(ms / 3600000)).padStart(2, "0")}:${String(Math.floor(ms / 60000) % 60).padStart(2, "0")}:${String(Math.floor(ms / 1000) % 60).padStart(2, "0")},${String(ms % 1000).padStart(3, "0")}`;
@@ -59,15 +41,13 @@ export async function buildAudio(
   const dir = path.join(out, "speech");
   await mkdir(dir, { recursive: true });
   const lines = timeline(p).flatMap((s) => {
-    const phrases =
-      s.narration
-        .match(/[^.!?。！？]+[.!?。！？]+|[^.!?。！？]+$/g)
-        ?.map((x) => x.trim())
-        .filter(Boolean) ?? [];
+    const phrases = narrationPhrases(s.narration);
+    const captions = captionTextForSpeech(s.narration, phrases);
     return phrases.map((text, i) => ({
       id: `${s.id}-${i}`,
       sceneId: s.id,
       text,
+      caption: captions[i],
     }));
   });
   await writeJSON(path.join(dir, "lines.json"), lines);
@@ -83,17 +63,13 @@ export async function buildAudio(
           .update(engine + p.voice + line.text)
           .digest("hex");
         const cached = path.join(cacheDir, `${key}.wav`);
-        let wav;
-        try {
-          wav = await readFile(cached);
-        } catch {
+        const wav = await cachedSpeech(cached, async () => {
           const wait = Math.max(0, 200 - (Date.now() - lastRequest));
           if (wait) await new Promise((r) => setTimeout(r, wait));
           for (let attempt = 0; attempt < 3; attempt++) {
             lastRequest = Date.now();
             try {
-              wav = await azureSpeech(line.text, p.voice.slice(6));
-              break;
+              return await azureSpeech(line.text, p.voice.slice(6));
             } catch (e) {
               if (e.status !== 429 || attempt === 2) throw e;
               console.log(
@@ -102,8 +78,7 @@ export async function buildAudio(
               await new Promise((r) => setTimeout(r, e.retryAfterMs));
             }
           }
-          await writeFile(cached, wav);
-        }
+        });
         await writeFile(path.join(dir, `${line.id}.wav`), wav);
         console.log(`Narration ${index + 1}/${lines.length}`);
         await onProgress(index + 1, lines.length);
@@ -237,7 +212,7 @@ export async function buildAudio(
         sceneId: scene.id,
         start,
         end: Math.min(scene.end - 0.1, end + 0.16),
-        text: e.text,
+        text: e.caption ?? e.text,
       });
       cursor = end + fit.gap;
     }
@@ -286,7 +261,7 @@ export async function buildAudio(
       voice[i] * 0.85 +
       (p.music ? (pulse + pad) * duck * envelope * silence : 0);
   }
-  if (p.music)
+  if (p.music && p.production?.backend !== "blender")
     for (const point of boundaries) {
       const start = Math.round(point * RATE);
       for (let i = 0; i < RATE * 0.13; i++) {
@@ -324,6 +299,33 @@ export async function buildAudio(
           mix[offset + i] += gain * signal;
         }
       }
+  if (p.production?.backend === "blender") {
+    const reports = {};
+    for (const scene of p.scenes) {
+      const folder = path.join(out, "blender", scene.id);
+      // A sample's audio directory is a child of its compiled-scene directory.
+      const sceneFolder =
+        path.basename(out) === "sample-audio"
+          ? path.join(path.dirname(out), "blender", scene.id)
+          : folder;
+      const manifest = await readJSON(path.join(sceneFolder, "manifest.json"));
+      if (
+        !isDeepStrictEqual(manifest.spatial, scene.spatial) ||
+        manifest.duration !== scene.duration
+      )
+        throw new Error(
+          `Contact audio needs current Blender scene: ${scene.id}`,
+        );
+      reports[scene.id] = await readJSON(path.join(sceneFolder, "report.json"));
+    }
+    const events = physicalEvents(p, reports);
+    addPhysicalSound(mix, RATE, p, events);
+    await writeJSON(path.join(out, "physical-sound.json"), {
+      source: "Baked Blender contacts; original synthesized ambience/foley",
+      events,
+      listening: "not checked",
+    });
+  }
   const raw = Buffer.alloc(mix.length * 2);
   for (let i = 0; i < mix.length; i++)
     raw.writeInt16LE(

@@ -41,7 +41,9 @@ import {
   redactError,
 } from "./src/settings.mjs";
 import { testConnection } from "./src/connections.mjs";
-import { assertProductionAvailable } from "./src/production.mjs";
+import { assertProductionAvailable, requires3D } from "./src/production.mjs";
+import { blenderStatus, probeBlender } from "./src/blender.mjs";
+import { summarizeBlenderFrames } from "./src/blender-review.mjs";
 
 const PORT = Number(process.env.PORT || 4173),
   jobs = new Map(),
@@ -258,6 +260,7 @@ const server = http.createServer(async (req, res) => {
     }
     if (pathname === "/api/config") {
       json(res, 200, {
+        blender: await blenderStatus(),
         google: configured(),
         director: configured(),
         image: imageConfigured(),
@@ -345,6 +348,95 @@ const server = http.createServer(async (req, res) => {
         ].includes(action)
       )
         assertProductionAvailable(await loadProject(id));
+      if (req.method === "POST" && requires3D(await loadProject(id))) {
+        if (["plan", "revise-shot"].includes(action))
+          throw new Error(
+            "当前 3D 镜头使用可编辑 Blender 场景；请修改分镜或场景数据，2D 动画导演不适用。",
+          );
+        if (
+          [
+            "prepare",
+            "stills",
+            "critique",
+            "audio",
+            "sample",
+            "render",
+          ].includes(action)
+        ) {
+          const p = await loadProject(id),
+            state = reviewState(p);
+          if (!state.storyApproved) throw new Error("请先确认故事与分镜");
+          if (["sample", "audio"].includes(action) && !state.framesApproved)
+            throw new Error("请先确认关键画面");
+          if (action === "render" && !state.sampleApproved)
+            throw new Error("请先确认有声短样片，再制作全片");
+          if (action === "critique") {
+            const key = hashProject(p),
+              out = path.join(ROOT, "outputs", id, key);
+            const job = await startJob(id, "critique", async (j) => {
+              const diagnostics = await readJSON(
+                path.join(out, "frame-diagnostics.json"),
+              );
+              let manual = {};
+              try {
+                manual = await readJSON(path.join(out, "manual-review.json"));
+              } catch (e) {
+                if (e.code !== "ENOENT") throw e;
+              }
+              await writeJSON(path.join(out, "quality.json"), {
+                ...summarizeBlenderFrames(diagnostics, manual),
+                projectHash: key,
+              });
+              j.outputKey = key;
+              j.projectHash = key;
+              j.message = "实际静帧与相机检查完成；审美、表演与听看仍需审阅。";
+            });
+            json(res, 202, job);
+            return;
+          }
+          await probeBlender();
+          const input = action === "sample" ? await parsed(req) : {};
+          const start = Number(input.start ?? 0);
+          if (!Number.isFinite(start) || start < 0 || start > duration(p) - 4)
+            throw new Error("Invalid sample range");
+          const key = hashProject(p),
+            out = path.join(ROOT, "outputs", id, key);
+          const job = await startJob(id, action, async (j) => {
+            await mkdir(out, { recursive: true });
+            await writeJSON(path.join(out, "project.json"), p);
+            j.outputKey = key;
+            j.projectHash = key;
+            j.outputBase = `/outputs/${id}/${key}`;
+            const script = ["prepare", "stills"].includes(action)
+              ? "blender-stills.mjs"
+              : action === "render"
+                ? "blender-fast-render.mjs"
+                : "blender-render.mjs";
+            const args = [
+              path.join(ROOT, "scripts", script),
+              id,
+              "--snapshot",
+              path.join(out, "project.json"),
+            ];
+            if (action === "sample")
+              args.push("--sample", "--start", String(start), "--length", "12");
+            if (action === "audio") args.push("--audio-only");
+            // The cached executor publishes verified per-frame progress itself.
+            const result = await run(process.execPath, args, {
+              env: speechEnvironment(),
+            });
+            await writeFile(
+              path.join(out, `${action}.log`),
+              result.out + "\n" + result.err,
+            );
+            j.message = ["prepare", "stills"].includes(action)
+              ? "Blender 角色与空间预演已生成，请审阅关键帧"
+              : "Blender 导出已完成，请播放审阅";
+          });
+          json(res, 202, job);
+          return;
+        }
+      }
       if (!action && req.method === "GET") {
         json(res, 200, await loadProject(id));
         return;
@@ -747,7 +839,7 @@ const server = http.createServer(async (req, res) => {
             key,
             base: `/outputs/${id}/${key}`,
             files: files.filter((x) =>
-              /^(film.mp4|sample.mp4|sample-poster.jpg|poster.jpg|subtitles.srt|storyboard.jpg|soundtrack.wav|audio.json|qa.json)$/.test(
+              /^(film.mp4|sample.mp4|sample-poster.jpg|poster.jpg|subtitles.srt|subtitles-corrected.srt|motion-review.mp4|motion-review-after.mp4|motion-review.json|storyboard.jpg|soundtrack.wav|audio.json|qa.json|frame-diagnostics.json|look-review.jpg|frame-[a-z0-9-]+\.png|review-strip-[a-z0-9-]+\.jpg)$/.test(
                 x,
               ),
             ),
@@ -776,13 +868,21 @@ const server = http.createServer(async (req, res) => {
     )
       target = path.join(ROOT, "public", pathname.slice(1));
     else if (
-      /^\/src\/(film|model|workflow|presets|production)\.mjs$/.test(pathname) ||
+      /^\/src\/(film|model|workflow|presets|production|blender-schema|cue-timing|captions)\.mjs$/.test(
+        pathname,
+      ) ||
       /^\/src\/engine\/(motion|schema|renderer|recipes|review|shot-plan)\.mjs$/.test(
         pathname,
       )
     )
       target = path.join(ROOT, pathname.slice(1));
     else if (/^\/projects\/[a-z0-9-]+\/assets\/[a-zA-Z0-9._-]+$/.test(pathname))
+      target = path.join(ROOT, pathname.slice(1));
+    else if (
+      /^\/outputs\/[a-z0-9-]+\/[a-f0-9]{16}\/blender\/[a-z0-9-]+\/scene\.blend$/.test(
+        pathname,
+      )
+    )
       target = path.join(ROOT, pathname.slice(1));
     else if (
       /^\/outputs\/[a-z0-9-]+\/[a-f0-9]{16}\/[a-zA-Z0-9._-]+\.(mp4|wav|png|jpg|srt|json)$/.test(

@@ -1,5 +1,8 @@
 # code-doc-film：3D 可行性研究
 
+后续更新：本轮已将多点运镜、相机诊断、cue 编译和首中尾审片接入 Blender 路径，见
+[实际接入记录](code-doc-film-integration.md)。以下 Three.js 性能数字仍是原探针的历史记录。
+
 研究日期：2026-10-05。参考项目：[bangbuilds/code-doc-film](https://github.com/bangbuilds/code-doc-film)。
 核对版本：[`d3078a857fbc70f78121ed0f919aa9d15c854e57`](https://github.com/bangbuilds/code-doc-film/tree/d3078a857fbc70f78121ed0f919aa9d15c854e57)，提交日期 2026-10-03。
 方法：GitHub API 查元信息、克隆固定版本、阅读实现与参考手册、在隔离目录实际运行其船队场景。

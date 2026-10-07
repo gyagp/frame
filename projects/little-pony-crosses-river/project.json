@@ -80,8 +80,8 @@
   ],
   "review": {
     "story": "a4e24333ef68f2d098d87a00b165dff67f918680c45f54f79d393c7263677a88",
-    "frames": null,
-    "sample": null
+    "frames": "c0acfde0edeebbac",
+    "sample": "c0acfde0edeebbac"
   },
   "scenes": [
     {
@@ -101,6 +101,106 @@
         "action": "低机位轻轻后退，显露水面的宽度和小马的犹豫。",
         "transitionIntent": "蹄子落地声匹配切到出发前的院子。",
         "sound": "先河声后入旁白；两音木琴动机停在未解决的一音。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "river-v2",
+        "camera": {
+          "position": [
+            -0.25,
+            -2.6,
+            0.52
+          ],
+          "target": [
+            -1.6,
+            -0.15,
+            0.5
+          ],
+          "lens": 58,
+          "safety": {
+            "framing": "detail",
+            "clearance": 0.05,
+            "subjects": [
+              "pony"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              -2.6,
+              0,
+              0.26
+            ],
+            "action": "probe",
+            "heading": 0,
+            "travel": 0,
+            "bag": true,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0,
+                  "probeLift": 0,
+                  "probeReach": 0,
+                  "bodyShift": 0,
+                  "bodyDrop": 0
+                },
+                {
+                  "k": 0.14,
+                  "headPitch": 0.27,
+                  "headYaw": -0.16,
+                  "probeLift": 0,
+                  "probeReach": 0
+                },
+                {
+                  "k": 0.25,
+                  "headPitch": 0.27,
+                  "probeLift": 0.28,
+                  "probeReach": 0.04
+                },
+                {
+                  "k": 0.34,
+                  "probeLift": 0.28,
+                  "probeReach": 0.48
+                },
+                {
+                  "k": 0.49,
+                  "probeLift": 0,
+                  "probeReach": 0.48,
+                  "bodyShift": 0.1,
+                  "bodyDrop": 0.09
+                },
+                {
+                  "k": 0.7,
+                  "bodyShift": 0.1,
+                  "bodyDrop": 0.09,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.87,
+                  "headPitch": 0.06,
+                  "bodyShift": 0.1,
+                  "bodyDrop": 0.09
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0.06,
+                  "headYaw": 0,
+                  "probeLift": 0,
+                  "probeReach": 0.48,
+                  "bodyShift": 0.1,
+                  "bodyDrop": 0.09
+                }
+              ]
+            }
+          }
+        ],
+        "reviewAt": 0.12
       }
     },
     {
@@ -120,6 +220,127 @@
         "action": "稳定双人镜头，只在小马挺胸时轻推，强调他的自信。",
         "transitionIntent": "顺着小马看向道路的目光切出院子。",
         "sound": "暖木管加入；布袋摩擦、轻蹄声；引号中的话由同一叙述者自然转述。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "yard-v2",
+        "camera": {
+          "position": [
+            -3,
+            -9,
+            3.4
+          ],
+          "target": [
+            -5.8,
+            1.6,
+            1.6
+          ],
+          "lens": 43,
+          "safety": {
+            "framing": "full",
+            "clearance": 0.05,
+            "subjects": [
+              "pony"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              -4.9,
+              0.6,
+              0.26
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": true,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": -0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": "mother",
+            "asset": "mother-v3",
+            "position": [
+              -7,
+              1.2,
+              0.26
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": false,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": 0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {
@@ -139,6 +360,124 @@
         "action": "平行跟拍，让观众自然记住前进方向。",
         "transitionIntent": "前景树干遮挡切向河边，不加装饰性转场。",
         "sound": "轻拨弦随步子律动；田野虫鸟点到为止。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "river-v2",
+        "camera": {
+          "position": [
+            -5.2,
+            -8.2,
+            2.7
+          ],
+          "target": [
+            -6,
+            0,
+            1.25
+          ],
+          "lens": 43,
+          "keys": [
+            {
+              "k": 0,
+              "position": [
+                -5.2,
+                -8.2,
+                2.7
+              ],
+              "target": [
+                -6,
+                0,
+                1.25
+              ]
+            },
+            {
+              "k": 0.1,
+              "position": [
+                -5.2,
+                -8.2,
+                2.7
+              ],
+              "target": [
+                -6,
+                0,
+                1.25
+              ]
+            },
+            {
+              "k": 0.9,
+              "position": [
+                -2.5,
+                -8.2,
+                2.7
+              ],
+              "target": [
+                -3.4,
+                0,
+                1.25
+              ]
+            },
+            {
+              "k": 1,
+              "position": [
+                -2.5,
+                -8.2,
+                2.7
+              ],
+              "target": [
+                -3.4,
+                0,
+                1.25
+              ]
+            }
+          ],
+          "safety": {
+            "framing": "full",
+            "clearance": 0.05,
+            "subjects": [
+              "pony"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              -6.6,
+              0,
+              0.26
+            ],
+            "action": "walk",
+            "heading": 0,
+            "travel": 3.1,
+            "bag": true,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "travel": 0,
+                  "headPitch": 0.05,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.1,
+                  "travel": 0
+                },
+                {
+                  "k": 0.9,
+                  "travel": 3.1
+                },
+                {
+                  "k": 1,
+                  "travel": 3.1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {
@@ -158,6 +497,80 @@
         "action": "从小马背后微微抬高，揭示横在路上的河。",
         "transitionIntent": "保留水声，切向河边吃草的老牛。",
         "sound": "拨弦停止，水声变得清楚；留一个无旁白的迟疑。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "river-v2",
+        "camera": {
+          "position": [
+            -5,
+            -3,
+            2.4
+          ],
+          "target": [
+            -0.5,
+            1,
+            1.2
+          ],
+          "lens": 40,
+          "safety": {
+            "framing": "full",
+            "clearance": 0.05,
+            "subjects": [
+              "pony"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              -2.9,
+              0,
+              0.26
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": true,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": -0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {
@@ -177,6 +590,127 @@
         "action": "轻推到老牛腿上的水痕，给后面的比较留下证据。",
         "transitionIntent": "视线匹配切到老牛高度看到的水面。",
         "sound": "低音木管回应，保持友好；不把老牛演成误导者。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "river-v2",
+        "camera": {
+          "position": [
+            0,
+            -10,
+            3.2
+          ],
+          "target": [
+            -2.8,
+            0.7,
+            1.8
+          ],
+          "lens": 44,
+          "safety": {
+            "framing": "full",
+            "clearance": 0.05,
+            "subjects": [
+              "pony"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              -2.8,
+              0,
+              0.26
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": true,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": -0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": "ox",
+            "asset": "ox-v2",
+            "position": [
+              -2.7,
+              1.7,
+              0.26
+            ],
+            "action": "look",
+            "heading": -30,
+            "travel": 0,
+            "bag": false,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": 0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {
@@ -196,6 +730,127 @@
         "action": "短距离升高到老牛眼线，让相同水面显得平缓。",
         "transitionIntent": "小马向前的动作被下一镜声音打断。",
         "sound": "音乐短暂明亮；尾部提前听见松鼠叫声。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "river-v2",
+        "camera": {
+          "position": [
+            -1,
+            -5,
+            5.5
+          ],
+          "target": [
+            -1.7,
+            0.3,
+            0.55
+          ],
+          "lens": 40,
+          "safety": {
+            "framing": "detail",
+            "clearance": 0.05,
+            "subjects": [
+              "pony"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              -3.2,
+              -0.8,
+              0.26
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": true,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": -0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": "ox",
+            "asset": "ox-v2",
+            "position": [
+              -1.25,
+              1,
+              0
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": false,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": 0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {
@@ -215,6 +870,124 @@
         "action": "快速但平滑的横移接住松鼠，随后稳定在双人构图。",
         "transitionIntent": "由松鼠视线切到低处的水面。",
         "sound": "弦乐轻颤一次后收住；小石子与爪子接触声。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "river-v2",
+        "camera": {
+          "position": [
+            -0.6,
+            -6.5,
+            2
+          ],
+          "target": [
+            -2.6,
+            0,
+            1.2
+          ],
+          "lens": 43,
+          "safety": {
+            "framing": "full",
+            "clearance": 0.05,
+            "subjects": [
+              "pony"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              -2.9,
+              0.3,
+              0.26
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": true,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": -0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": "squirrel",
+            "asset": "squirrel-v2",
+            "position": [
+              -2.75,
+              -0.65,
+              0.37
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": false,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "probeLift": 0.36,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.13,
+                  "probeLift": 0.36
+                },
+                {
+                  "k": 0.19,
+                  "probeLift": 0,
+                  "headYaw": -0.25
+                },
+                {
+                  "k": 0.27,
+                  "probeLift": 0.04
+                },
+                {
+                  "k": 0.34,
+                  "probeLift": 0
+                },
+                {
+                  "k": 1,
+                  "probeLift": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {
@@ -234,6 +1007,127 @@
         "action": "固定镜头，让体型和水面关系自己说话。",
         "transitionIntent": "波纹匹配切回小马的倒影。",
         "sound": "降低音乐，保留近处水声；不做恐怖音效。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "river-v2",
+        "camera": {
+          "position": [
+            -1.35,
+            -3.1,
+            0.68
+          ],
+          "target": [
+            -2.7,
+            0,
+            0.45
+          ],
+          "lens": 42,
+          "safety": {
+            "framing": "detail",
+            "clearance": 0.05,
+            "subjects": [
+              "squirrel"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              -3,
+              0.9,
+              0.26
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": true,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": -0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": "squirrel",
+            "asset": "squirrel-v2",
+            "position": [
+              -2.75,
+              0,
+              0.37
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": false,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": 0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {
@@ -253,6 +1147,80 @@
         "action": "缓慢推进后停住，把注意力留给表情和安静。",
         "transitionIntent": "小马转身，切回返家的道路；返回方向为画面左侧。",
         "sound": "两音动机互相错开；留两秒只有水声。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "river-v2",
+        "camera": {
+          "position": [
+            1,
+            -5.8,
+            2.7
+          ],
+          "target": [
+            -2.3,
+            0,
+            1.5
+          ],
+          "lens": 55,
+          "safety": {
+            "framing": "full",
+            "clearance": 0.05,
+            "subjects": [
+              "pony"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              -2.9,
+              0,
+              0.26
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": true,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": -0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {
@@ -272,6 +1240,127 @@
         "action": "固定母子中景，稳定构图带来安全感。",
         "transitionIntent": "小马抬眼时切到三种身高关系的想象画面。",
         "sound": "暖长音回归；声线耐心，不像课堂训话。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "yard-v2",
+        "camera": {
+          "position": [
+            -3,
+            -9,
+            3.4
+          ],
+          "target": [
+            -5.8,
+            1.6,
+            1.6
+          ],
+          "lens": 43,
+          "safety": {
+            "framing": "full",
+            "clearance": 0.05,
+            "subjects": [
+              "pony"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              -4.9,
+              0.6,
+              0.26
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": true,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": -0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": "mother",
+            "asset": "mother-v3",
+            "position": [
+              -7,
+              1.2,
+              0.26
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": false,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": 0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {
@@ -291,6 +1380,174 @@
         "action": "横移依次观察三者，落在小马身上；不使用数字卡片。",
         "transitionIntent": "小马抬起头的动作接回现实。",
         "sound": "三件乐器依次奏同一动机，在小马处合成和声。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "river-v2",
+        "camera": {
+          "position": [
+            0,
+            -13,
+            4.1
+          ],
+          "target": [
+            -3,
+            0.5,
+            1.8
+          ],
+          "lens": 42,
+          "safety": {
+            "framing": "full",
+            "clearance": 0.05,
+            "subjects": [
+              "pony"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              -2.9,
+              -0.6,
+              0.26
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": true,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": -0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": "ox",
+            "asset": "ox-v2",
+            "position": [
+              -3.4,
+              2.2,
+              0.26
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": false,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": 0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": "squirrel",
+            "asset": "squirrel-v2",
+            "position": [
+              -2.9,
+              -2,
+              0.26
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": false,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": 0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": -0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {
@@ -310,6 +1567,161 @@
         "action": "舒缓跟拍，与第一次出发的急切形成节奏变化。",
         "transitionIntent": "沿目光切向清晰可见河底石头的浅滩。",
         "sound": "步伐律动回来，速度更从容；水声成为稳定背景。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "river-v2",
+        "camera": {
+          "position": [
+            -4,
+            -8.4,
+            2.8
+          ],
+          "target": [
+            -5.1,
+            0.7,
+            1.25
+          ],
+          "lens": 43,
+          "keys": [
+            {
+              "k": 0,
+              "position": [
+                -4,
+                -8.4,
+                2.8
+              ],
+              "target": [
+                -5.1,
+                0.7,
+                1.25
+              ]
+            },
+            {
+              "k": 0.1,
+              "position": [
+                -4,
+                -8.4,
+                2.8
+              ],
+              "target": [
+                -5.1,
+                0.7,
+                1.25
+              ]
+            },
+            {
+              "k": 0.9,
+              "position": [
+                -1.8,
+                -8.4,
+                2.8
+              ],
+              "target": [
+                -2.9,
+                0.7,
+                1.25
+              ]
+            },
+            {
+              "k": 1,
+              "position": [
+                -1.8,
+                -8.4,
+                2.8
+              ],
+              "target": [
+                -2.9,
+                0.7,
+                1.25
+              ]
+            }
+          ],
+          "safety": {
+            "framing": "full",
+            "clearance": 0.05,
+            "subjects": [
+              "pony"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              -5.2,
+              0,
+              0.26
+            ],
+            "action": "walk",
+            "heading": 0,
+            "travel": 2.6,
+            "bag": true,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "travel": 0,
+                  "headPitch": 0.05,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.1,
+                  "travel": 0
+                },
+                {
+                  "k": 0.9,
+                  "travel": 2.6
+                },
+                {
+                  "k": 1,
+                  "travel": 2.6,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": "mother",
+            "asset": "mother-v3",
+            "position": [
+              -6.7,
+              1.5,
+              0.26
+            ],
+            "action": "walk",
+            "heading": 0,
+            "travel": 2.2,
+            "bag": false,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "travel": 0,
+                  "headPitch": 0.05,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.1,
+                  "travel": 0
+                },
+                {
+                  "k": 0.9,
+                  "travel": 2.2
+                },
+                {
+                  "k": 1,
+                  "travel": 2.2,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {
@@ -334,6 +1746,206 @@
         "ending": "试探蹄触底并稳定承重，小马仍朝磨坊方向；颈部放松，耳朵扬起。镜头停止下降，下一镜从这一步的支撑状态继续。",
         "referenceRoles": "角色参考锁定身份与毛色；河谷灰模锁定河岸、石头和水位；美术参考只决定表面与晨光；不复刻参考视频的角色或付费模型效果。",
         "checks": "用实际样片检查蹄子接触与承重、无滑蹄／穿模、麦袋固定且干燥、水纹滞后合理、接触声同步；这些检查尚未执行。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "river-v2",
+        "camera": {
+          "position": [
+            -0.9,
+            -6.4,
+            2.2
+          ],
+          "target": [
+            -2.3,
+            0,
+            1.12
+          ],
+          "lens": 48,
+          "keys": [
+            {
+              "k": 0,
+              "position": [
+                -0.9,
+                -6.4,
+                2.2
+              ],
+              "target": [
+                -2.3,
+                0,
+                1.12
+              ]
+            },
+            {
+              "k": 0.1,
+              "position": [
+                -0.9,
+                -6.4,
+                2.2
+              ],
+              "target": [
+                -2.3,
+                0,
+                1.12
+              ]
+            },
+            {
+              "k": 0.9,
+              "position": [
+                -0.7,
+                -6.1,
+                1.9
+              ],
+              "target": [
+                -2.2,
+                0,
+                1.05
+              ]
+            },
+            {
+              "k": 1,
+              "position": [
+                -0.7,
+                -6.1,
+                1.9
+              ],
+              "target": [
+                -2.2,
+                0,
+                1.05
+              ]
+            }
+          ],
+          "safety": {
+            "framing": "full",
+            "clearance": 0.05,
+            "subjects": [
+              "pony"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              -2.6,
+              0,
+              0.26
+            ],
+            "action": "probe",
+            "heading": 0,
+            "travel": 0,
+            "bag": true,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0,
+                  "probeLift": 0,
+                  "probeReach": 0,
+                  "bodyShift": 0,
+                  "bodyDrop": 0
+                },
+                {
+                  "k": 0.14,
+                  "headPitch": 0.27,
+                  "headYaw": -0.16,
+                  "probeLift": 0,
+                  "probeReach": 0
+                },
+                {
+                  "k": 0.25,
+                  "headPitch": 0.27,
+                  "probeLift": 0.28,
+                  "probeReach": 0.04
+                },
+                {
+                  "k": 0.34,
+                  "probeLift": 0.28,
+                  "probeReach": 0.48
+                },
+                {
+                  "k": 0.49,
+                  "probeLift": 0,
+                  "probeReach": 0.48,
+                  "bodyShift": 0.1,
+                  "bodyDrop": 0.09
+                },
+                {
+                  "k": 0.7,
+                  "bodyShift": 0.1,
+                  "bodyDrop": 0.09,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.87,
+                  "headPitch": 0.06,
+                  "bodyShift": 0.1,
+                  "bodyDrop": 0.09
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0.06,
+                  "headYaw": 0,
+                  "probeLift": 0,
+                  "probeReach": 0.48,
+                  "bodyShift": 0.1,
+                  "bodyDrop": 0.09
+                }
+              ]
+            }
+          },
+          {
+            "id": "mother",
+            "asset": "mother-v3",
+            "position": [
+              -4,
+              1,
+              0.26
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": false,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": 0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {
@@ -356,6 +1968,171 @@
         "ending": "小马位于浅滩中部，稳定支撑后才转头；麦袋、躯干与四足位置可接到下一镜回望。",
         "environment": "每次落蹄带来局部水纹，水流方向固定；袋绳不穿过躯干。",
         "checks": "原速核对四足步态、根运动速度、麦袋稳定、水位一致与镜头边界接步。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "river-v2",
+        "camera": {
+          "position": [
+            -1.3,
+            -7.7,
+            2.4
+          ],
+          "target": [
+            -1.5,
+            0,
+            1
+          ],
+          "lens": 45,
+          "keys": [
+            {
+              "k": 0,
+              "position": [
+                -1.3,
+                -7.7,
+                2.4
+              ],
+              "target": [
+                -1.5,
+                0,
+                1
+              ]
+            },
+            {
+              "k": 0.1,
+              "position": [
+                -1.3,
+                -7.7,
+                2.4
+              ],
+              "target": [
+                -1.5,
+                0,
+                1
+              ]
+            },
+            {
+              "k": 0.9,
+              "position": [
+                1.7,
+                -7.7,
+                2.4
+              ],
+              "target": [
+                1.6,
+                0,
+                1
+              ]
+            },
+            {
+              "k": 1,
+              "position": [
+                1.7,
+                -7.7,
+                2.4
+              ],
+              "target": [
+                1.6,
+                0,
+                1
+              ]
+            }
+          ],
+          "safety": {
+            "framing": "full",
+            "clearance": 0.05,
+            "subjects": [
+              "pony"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              -1.7,
+              0,
+              0
+            ],
+            "action": "walk",
+            "heading": 0,
+            "travel": 3.5,
+            "bag": true,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "travel": 0,
+                  "headPitch": 0.05,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.08,
+                  "travel": 0
+                },
+                {
+                  "k": 0.95,
+                  "travel": 3.5
+                },
+                {
+                  "k": 1,
+                  "travel": 3.5,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": "mother",
+            "asset": "mother-v3",
+            "position": [
+              -3.6,
+              1,
+              0.26
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": false,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": 0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {
@@ -375,6 +2152,181 @@
         "action": "小幅绕到小马前侧，同时保持向右的银幕方向。",
         "transitionIntent": "前蹄触到河岸，动作匹配切到干地。",
         "sound": "主旋律完整出现；保持温柔，不做英雄式轰鸣。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "river-v2",
+        "camera": {
+          "position": [
+            3.2,
+            -6.5,
+            2.5
+          ],
+          "target": [
+            1.9,
+            0,
+            1.1
+          ],
+          "lens": 46,
+          "keys": [
+            {
+              "k": 0,
+              "position": [
+                3.2,
+                -6.5,
+                2.5
+              ],
+              "target": [
+                1.9,
+                0,
+                1.1
+              ]
+            },
+            {
+              "k": 0.1,
+              "position": [
+                3.2,
+                -6.5,
+                2.5
+              ],
+              "target": [
+                1.9,
+                0,
+                1.1
+              ]
+            },
+            {
+              "k": 0.9,
+              "position": [
+                3.7,
+                -6.5,
+                2.5
+              ],
+              "target": [
+                2.5,
+                0,
+                1.1
+              ]
+            },
+            {
+              "k": 1,
+              "position": [
+                3.7,
+                -6.5,
+                2.5
+              ],
+              "target": [
+                2.5,
+                0,
+                1.1
+              ]
+            }
+          ],
+          "safety": {
+            "framing": "full",
+            "clearance": 0.05,
+            "subjects": [
+              "pony"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              1.8,
+              0,
+              0.13
+            ],
+            "action": "walk",
+            "heading": 0,
+            "travel": 0.8,
+            "bag": true,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "travel": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "travel": 0,
+                  "headYaw": 0.65,
+                  "headPitch": -0.06
+                },
+                {
+                  "k": 0.42,
+                  "travel": 0,
+                  "headYaw": 0.65
+                },
+                {
+                  "k": 0.63,
+                  "travel": 0,
+                  "headYaw": 0,
+                  "headPitch": 0
+                },
+                {
+                  "k": 0.96,
+                  "travel": 0.8
+                },
+                {
+                  "k": 1,
+                  "travel": 0.8
+                }
+              ]
+            }
+          },
+          {
+            "id": "mother",
+            "asset": "mother-v3",
+            "position": [
+              -3.6,
+              1,
+              0.26
+            ],
+            "action": "look",
+            "heading": 0,
+            "travel": 0,
+            "bag": false,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.18,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.42,
+                  "headPitch": 0.13,
+                  "headYaw": -0.34
+                },
+                {
+                  "k": 0.65,
+                  "headPitch": -0.06,
+                  "headYaw": 0.12
+                },
+                {
+                  "k": 0.84,
+                  "headPitch": 0,
+                  "headYaw": 0
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {
@@ -394,6 +2346,75 @@
         "action": "轻轻后拉，让河重新进入构图，完成空间闭环。",
         "transitionIntent": "沿前方风车转动切到磨坊门前。",
         "sound": "蹄子从水声变为草地声；留笑意的无旁白空间。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "river-v2",
+        "camera": {
+          "position": [
+            4,
+            -6,
+            2.8
+          ],
+          "target": [
+            2.8,
+            0,
+            1.6
+          ],
+          "lens": 43,
+          "endPosition": [
+            4.8,
+            -7,
+            3
+          ],
+          "safety": {
+            "framing": "full",
+            "clearance": 0.05,
+            "subjects": [
+              "pony"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              2.6,
+              0,
+              0.26
+            ],
+            "action": "walk",
+            "heading": 0,
+            "travel": 0.9,
+            "bag": true,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "travel": 0,
+                  "headPitch": 0.05,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.04,
+                  "travel": 0
+                },
+                {
+                  "k": 0.45,
+                  "travel": 0.9
+                },
+                {
+                  "k": 1,
+                  "travel": 0.9,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {
@@ -413,6 +2434,84 @@
         "action": "固定镜头，给任务完成一个踏实的落点。",
         "transitionIntent": "柔和叠化回到河岸远景。",
         "sound": "木管收束；布袋落台的轻响；风车木轴声。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "mill-v2",
+        "camera": {
+          "position": [
+            6.4,
+            -3.6,
+            3.4
+          ],
+          "target": [
+            3.8,
+            2.45,
+            1.15
+          ],
+          "lens": 48,
+          "safety": {
+            "framing": "full",
+            "clearance": 0.05,
+            "subjects": [
+              "pony"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              3.25,
+              3.15,
+              0.26
+            ],
+            "action": "look",
+            "heading": -90,
+            "travel": 0,
+            "bag": true,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "headPitch": 0,
+                  "headYaw": 0,
+                  "bagDrop": 0
+                },
+                {
+                  "k": 0.17,
+                  "headYaw": -0.18,
+                  "headPitch": 0.18,
+                  "bagDrop": 0
+                },
+                {
+                  "k": 0.29,
+                  "headPitch": 0.23,
+                  "bagDrop": 0.12
+                },
+                {
+                  "k": 0.4,
+                  "headPitch": 0.15,
+                  "bagDrop": 1
+                },
+                {
+                  "k": 0.62,
+                  "headPitch": 0,
+                  "headYaw": 0,
+                  "bagDrop": 1
+                },
+                {
+                  "k": 1,
+                  "headPitch": 0,
+                  "headYaw": 0,
+                  "bagDrop": 1
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     {
@@ -432,7 +2531,168 @@
         "action": "缓慢升起后停住，留出完整结束和音乐尾音。",
         "transitionIntent": "最后两秒淡出；片名《小马过河》，小字“重新编写的 3D 动画短片”。",
         "sound": "动机温柔落定，保留尾音与河声；避免旁白压片尾。"
+      },
+      "spatial": {
+        "version": 1,
+        "seed": 21,
+        "environment": "river-v2",
+        "camera": {
+          "position": [
+            -3,
+            -13,
+            6
+          ],
+          "target": [
+            -3,
+            0.8,
+            1
+          ],
+          "lens": 35,
+          "keys": [
+            {
+              "k": 0,
+              "position": [
+                -3,
+                -13,
+                6
+              ],
+              "target": [
+                -3,
+                0.8,
+                1
+              ]
+            },
+            {
+              "k": 0.1,
+              "position": [
+                -3,
+                -13,
+                6
+              ],
+              "target": [
+                -3,
+                0.8,
+                1
+              ]
+            },
+            {
+              "k": 0.9,
+              "position": [
+                -5,
+                -14,
+                7
+              ],
+              "target": [
+                -5,
+                0.8,
+                1
+              ]
+            },
+            {
+              "k": 1,
+              "position": [
+                -5,
+                -14,
+                7
+              ],
+              "target": [
+                -5,
+                0.8,
+                1
+              ]
+            }
+          ],
+          "safety": {
+            "framing": "full",
+            "clearance": 0.05,
+            "subjects": [
+              "pony"
+            ]
+          }
+        },
+        "actors": [
+          {
+            "id": "pony",
+            "asset": "pony-v3",
+            "position": [
+              -3,
+              0,
+              0.26
+            ],
+            "action": "walk",
+            "heading": 180,
+            "travel": 3,
+            "bag": false,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "travel": 0,
+                  "headPitch": 0.05,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.1,
+                  "travel": 0
+                },
+                {
+                  "k": 0.9,
+                  "travel": 3
+                },
+                {
+                  "k": 1,
+                  "travel": 3,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": "mother",
+            "asset": "mother-v3",
+            "position": [
+              -3,
+              1.7,
+              0.26
+            ],
+            "action": "walk",
+            "heading": 180,
+            "travel": 3,
+            "bag": false,
+            "performance": {
+              "keys": [
+                {
+                  "k": 0,
+                  "travel": 0,
+                  "headPitch": 0.05,
+                  "headYaw": 0
+                },
+                {
+                  "k": 0.1,
+                  "travel": 0
+                },
+                {
+                  "k": 0.9,
+                  "travel": 3
+                },
+                {
+                  "k": 1,
+                  "travel": 3,
+                  "headPitch": 0,
+                  "headYaw": 0
+                }
+              ]
+            }
+          }
+        ]
       }
     }
-  ]
+  ],
+  "visualRevision": {
+    "assetVersion": 3,
+    "userDirection": "接近实拍动物与真实环境",
+    "status": "look-development",
+    "priorOutput": "308d839442f65f00"
+  }
 }

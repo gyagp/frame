@@ -95,6 +95,20 @@ export function workflowView({ project, review = {}, outputs = [], job }) {
           ? "sample.mp4"
           : null,
   };
+  if (
+    project.production?.backend === "blender" &&
+    ["frames", "sample"].includes(phase)
+  ) {
+    view.title = "先检查角色与空间预演";
+    view.description =
+      "这是实际 Blender 渲染的制作原型。检查角色尺度、构图与动作接触；角色表面和自然表演仍需精修，不能视为成片质量验收。";
+    if (!view.media && has("motion-review-after.mp4")) {
+      view.media = "motion-review-after.mp4";
+      view.visualPreview = true;
+      view.description =
+        "先播放原速无声动作预览，再检查下方关键帧。确认画面后制作中文有声样片。";
+    }
+  }
   if (job?.projectId === project.id && job.status === "running")
     return {
       ...view,

@@ -1,0 +1,18 @@
+{
+  "id": "jjmoser-horse-v1",
+  "name": "Horse lowpoly",
+  "author": "jjmoser",
+  "source": "https://opengameart.org/content/horse-lowpoly",
+  "download": "https://opengameart.org/sites/default/files/caballo_lowpoly.zip",
+  "retrievedAt": "2026-10-05",
+  "license": "CC-BY-3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+  "archiveSha256": "7bd6582c33830cefffc5a7d34977ae16ab0618f5ea410caefb26554ad9476261",
+  "changes": "Mesh-only extraction without executing source scripts; 180 degree heading rotation, 0.35 meter scale, ground origin; Studio supplies its own rig and material nodes.",
+  "units": "meter",
+  "up": "Z",
+  "forward": "+X",
+  "origin": "ground level, approximately torso center",
+  "geometry": "797 source vertices, 849 faces; 1024px albedo and normal maps",
+  "limitations": "Low resolution modeling source, not a photoreal production asset. Rigging, animation, fur and final appearance are not authored or approved by the source artist."
+}

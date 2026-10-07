@@ -1624,3 +1624,18 @@ body[data-mode="editor"] .sidebar-guidance {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+/* Secondary review links remain separate from the per-shot edit action. */
+.shot-review-link {
+  display: block;
+  margin-top: 8px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--accent, #cfe9a8);
+  text-decoration: none;
+}
+.look-comparison {
+  display: block;
+  width: fit-content;
+  margin-top: 8px;
+  white-space: nowrap;
+}

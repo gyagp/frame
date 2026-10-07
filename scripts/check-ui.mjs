@@ -21,8 +21,13 @@ try {
   await page
     .getByRole("heading", { name: "Subgroup Matrix", exact: true })
     .waitFor();
-  await page.getByText("你的电影做好了", { exact: true }).waitFor();
-  await page.locator(".scene-card").first().waitFor({state:'attached'});
+  await page.locator("#review-title").waitFor();
+  await page.waitForFunction(
+    () =>
+      document.getElementById("review-title").textContent !== "先把故事讲对。",
+  );
+  const initialReviewTitle = await page.locator("#review-title").innerText();
+  await page.locator(".scene-card").first().waitFor({ state: "attached" });
   await page.screenshot({
     path: path.join(folder, "studio-desktop.png"),
     fullPage: true,
@@ -96,7 +101,7 @@ try {
     .locator(".project-link")
     .filter({ hasText: /^Subgroup Matrix$/ })
     .click();
-  await page.getByText("你的电影做好了", { exact: true }).waitFor();
+  await page.getByText(initialReviewTitle, { exact: true }).waitFor();
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({
     path: path.join(folder, "studio-mobile.png"),

@@ -8,12 +8,15 @@
     "node": "^20.19.0 || >=22.12.0"
   },
   "scripts": {
+    "blender:setup": "node scripts/blender-setup.mjs",
+    "blender:verify": "node scripts/blender-verify.mjs",
     "dev": "node server.mjs",
     "start": "node server.mjs",
     "render": "node scripts/render.mjs subgroup-matrix",
     "stills": "node scripts/stills.mjs subgroup-matrix",
     "test": "node --test tests/*.test.mjs",
     "test:ui": "node scripts/check-ui.mjs",
+    "test:blender-ui": "node scripts/check-blender-ui.mjs",
     "test:workflow": "node scripts/check-workflow.mjs",
     "verify": "node scripts/verify.mjs subgroup-matrix"
   },

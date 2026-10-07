@@ -1,5 +1,6 @@
 import { THEMES, sceneAt, duration, subtitles } from "./model.mjs";
 import { drawComposition } from "./engine/renderer.mjs";
+import { requires3D } from "./production.mjs";
 
 export const WIDTH = 1600,
   HEIGHT = 900;
@@ -138,6 +139,8 @@ export function drawFrame(
   cues = null,
   options = {},
 ) {
+  if (requires3D(project))
+    throw new Error("3D projects require Blender; 2D fallback is forbidden");
   const compositionTime = Math.max(
       0,
       Math.min(duration(project) - 0.001, seconds),

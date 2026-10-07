@@ -1,5 +1,6 @@
 import { readFile, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+import os from "node:os";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { readFileSync, existsSync } from "node:fs";
@@ -9,6 +10,7 @@ import { assertProject } from "../src/model.mjs";
 import { paletteFingerprint } from "../src/presets.mjs";
 import { equivalentApproval } from "../src/review-compatibility.mjs";
 import { assertProductionAvailable, requires3D } from "../src/production.mjs";
+import { mediaExecutable } from "../src/media-tools.mjs";
 export const ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "..",
@@ -39,9 +41,37 @@ export const hashProject = (p) => {
     "src/engine/renderer.mjs",
     "scripts/audio.mjs",
     "src/audio-fit.mjs",
+    "src/speech-audio.mjs",
+    "src/captions.mjs",
+    "src/physical-sound.mjs",
     "scripts/render.mjs",
   ])
     hash.update(readFileSync(path.join(ROOT, source)));
+  if (p.production?.backend === "blender") {
+    const settings = path.join(os.homedir(), ".movie-studio", "blender.json");
+    hash.update(
+      existsSync(settings)
+        ? JSON.parse(readFileSync(settings, "utf8")).version || "unconfigured"
+        : "unconfigured",
+    );
+    for (const source of [
+      "src/blender-schema.mjs",
+      "src/blender.mjs",
+      "scripts/blender/build.py",
+      "scripts/blender/natural_assets.py",
+      "scripts/blender/camera_tools.py",
+      "scripts/blender/performance.py",
+      "src/cue-timing.mjs",
+      "src/shot-diagnostics.mjs",
+      "assets/3d/jjmoser-horse/ASSET.json",
+      "assets/3d/jjmoser-horse/mesh.json",
+      "assets/3d/jjmoser-horse/albedo.png",
+      "assets/3d/jjmoser-horse/normal.png",
+      "scripts/blender-stills.mjs",
+      "scripts/blender-render.mjs",
+    ])
+      hash.update(readFileSync(path.join(ROOT, source)));
+  }
   for (const name of [
     ...new Set(
       p.scenes
@@ -82,7 +112,8 @@ export const storySignature = (p) =>
         music: p.music,
         ...(requires3D(p) ? { production: p.production } : {}),
         scenes: p.scenes.map(
-          ({ image, imageAlt, composition, soundCues, ...scene }) => scene,
+          ({ image, imageAlt, composition, spatial, soundCues, ...scene }) =>
+            scene,
         ),
       }),
     )
@@ -141,7 +172,7 @@ export async function graphics(p) {
 }
 export function run(command, args, options = {}) {
   return new Promise((resolve, reject) => {
-    const child = spawn(command, args, {
+    const child = spawn(mediaExecutable(command), args, {
       cwd: ROOT,
       windowsHide: true,
       ...options,
@@ -162,7 +193,7 @@ export function run(command, args, options = {}) {
     );
   });
 }
-export async function renderContext() {
+export async function renderContext({ backend = "canvas2d" } = {}) {
   const id = process.argv[2] ?? "subgroup-matrix";
   const snapshot = process.argv.indexOf("--snapshot");
   const p =
@@ -171,6 +202,10 @@ export async function renderContext() {
       : await loadProject(id);
   if (p.id !== id) throw new Error("Snapshot project mismatch");
   assertProductionAvailable(p);
+  if ((requires3D(p) ? p.production?.backend : "canvas2d") !== backend)
+    throw new Error(
+      "3D projects require the Blender renderer; 2D fallback is forbidden",
+    );
   const out = path.join(ROOT, "outputs", id, hashProject(p));
   await mkdir(out, { recursive: true });
   await writeJSON(path.join(out, "project.json"), p);

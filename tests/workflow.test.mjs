@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { workflowView, briefSuggestions } from "../src/workflow.mjs";
+import { loadProject } from "../scripts/lib.mjs";
 const project = {
   id: "test",
   scenes: [{ narration: "One clear idea.", body: "Start here." }],
@@ -8,6 +9,30 @@ const project = {
 const output = (files) => [
   { current: true, key: "current", base: "/output", files },
 ];
+
+test("silent Blender performance preview appears without advancing the approval gate", async () => {
+  const p = await loadProject("little-pony-crosses-river");
+  const view = workflowView({
+    project: p,
+    review: { storyApproved: true },
+    outputs: output(["storyboard.jpg", "motion-review-after.mp4"]),
+  });
+  assert.equal(view.action, "approve-frames");
+  assert.equal(view.phase, "frames");
+  assert.equal(view.media, "motion-review-after.mp4");
+  assert.equal(view.visualPreview, true);
+  const voiced = workflowView({
+    project: p,
+    review: { storyApproved: true, framesApproved: true },
+    outputs: output([
+      "storyboard.jpg",
+      "motion-review-after.mp4",
+      "sample.mp4",
+    ]),
+  });
+  assert.equal(voiced.media, "sample.mp4");
+  assert.equal(voiced.action, "approve-sample");
+});
 test("one explicit action guides every approval stage", () => {
   const cases = [
     [{}, [], "approve-story"],

@@ -1,3 +1,5 @@
+import { validateSpatial } from "./blender-schema.mjs";
+import { captionPhrases } from "./captions.mjs";
 export const KINDS = [
   "title",
   "matrix",
@@ -65,11 +67,7 @@ export function subtitles(p, cues) {
   const rows =
     cues ??
     timeline(p).flatMap((s) => {
-      const lines =
-        s.narration
-          .match(/[^.!?]+[.!?]+|[^.!?]+$/g)
-          ?.map((x) => x.trim())
-          .filter(Boolean) ?? [];
+      const lines = captionPhrases(s.narration);
       const total = lines.reduce((n, x) => n + x.length, 0);
       let t = s.start + 0.7;
       return lines.map((text) => {
@@ -171,7 +169,7 @@ export function validate(p) {
         s.items.some((x) => typeof x !== "string" || x.length > 200))
     )
       errors.push("Invalid list items");
-    errors.push(...validateComposition(s));
+    errors.push(...validateComposition(s), ...validateSpatial(s.spatial));
   }
   if (duration(p) > 900)
     errors.push("First release supports films up to 15 minutes");

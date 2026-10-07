@@ -1,5 +1,6 @@
 import { drawFrame as draw2DFrame } from "/src/film.mjs";
-import { productionUnavailable } from "/src/production.mjs";
+import { productionUnavailable, requires3D } from "/src/production.mjs";
+import { validateSpatial } from "/src/blender-schema.mjs";
 import { SHOT_DIRECTION_FIELDS } from "/src/engine/shot-plan.mjs";
 import { reviewTime } from "/src/engine/review.mjs";
 import { workflowView, briefSuggestions } from "/src/workflow.mjs";
@@ -23,9 +24,25 @@ const $ = (id) => document.getElementById(id),
   canvas = $("preview"),
   ctx = canvas.getContext("2d");
 function drawFrame(context, p, seconds, loaded, captionCues, options) {
-  if (!productionUnavailable(p))
+  if (!requires3D(p) && !productionUnavailable(p))
     return draw2DFrame(context, p, seconds, loaded, captionCues, options);
   const { width, height } = context.canvas;
+  const still = loaded?.[`blender:${sceneAt(p, seconds).id}`];
+  if (still) {
+    context.drawImage(still, 0, 0, width, height);
+    context.save();
+    context.fillStyle = "#14201dcc";
+    context.fillRect(0, height * 0.88, width, height * 0.12);
+    context.fillStyle = "#f5efdf";
+    context.font = `${height * 0.045}px 'Microsoft YaHei', sans-serif`;
+    context.fillText(
+      "Blender 关键帧 · 动画请看导出样片",
+      width * 0.03,
+      height * 0.955,
+    );
+    context.restore();
+    return;
+  }
   context.save();
   context.fillStyle = "#ede6d6";
   context.fillRect(0, 0, width, height);
@@ -38,6 +55,37 @@ function drawFrame(context, p, seconds, loaded, captionCues, options) {
   context.restore();
 }
 mountPresets();
+document
+  .querySelector(".project-settings")
+  .insertAdjacentHTML(
+    "beforebegin",
+    `<details id="spatial-editor" class="director-controls" hidden><summary>Blender 场景与工程</summary><p>编辑角色、机位与动作数据。此处只接受场景 JSON。下载的工程包含网格、骨骼、材质和相机；手工修改工程不会自动同步回工作台。</p><textarea id="spatial-data" rows="14" spellcheck="false" aria-label="Blender 场景数据"></textarea><button id="spatial-apply" class="button quiet" type="button">保存场景数据</button><a id="blend-source" class="button quiet" hidden download="scene.blend">下载本镜 Blender 工程</a></details>`,
+  );
+$("spatial-apply").onclick = () => {
+  try {
+    const data = JSON.parse($("spatial-data").value),
+      errors = validateSpatial(data);
+    if (errors.length) throw new Error(errors.join("; "));
+    project.scenes[selected].spatial = data;
+    changed();
+    toast("场景已修改，重新制作关键帧后再确认画面。");
+  } catch (e) {
+    toast("场景数据无效：" + e.message);
+  }
+};
+function updateSpatialEditor() {
+  if (!project) return;
+  const is3d = requires3D(project),
+    s = project.scenes[selected];
+  $("spatial-editor").hidden = !is3d;
+  for (const id of ["revise-shot", "scene-camera", "scene-kind"])
+    $(id).disabled =
+      is3d || (job?.status === "running" && job?.type === "prepare");
+  const source = $("blend-source");
+  source.hidden = !is3d || !currentOutput?.files.includes("storyboard.jpg");
+  if (!source.hidden)
+    source.href = currentOutput.base + `/blender/${s.id}/scene.blend`;
+}
 document
   .querySelector(".project-settings")
   .insertAdjacentHTML(
@@ -199,6 +247,8 @@ function selectShot(index, seek = true) {
   $("director-note").textContent = s.direction
     ? Object.values(s.direction).filter(Boolean).join(" · ")
     : "每个镜头都可以交给导演重新设计。";
+  $("spatial-data").value = s.spatial ? JSON.stringify(s.spatial, null, 2) : "";
+  updateSpatialEditor();
   readingHint();
   document
     .querySelectorAll(".scene-card")
@@ -301,6 +351,7 @@ async function openProject(id) {
   pause();
   $("guided-video").pause();
   project = await api(`/api/projects/${id}`);
+  currentOutput = null;
   selected = 0;
   t = 0.1;
   dirty = false;
@@ -342,6 +393,9 @@ async function openProject(id) {
 }
 function changed() {
   dirty = true;
+  if (requires3D(project))
+    for (const key of Object.keys(assets))
+      if (key.startsWith("blender:")) delete assets[key];
   cues = null;
   previewAudioBase = null;
   audioLoadFailed = false;
@@ -545,8 +599,33 @@ async function refreshReview() {
   const all = await api(route("outputs"));
   allOutputs = all;
   currentOutput = all.find((x) => x.current);
+  if (
+    requires3D(project) &&
+    currentOutput?.files.some(
+      (f) => f.startsWith("frame-") && f.endsWith(".png"),
+    )
+  ) {
+    await Promise.all(
+      project.scenes.map(async (s) => {
+        if (!currentOutput.files.includes(`frame-${s.id}.png`)) return;
+        const key = `blender:${s.id}`,
+          url = currentOutput.base + `/frame-${s.id}.png`;
+        if (assets[key]?.src === location.origin + url) return;
+        const img = new Image();
+        img.src = url;
+        try {
+          await img.decode();
+          assets[key] = img;
+        } catch {}
+      }),
+    );
+    guideRenderKey = null;
+    thumbnails();
+    redraw();
+  }
   const hasFrames = currentOutput?.files.includes("storyboard.jpg"),
     hasSample = currentOutput?.files.includes("sample.mp4");
+  updateSpatialEditor();
   const area = $("review-visuals");
   area.replaceChildren();
   area.hidden = !hasFrames && !hasSample;
@@ -557,6 +636,14 @@ async function refreshReview() {
     a.target = "_blank";
     a.textContent = "↗ 查看分镜与关键画面总览";
     area.append(a);
+  }
+  if (currentOutput?.files.includes("look-review.jpg")) {
+    const comparison = document.createElement("a");
+    comparison.href = currentOutput.base + "/look-review.jpg";
+    comparison.target = "_blank";
+    comparison.className = "review-sheet";
+    comparison.textContent = "↗ 查看新旧画面对照";
+    area.append(comparison);
   }
   const quality = await api(route("quality"));
   $("quality-report").replaceChildren();
@@ -605,7 +692,7 @@ function renderGuidance() {
         i < g.step ? "done" : i === g.step ? "current" : ""),
   );
   $("guided-media").hidden = !g.media;
-  $("guided-plan").hidden = !!g.media;
+  $("guided-plan").hidden = !!g.media && !g.visualPreview;
   $("sample-options").hidden = !["frames", "sample", "sample-review"].includes(
     g.phase,
   );
@@ -622,19 +709,26 @@ function renderGuidance() {
     if ($("guided-video").src !== url) {
       pause();
       $("guided-video").src = url;
-      $("guided-video").poster =
-        g.output.base +
-        (g.media === "film.mp4" ? "/poster.jpg" : "/sample-poster.jpg");
+      $("guided-video").poster = g.visualPreview
+        ? ""
+        : g.output.base +
+          (g.media === "film.mp4" ? "/poster.jpg" : "/sample-poster.jpg");
     }
-    $("guided-media-label").textContent =
-      g.media === "film.mp4" ? "完整电影" : "有声试看片";
-    $("guided-media-sound").textContent =
-      (project.scenes.some((s) => s.narration.trim()) ? "旁白" : "") +
-        (project.music ? " · 配乐" : "") || "无声作品";
+    $("guided-media-label").textContent = g.visualPreview
+      ? "无声动作预览"
+      : g.media === "film.mp4"
+        ? "完整电影"
+        : "有声试看片";
+    $("guided-media-sound").textContent = g.visualPreview
+      ? "原速 · 审阅角色动作"
+      : (project.scenes.some((s) => s.narration.trim()) ? "旁白" : "") +
+          (project.music ? " · 配乐" : "") || "无声作品";
     $("guided-downloads").replaceChildren();
     for (const [name, label] of [
       ["subtitles.srt", "字幕文件"],
       ["poster.jpg", "封面图片"],
+      ["subtitles-corrected.srt", "修正字幕"],
+      ["motion-review.mp4", "动作前后对比"],
     ])
       if (g.output.files.includes(name)) {
         const link = document.createElement("a");
@@ -661,6 +755,14 @@ function renderGuidance() {
     $("guided-plan-count").textContent =
       `${project.scenes.length} 个镜头 · ${time(duration(project))}`;
     $("guided-synopsis").textContent = project.bible?.logline || project.idea;
+    if (currentOutput?.files.includes("look-review.jpg")) {
+      const link = document.createElement("a");
+      link.href = currentOutput.base + "/look-review.jpg";
+      link.target = "_blank";
+      link.className = "look-comparison";
+      link.textContent = "查看新旧画面对照 ↗";
+      $("guided-synopsis").append(document.createTextNode("　"), link);
+    }
     timeline(project).forEach((s, i) => {
       const card = document.createElement("article");
       card.className = "guided-shot";
@@ -682,7 +784,7 @@ function renderGuidance() {
       if (g.phase === "story" && !s.composition && !s.image) {
         const placeholder = document.createElement("span");
         placeholder.className = "guided-shot-placeholder";
-        placeholder.textContent = productionUnavailable(project)
+        placeholder.textContent = requires3D(project)
           ? "3D 画面待制作"
           : "分镜占位 · 美术待制作";
         visual.append(placeholder);
@@ -741,19 +843,32 @@ function renderGuidance() {
       };
       content.append(edit);
       card.append(content);
+      if (
+        requires3D(project) &&
+        currentOutput?.files.includes(`review-strip-${s.id}.jpg`)
+      ) {
+        const link = document.createElement("a");
+        link.className = "shot-review-link";
+        link.href = currentOutput.base + `/review-strip-${s.id}.jpg`;
+        link.target = "_blank";
+        link.textContent = "查看开始、中段与结束画面 ↗";
+        content.append(link);
+      }
       $("guided-shots").append(card);
     });
     const previous = $("sample-choice").value;
     $("sample-choice").replaceChildren();
     timeline(project).forEach((s, i) => {
       const o = new Option(
-        `${i === 0 ? "开场（推荐）" : `镜头 ${i + 1}`} · ${s.title.replaceAll("\n", " ")}`,
+        `${s.id === project.production?.sampleSuggestion?.sceneId ? `镜头 ${i + 1}（推荐）` : i === 0 && !requires3D(project) ? "开场（推荐）" : `镜头 ${i + 1}`} · ${s.title.replaceAll("\n", " ")}`,
         s.id,
       );
       $("sample-choice").add(o);
     });
     if (project.scenes.some((s) => s.id === previous))
       $("sample-choice").value = previous;
+    else if (project.production?.sampleSuggestion?.sceneId)
+      $("sample-choice").value = project.production.sampleSuggestion.sceneId;
   }
   $("guided-quality").hidden = !["frames", "sample"].includes(g.phase);
   $("guided-quality-content").replaceChildren(
@@ -779,7 +894,7 @@ async function advanceWorkflow() {
     const action = guideState.action;
     if (
       ["plan", "prepare", "approve-story"].includes(action) &&
-      !(action === "approve-story" && productionUnavailable(project)) &&
+      !requires3D(project) &&
       !config.director
     ) {
       await openConnections();
@@ -931,6 +1046,7 @@ async function pollJob(initial = false) {
         (el) =>
           (el.disabled = job.status === "running" && job.type === "prepare"),
       );
+    updateSpatialEditor();
     if (job.status === "complete" && jobSeen !== job.id) {
       jobSeen = job.id;
       if (["plan", "prepare", "revise"].includes(job.type)) {

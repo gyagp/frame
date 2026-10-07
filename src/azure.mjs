@@ -1,5 +1,6 @@
 import path from "node:path";
 import { ROOT, run } from "../scripts/lib.mjs";
+import { validateSpeechWav } from "./speech-audio.mjs";
 try {
   process.loadEnvFile?.();
 } catch {}
@@ -99,7 +100,6 @@ export async function azureSpeech(
     throw error;
   }
   const wav = Buffer.from(await response.arrayBuffer());
-  if (wav.toString("ascii", 0, 4) !== "RIFF")
-    throw new Error("Azure 没有返回有效 WAV 音频。");
+  validateSpeechWav(wav);
   return wav;
 }

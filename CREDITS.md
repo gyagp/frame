@@ -13,6 +13,15 @@
   MIT, copyright 2026 bangbuilds. An isolated feasibility render uses its supplied
   fleet scene and Three.js (MIT); it is attributed upstream work, not an original
   Studio film or a production-engine integration. See `research/code-doc-film.md`.
+- **Adopted production methods**: bangbuilds / code-doc-film at
+  `d3078a857fbc70f78121ed0f919aa9d15c854e57`: normalized camera tracks, reported
+  camera safeguards, measured-cue timing and three-point still QA. Original Blender/
+  Node implementations are documented in `research/code-doc-film-integration.md`;
+  upstream MIT notice is retained in `research/licenses/code-doc-film-MIT.txt`.
+- **Horse modeling source**: “Horse lowpoly” by jjmoser,
+  <https://opengameart.org/content/horse-lowpoly>, CC-BY-3.0. Studio extracted,
+  transformed, subdivided, re-shaded and experimentally rigged the geometry.
+  Source license, hash and changes are in `assets/3d/jjmoser-horse/ASSET.json`.
 - **Image generation**: Google Gemini / Nano Banana, using the user's Google API
   account. Generated assets preserve prompt, model and timestamp in sidecars.
 - **Speech**: Azure Speech neural voices, or user-selected installed Microsoft Windows voices.
