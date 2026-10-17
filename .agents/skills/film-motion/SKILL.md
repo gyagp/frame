@@ -8,6 +8,11 @@ diagrams and UI; generated images for atmosphere, environments and art direction
 supplied footage or photography when it is the subject. Do not bake important
 numbers, formulas or UI labels into generated artwork.
 
+For detailed isometric SVG assets or a standalone interactive explainer, read
+[anatomy](../anatomy/SKILL.md). Its browser animation is an authoring reference;
+film motion still needs validated scene data and independently renderable frames.
+Follow its [Movie Studio notes](../anatomy/references/movie-studio.md) for that boundary.
+
 Generate frames through `src/google.mjs` using the server-only `GOOGLE_API_KEY`.
 Keep prompts, model, creation date and file identity in the asset sidecar. Match
 palette, subject description and lighting across prompts. Review candidates before

@@ -7,6 +7,11 @@ Read the actual implementation and its source figures. Map one central mechanism
 to a visual explanation, show the source demo, then interpret the evidence. Use
 code-rendered text and numbers; generated keyframes are only illustrative context.
 
+For an isometric mechanism or physical analogy, use
+[anatomy](../anatomy/SKILL.md) and its Movie Studio notes. Map moving parts and
+readouts to the same evidence-backed model. Label a conceptual machine as an
+analogy; its animation does not demonstrate actual GPU execution or performance.
+
 Distinguish conceptual animation, recorded-result replay and live execution on
 screen. Capture actual user-provided UI where possible. Do not present a visual bar
 animation as a fresh measurement. Preserve source snapshots and hashes.

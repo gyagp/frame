@@ -15,6 +15,7 @@
     "render": "node scripts/render.mjs subgroup-matrix",
     "stills": "node scripts/stills.mjs subgroup-matrix",
     "test": "node --test tests/*.test.mjs",
+    "test:anatomy": "node scripts/check-anatomy.mjs",
     "test:ui": "node scripts/check-ui.mjs",
     "test:blender-ui": "node scripts/check-blender-ui.mjs",
     "test:workflow": "node scripts/check-workflow.mjs",

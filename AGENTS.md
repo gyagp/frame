@@ -22,6 +22,8 @@ Read the relevant repository skill under `.agents/skills/`:
 - `film-continuity`: identity, spatial and visual continuity across shots.
 - `film-quality-review`: actual-frame critique and targeted revision.
 - `film-3d`: editable assets, blocking, rigged performance and local 3D production.
+- `anatomy`: detailed isometric SVG mechanisms and interactive technical explainers;
+  read its Movie Studio notes before using an illustration in a film.
 
 Prioritize the reusable studio and engine over any individual film. Ordinary films
 use the data-only 2D composition engine in `src/engine/`. Do not evaluate arbitrary

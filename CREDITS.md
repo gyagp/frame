@@ -9,6 +9,13 @@
 - **Typography**: Inter, Rasmus Andersson and contributors, SIL Open Font License
   1.1. Original source <https://github.com/rsms/inter>. License in `public/fonts/OFL.txt`.
 - **Software**: @napi-rs/canvas and Playwright retain their package licenses.
+- **Isometric illustration skill and toolkit**: Ryan / wheresryan22,
+  [anatomy](https://github.com/wheresryan22/anatomy), revision
+  `e9488296a44211c42701ff71705b7901470ec78f`, MIT, copyright 2026 Ryan.
+  The skill, toolkit, reference documentation and examples are vendored in
+  `.agents/skills/anatomy/`, with the original `LICENSE`. Local instruction
+  adaptations and validation scope are recorded in `research/anatomy-integration.md`.
+  Bundled example figures are upstream work, not original Studio productions.
 - **3D research reference**: bangbuilds / [code-doc-film](https://github.com/bangbuilds/code-doc-film),
   MIT, copyright 2026 bangbuilds. An isolated feasibility render uses its supplied
   fleet scene and Three.js (MIT); it is attributed upstream work, not an original

@@ -1,0 +1,14 @@
+{
+  "repository": "https://github.com/wheresryan22/anatomy",
+  "revision": "e9488296a44211c42701ff71705b7901470ec78f",
+  "retrieved": "2026-10-18",
+  "method": "skill-installer GitHub archive download pinned to commit",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2026 Ryan",
+  "upstreamSkillSha256": "4e7fa2def3faa7c00bab20cfca49fa0bc66fd74e0febba8cd51037c5da98cbfa",
+  "modified": {
+    "SKILL.md": "Scoped discovery description, compatibility moved into metadata, and Movie Studio integration entry added."
+  },
+  "added": ["UPSTREAM.json", "references/movie-studio.md"],
+  "toolkitAndExamples": "Unmodified upstream snapshot; standalone SVG verification only."
+}

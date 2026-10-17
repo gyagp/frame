@@ -12,6 +12,11 @@ Blender 4.5 LTS 的首版 **3D 预演管线** 已接入：受验证场景数据�
 实测语音 cue 对齐、相机／地形诊断、首帧／代表帧／尾帧检查、校验后复用完整镜头。
 来源、具体实现和验证范围见 [接入记录](research/code-doc-film-integration.md)。
 
+已加入 [wheresryan22/anatomy](https://github.com/wheresryan22/anatomy) 的等距 SVG
+技术插图 skill、工具库和示例，用于精密机械式解释图与独立交互演示。电影工作流的使用
+边界、固定上游版本及验证方法见 [Anatomy 接入记录](research/anatomy-integration.md)。
+它目前是创作工具，不是工作室新增的 WebGL / 3D 渲染后端。
+
 ## 打开工作室
 
 需要 Node.js 22 LTS（或 ^20.19.0 / >=22.12.0）和 FFmpeg / FFprobe。首次运行：
@@ -119,7 +124,7 @@ npm run verify
 ## 仓库结构
 
 ```text
-.agents/skills/   9 个可复用电影制作 skills
+.agents/skills/   电影制作 skills 与 Anatomy 技术插图工具
 public/          简单的中文工作室界面、字体
 src/engine/      自有 2D 场景图、关键帧、相机、镜头配方、编排与审片
 src/             作品模型、领域图表、Google 画面 / 导演与 Azure 语音适配器
